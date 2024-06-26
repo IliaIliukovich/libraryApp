@@ -1,12 +1,13 @@
 package com.telran.libraryapp;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 @RestController
 public class LibraryController {
@@ -15,11 +16,11 @@ public class LibraryController {
 
     public LibraryController() {
         library = new ArrayList<>();
-        library.add(new Book("Java in action", "author", "Java", 2, "isbn code"));
-        library.add(new Book("Algorithms", "author", "Java", 1, "isbn code"));
-        library.add(new Book("Design Patterns", "author", "Java", 4, "isbn code"));
-        library.add(new Book("", "author", "Detectives", 3, "isbn code"));
-        library.add(new Book("Harry Potter and the Philosopher's stone", "author", "Fantasy", 4, "isbn code"));
+        library.add(new Book("Java in action", "Urma R.-G., Fusco M., Mycroft A.", "Java", 2, "1"));
+        library.add(new Book("Algorithms", "Robert Sedgewick, Kevin Wayne", "Java", 1, "2"));
+        library.add(new Book("Design Patterns", "Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides", "Java", 4, "3"));
+        library.add(new Book("Sherlock Holmes", "Arthur Conan Doyle", "Detectives", 3, "4"));
+        library.add(new Book("Harry Potter and the Philosopher's stone", "J. K. Rowling", "Fantasy", 4, "5"));
     }
 
     @GetMapping("/home")
@@ -47,6 +48,40 @@ public class LibraryController {
                 .filter(book -> book.getTitle().startsWith(title))
                 .filter(book -> amount == null || book.getAvailableAmount() >= amount)
                 .toList();
+    }
+
+    @PostMapping("/all")
+    public ResponseEntity<Book> addBook(@RequestBody Book book) {
+        library.add(book);
+        return new ResponseEntity<>(book, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/all")
+    public ResponseEntity<Book> updateBook(@RequestBody Book book) {
+        if (library.contains(book)) {
+            int index = library.indexOf(book);
+            library.set(index, book);
+            return new ResponseEntity<>(book, HttpStatus.OK);
+        } else {
+            library.add(book);
+            return new ResponseEntity<>(book, HttpStatus.CREATED);
+        }
+    }
+
+    @PatchMapping("/all")
+    public ResponseEntity<Book> updateAmountOfBooks(@RequestParam String isbn, @RequestParam Integer amount) {
+        Optional<Book> book = library.stream().filter(b -> b.getIsbn().equals(isbn)).peek(b -> b.setAvailableAmount(amount)).findAny();
+        if (book.isPresent()) {
+            return new ResponseEntity<>(book.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/all")
+    public ResponseEntity<?> deleteByIsbn(@RequestParam String isbn) {
+        library.removeIf(book -> book.getIsbn().equals(isbn));
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 }
