@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -18,7 +20,20 @@ public class Building {
     private String address;
     private boolean hasReadingRoom;
 
-    public static List<Building> buildingList = List.of(
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Building building = (Building) o;
+        return id == building.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+    public static List<Building> buildingList = new ArrayList<>(List.of(
             new Building(1, "Christ's College", "St Andrew's St, Cambridge CB2 3BU", true),
             new Building(2, "Churchill College", "Storey's Way, Cambridge CB3 0DS", true),
             new Building(3, "Clare College", "Trinity Ln, Cambridge CB2 1TL", true),
@@ -50,5 +65,5 @@ public class Building {
             new Building(29, "Trinity College", "Trinity St, Cambridge CB2 1TQ", true),
             new Building(30, "Trinity Hall", "Trinity Ln, Cambridge CB2 1TJ", true),
             new Building(31, "Wolfson College", "Barton Rd, Cambridge CB3 9BB", true)
-        );
+        ));
 }
