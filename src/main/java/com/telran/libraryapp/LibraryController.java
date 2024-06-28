@@ -10,6 +10,7 @@ import java.util.Optional;
 
 
 @RestController
+@RequestMapping("/books")
 public class LibraryController {
 
     private List<Book> library;
@@ -23,7 +24,7 @@ public class LibraryController {
         library.add(new Book("Harry Potter and the Philosopher's stone", "J. K. Rowling", "Fantasy", 4, "5"));
     }
 
-    @GetMapping("/home")
+    @GetMapping
     public String helloMessage() {
         return "Hello from my excellent website!";
     }
@@ -33,7 +34,7 @@ public class LibraryController {
         return library;
     }
 
-    @GetMapping("/all/{category}")
+    @GetMapping("/{category}")
     public List<Book> getAllByCategory(@PathVariable String category) {
         List<Book> result = library.stream().filter(book -> book.getCategory().equals(category)).toList();
         if (result.isEmpty()) {
@@ -50,13 +51,13 @@ public class LibraryController {
                 .toList();
     }
 
-    @PostMapping("/all")
+    @PostMapping
     public ResponseEntity<Book> addBook(@RequestBody Book book) {
         library.add(book);
         return new ResponseEntity<>(book, HttpStatus.CREATED);
     }
 
-    @PutMapping("/all")
+    @PutMapping
     public ResponseEntity<Book> updateBook(@RequestBody Book book) {
         if (library.contains(book)) {
             int index = library.indexOf(book);
@@ -68,7 +69,7 @@ public class LibraryController {
         }
     }
 
-    @PatchMapping("/all")
+    @PatchMapping
     public ResponseEntity<Book> updateAmountOfBooks(@RequestParam String isbn, @RequestParam Integer amount) {
         Optional<Book> book = library.stream().filter(b -> b.getIsbn().equals(isbn)).peek(b -> b.setAvailableAmount(amount)).findAny();
         if (book.isPresent()) {
@@ -78,7 +79,8 @@ public class LibraryController {
         }
     }
 
-    @DeleteMapping("/all")
+    @DeleteMapping
+//    @RequestMapping(value = "/all", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteByIsbn(@RequestParam String isbn) {
         library.removeIf(book -> book.getIsbn().equals(isbn));
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
