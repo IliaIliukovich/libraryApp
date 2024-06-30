@@ -5,22 +5,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import java.util.Optional;
+
+import static com.telran.libraryapp.Book.library;
+
+
 
 @RestController
 public class LibraryController {
 
-    private List<Book> library;
-
-    public LibraryController() {
-        library = new ArrayList<>();
-        library.add(new Book("Java in action", "author", "Java", 2, "isbn code"));
-        library.add(new Book("Algorithms", "author", "Java", 1, "isbn code"));
-        library.add(new Book("Design Patterns", "author", "Java", 4, "isbn code"));
-        library.add(new Book("", "author", "Detectives", 3, "isbn code"));
-        library.add(new Book("Harry Potter and the Philosopher's stone", "author", "Fantasy", 4, "isbn code"));
-    }
 
     @GetMapping("/home")
     public String helloMessage() {
