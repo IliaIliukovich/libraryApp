@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/buildings")
@@ -16,21 +18,24 @@ public class BuildingController {
         return Building.buildingList;
     }
 
+
     @GetMapping("/searchById")
     public ResponseEntity<Building> getBildById(@RequestParam Integer id) {
         Optional<Building> building = Building.buildingList.stream().filter(b -> b.getId() == id).findAny();
-            if (building.isPresent()) {
-                return new ResponseEntity<>(building.get(), HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+        if (building.isPresent()) {
+            return new ResponseEntity<>(building.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+
 
     @PostMapping
     public ResponseEntity<Building> addBuilding(@RequestBody Building building) {
         Building.buildingList.add(building);
         return new ResponseEntity<>(building, HttpStatus.CREATED);
     }
+
 
     @PutMapping
     public ResponseEntity<Building> updateBuilding(@RequestBody Building building) {
@@ -44,11 +49,13 @@ public class BuildingController {
         }
     }
 
+
     @DeleteMapping
     public ResponseEntity<?> deleteById(@RequestParam Integer id) {
         Building.buildingList.removeIf(building -> building.getId() == id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
 
     @GetMapping("/serchByName")
     public List<Building> getBuildingByName(@RequestParam String name) {
@@ -56,4 +63,15 @@ public class BuildingController {
     }
 
 
+    @PatchMapping("/deleteAllZipCodes")
+    public ResponseEntity<?> deleteAllZipCodes() {
+        for (Building building : Building.buildingList) {
+            Matcher m = Pattern.compile("(.+)\\s([A-Z]{2}\\d\\s\\d[A-Z]{2})")
+                    .matcher(building.getAddress());
+            if (m.find()) {
+                building.setAddress(m.group(1));
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
 }

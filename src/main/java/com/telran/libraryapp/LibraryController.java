@@ -13,14 +13,14 @@ public class LibraryController {
 
     private List<Book> library;
 
-    public LibraryController() {
-        library = new ArrayList<>();
-        library.add(new Book("Java in action", "author", "Java", 2, "isbn code"));
-        library.add(new Book("Algorithms", "author", "Java", 1, "isbn code"));
-        library.add(new Book("Design Patterns", "author", "Java", 4, "isbn code"));
-        library.add(new Book("", "author", "Detectives", 3, "isbn code"));
-        library.add(new Book("Harry Potter and the Philosopher's stone", "author", "Fantasy", 4, "isbn code"));
-    }
+//    public LibraryController() {
+//        library = new ArrayList<>();
+//        library.add(new Book("Java in action", "author", "Java", 2, "isbn code"));
+//        library.add(new Book("Algorithms", "author", "Java", 1, "isbn code"));
+//        library.add(new Book("Design Patterns", "author", "Java", 4, "isbn code"));
+//        library.add(new Book("", "author", "Detectives", 3, "isbn code"));
+//        library.add(new Book("Harry Potter and the Philosopher's stone", "author", "Fantasy", 4, "isbn code"));
+//    }
 
     @GetMapping("/home")
     public String helloMessage() {
