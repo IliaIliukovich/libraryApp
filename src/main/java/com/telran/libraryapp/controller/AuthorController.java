@@ -1,7 +1,7 @@
-package com.telran.libraryapp;
+package com.telran.libraryapp.controller;
 
+import com.telran.libraryapp.entity.Author;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

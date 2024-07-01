@@ -1,4 +1,4 @@
-package com.telran.libraryapp;
+package com.telran.libraryapp.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
