@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library App</title>
+    <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+
+<h1>Library App</h1>
+
+<h1>List of books</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Title</th>
+        <th>Authors</th>
+        <th>Available amount</th>
+        <th>Isbn</th>
+        <th>Category</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book, iter : ${myBooks}"
+        th:style="${iter.odd}? 'font-weight: bold;'">
+        <td th:text="${iter.index}+1"></td>
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.availableAmount}"></td>
+        <td th:text="${book.isbn}"></td>
+        <td th:text="${book.category}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h1>Add new book</h1>
+
+<form th:action="@{/all}" th:object="${newBook}" th:method="post">
+    <div>
+        <label>Title:&nbsp;</label>
+        <label>
+            <input type="text" th:field="*{title}">
+        </label>
+    </div>
+    <div>
+        <label>Author:&nbsp;</label>
+        <label>
+            <input type="text" th:field="*{author}">
+        </label>
+    </div>
+    <div>
+        <label>Available amount:&nbsp;</label>
+        <label>
+            <input type="text" th:field="*{availableAmount}">
+        </label>
+    </div>
+    <div>
+        <label>Isbn:&nbsp;</label>
+        <label>
+            <input type="text" th:field="*{isbn}">
+        </label>
+    </div>
+    <div>
+        <label>Category:&nbsp;</label>
+        <label>
+            <input type="text" th:field="*{category}">
+        </label>
+    </div>
+    <div>
+        <button type="submit">Add</button>
+    </div>
+</form>
+
+</body>
+</html>
