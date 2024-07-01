@@ -77,4 +77,45 @@ public class LibraryController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    //    REST запрос на вывод одной книги по ее isbn.
+    @GetMapping("/findOneBook")
+    public ResponseEntity<Book> findBookByIsbn(@RequestParam String isbn) {
+        Optional<Book> firstFindBook = library.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst();
+        if (firstFindBook.isPresent()) {
+            return new ResponseEntity<>(firstFindBook.get(), HttpStatus.OK);
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //REST запрос на вывод общего числа книг в библиотеке (с учетом копий).
+    @GetMapping("/countBooks")
+    public int countBooks() {
+        int countBooks = library.stream().mapToInt(Book::getAvailableAmount).sum();
+        return countBooks;
+    }
+
+    //REST запрос на вывод общего числа книг в отдельной категории.
+    @GetMapping("/countInOneCategories/{category}")
+    public int countInOneCategories(@PathVariable String category) {
+        int totalCount = library.stream()
+                .filter(book -> book.getCategory().equals(category)).mapToInt(Book::getAvailableAmount).sum();
+        return totalCount;
+    }
+
+    //REST запрос на заполнение всех пустых полей author значением "Unknown".
+    @GetMapping("/updateUnknownAuthors")
+    public ResponseEntity<List<Book>> updateUnknownAuthors() {
+        library.stream().filter(book -> book.getAuthor().isEmpty()).forEach(book -> book.setAuthor("Unknown"));
+        return new ResponseEntity<>(library, HttpStatus.OK);
+    }
+
+//REST запрос на удаление из списка книг всех книг, у которых не указан title.
+    @DeleteMapping("/deleteWithoutTitle")
+    public ResponseEntity<List<Book>> deleteBooksWithoutTitle(){
+        library.removeIf(book -> book.getTitle().isEmpty());
+        return new ResponseEntity<>(library,HttpStatus.OK);
+    }
+
 }
