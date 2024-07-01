@@ -1,0 +1,15 @@
+Refactoring + Spring Web structure + RestController logic
+
+ RestController logic:
+ - get by id
+ - get all
+ - add
+ - delete
+ - update
+
+Author - Iryna
+Building - Evgenija
+Category - Alisa
+Tag - Volodymyr
+Visitor - Eugen
+BookDetail - Maria
