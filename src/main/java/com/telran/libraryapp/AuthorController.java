@@ -67,11 +67,11 @@ public class AuthorController {
     }
 
     @GetMapping("/findAuthorByRandomWord")
-    public ResponseEntity<Author> getAuthorByRandomWord(@RequestParam String randomWord) {
-        Optional<Author> authorByRandomWord = Author.authorList.stream().filter(author -> author.getName().contains(randomWord) ||
+    public ResponseEntity<List<Author>> getAuthorByRandomWord(@RequestParam String randomWord) {
+        List<Author> authors = Author.authorList.stream().filter(author -> author.getName().contains(randomWord) ||
                 author.getSurname().contains(randomWord) ||
-                author.getAuthorInfo().contains(randomWord)).findAny();
-        return new ResponseEntity<>(authorByRandomWord.get(),HttpStatus.OK);
+                author.getAuthorInfo().contains(randomWord)).toList();
+        return new ResponseEntity<>(authors,HttpStatus.OK);
     }
 
 
