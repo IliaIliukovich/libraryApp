@@ -52,22 +52,27 @@ public class AuthorController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-//    @GetMapping("/find")
-//    public List<Author> getAuthorByName(@RequestParam(required = false) String name, @RequestParam(required = false) String surname) {
-//        List<Author> list;
-//        if (name == null) {
-//            list = Author.authorList.stream().filter(author -> author.getSurname().equalsIgnoreCase(surname)).toList();
-//
-//        } else if (surname == null) {
-//            list = Author.authorList.stream().filter(author -> author.getName().equalsIgnoreCase(name)).toList();
-//
-//        } else {
-//            list = Author.authorList;
-//        }
-//        return list;
-//
-//    }
+    @GetMapping("/findAuthorByName")
+    public List<Author> getAuthorByName(@RequestParam(required = false) String name, @RequestParam(required = false) String surname) {
+        if (name != null && surname != null) {
+            return Author.authorList.stream().filter(author -> author.getSurname().startsWith(surname) && author.getName().startsWith(name)).toList();
+        } else if (name != null && surname == null) {
+            return Author.authorList.stream().filter(author -> author.getName().startsWith(name)).toList();
+        } else if (name == null && surname != null) {
+            return Author.authorList.stream().filter(author -> author.getSurname().startsWith(surname)).toList();
+        } else {
+            return Author.authorList;
+        }
 
+    }
+
+    @GetMapping("/findAuthorByRandomWord")
+    public ResponseEntity<List<Author>> getAuthorByRandomWord(@RequestParam String randomWord) {
+        List<Author> authors = Author.authorList.stream().filter(author -> author.getName().contains(randomWord) ||
+                author.getSurname().contains(randomWord) ||
+                author.getAuthorInfo().contains(randomWord)).toList();
+        return new ResponseEntity<>(authors,HttpStatus.OK);
+    }
 
 
 }
