@@ -10,6 +10,7 @@ import java.util.Optional;
 @Service
 public class BuildingService {
 
+    private static final String ZIPCODE_REGEX = "\\s[A-Z]{2}\\d\\s\\d[A-Z]{2}";
     private final BuildingRepository repository;
 
 
@@ -57,8 +58,8 @@ public class BuildingService {
 
 
     public void deleteAllZipCodes() {
-        repository.getAll().stream().forEach(building -> building.setAddress(building.getAddress()
-                .replaceAll("\\s[A-Z]{2}\\d\\s\\d[A-Z]{2}", "")));
+        repository.getAll().forEach(building -> building.setAddress(building.getAddress()
+                .replaceAll(ZIPCODE_REGEX, "")));
     }
 
 }

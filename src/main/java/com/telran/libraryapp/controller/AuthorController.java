@@ -56,7 +56,7 @@ public class AuthorController {
     }
 
     @GetMapping("/findAuthorByName")
-    public List<Author> getAuthorByName(@RequestParam(required = false) String name, @RequestParam(required = false) String surname) {
+    public List<Author> getAuthorByNameOrSurname(@RequestParam(required = false) String name, @RequestParam(required = false) String surname) {
         return authorService.returnAuthorByNameOrSurname(name, surname);
     }
 
