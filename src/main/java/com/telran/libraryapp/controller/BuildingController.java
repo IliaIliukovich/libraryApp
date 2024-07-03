@@ -50,12 +50,7 @@ public class BuildingController {
     @PutMapping
     public ResponseEntity<Building> updateBuilding(@RequestBody Building building) {
         boolean isUpdated = service.updateBuilding(building);
-        if (isUpdated) {
-            return new ResponseEntity<>(building, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(building, HttpStatus.CREATED);
-        }
-
+        return new ResponseEntity<>(building, isUpdated ? HttpStatus.OK : HttpStatus.CREATED);
     }
 
 
@@ -66,13 +61,13 @@ public class BuildingController {
     }
 
 
-    @GetMapping("/serchByName")
+    @GetMapping("/searchByName")
     public ResponseEntity<List<Building>> getBuildingByName(@RequestParam String name) {
         List<Building> buildings = service.getBuildingByName(name);
         if (!buildings.isEmpty()) {
             return new ResponseEntity<>(buildings, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

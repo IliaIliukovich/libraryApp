@@ -27,9 +27,9 @@ public class AuthorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Author> getAuthorById(@PathVariable int id) {
-        Optional<Author> nameAuthor = authorService.getNameAuthorByID(id);
-        if (nameAuthor.isPresent()) {
-            return new ResponseEntity<>(nameAuthor.get(), HttpStatus.OK);
+        Optional<Author> authorOptional = authorService.getNameAuthorByID(id);
+        if (authorOptional.isPresent()) {
+            return new ResponseEntity<>(authorOptional.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -45,11 +45,7 @@ public class AuthorController {
     @PutMapping
     public ResponseEntity<Author> updateAuthor(@RequestBody Author author) {
         boolean isUpdated = authorService.updateAuthor(author);
-        if (isUpdated) {
-            return new ResponseEntity<>(author, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(author, HttpStatus.CREATED);
-        }
+        return new ResponseEntity<>(author, isUpdated ? HttpStatus.OK : HttpStatus.CREATED);
 
     }
 

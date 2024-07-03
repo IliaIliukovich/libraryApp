@@ -37,10 +37,10 @@ public class BookController {
     }
 
     @GetMapping("/{category}")
-    public ResponseEntity<?> getAllByCategory(@PathVariable String category) {
+    public ResponseEntity<List<Book>> getAllByCategory(@PathVariable String category) {
         List<Book> result = service.getBooksByCategory(category);
         if (result.isEmpty()) {
-            return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -59,11 +59,7 @@ public class BookController {
     @PutMapping
     public ResponseEntity<Book> updateBook(@RequestBody Book book) {
         boolean isUpdated = service.updateBook(book);
-        if (isUpdated) {
-            return new ResponseEntity<>(book, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(book, HttpStatus.CREATED);
-        }
+        return new ResponseEntity<>(book, isUpdated ? HttpStatus.OK : HttpStatus.CREATED);
     }
 
     @PatchMapping
