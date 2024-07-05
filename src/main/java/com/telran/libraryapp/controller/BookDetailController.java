@@ -53,7 +53,7 @@ public class BookDetailController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBookDetail(@PathVariable Integer id) {
-        service.deleteById(id);
+        service.remove(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
