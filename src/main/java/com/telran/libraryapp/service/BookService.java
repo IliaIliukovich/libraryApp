@@ -30,7 +30,7 @@ public class BookService {
         if (amount == null) {
             amount = 0;
         }
-        return repository.findBooksByTitleStartingWithAndAndAvailableAmountIsGreaterThanEqual(title, amount);
+        return repository.findBooksByTitleStartingWithAndAvailableAmountIsGreaterThanEqual(title, amount);
     }
 
     public void add(Book book) {

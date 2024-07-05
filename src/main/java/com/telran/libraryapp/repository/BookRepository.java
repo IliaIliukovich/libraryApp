@@ -12,7 +12,7 @@ public interface BookRepository extends JpaRepository<Book, String> {
 
     List<Book> findBooksByCategory(String category);
 
-    List<Book> findBooksByTitleStartingWithAndAndAvailableAmountIsGreaterThanEqual(String title, Integer amount);
+    List<Book> findBooksByTitleStartingWithAndAvailableAmountIsGreaterThanEqual(String title, Integer amount);
 
     @Query("select b from Book b where b.title like ?1% and b.availableAmount >= ?2")
     List<Book> customQuery(String title, Integer amount);
