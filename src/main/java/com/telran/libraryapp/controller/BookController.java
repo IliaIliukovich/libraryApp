@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.telran.libraryapp.entity.Book.library;
 
 
 @RestController
@@ -79,17 +78,17 @@ public class BookController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    //    REST запрос на вывод одной книги по ее isbn.
-    @GetMapping("/findOneBook")
-    public ResponseEntity<Book> findBookByIsbn(@RequestParam String isbn) {
-        Optional<Book> firstFindBook = library.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst();
-        if (firstFindBook.isPresent()) {
-            return new ResponseEntity<>(firstFindBook.get(), HttpStatus.OK);
-
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+//    //    REST запрос на вывод одной книги по ее isbn.
+//    @GetMapping("/findOneBook")
+//    public ResponseEntity<Book> findBookByIsbn(@RequestParam String isbn) {
+//        Optional<Book> firstFindBook = library.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst();
+//        if (firstFindBook.isPresent()) {
+//            return new ResponseEntity<>(firstFindBook.get(), HttpStatus.OK);
+//
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
 //    //REST запрос на вывод общего числа книг в библиотеке (с учетом копий).
 //    @GetMapping("/countBooks")

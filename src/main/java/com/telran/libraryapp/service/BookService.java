@@ -19,41 +19,40 @@ public class BookService {
     }
 
     public List<Book> getAll() {
-        return repository.getAll();
+        return repository.findAll();
     }
 
     public List<Book> getBooksByCategory(String category) {
-        return repository.getAll().stream().filter(book -> book.getCategory().equals(category)).toList();
+        return repository.findAll().stream().filter(book -> book.getCategory().equals(category)).toList();
     }
 
     public List<Book> getAllByTitle(String title, Integer amount) {
-        return repository.getAll().stream()
+        return repository.findAll().stream()
                 .filter(book -> book.getTitle().startsWith(title))
                 .filter(book -> amount == null || book.getAvailableAmount() >= amount)
                 .toList();
     }
 
     public void add(Book book) {
-        repository.getAll().add(book);
+        repository.save(book);
     }
 
     public boolean updateBook(Book book) {
-        List<Book> library = repository.getAll();
-        if (library.contains(book)) {
-            int index = library.indexOf(book);
-            library.set(index, book);
+        Optional<Book> optional = repository.findById(book.getIsbn());
+        if (optional.isPresent()) {
+            repository.save(book);
             return true;
         } else {
-            library.add(book);
+            repository.save(book);
             return false;
         }
     }
 
     public Optional<Book> updateAmountOfBooks(String isbn, Integer amount) {
-        return repository.getAll().stream().filter(b -> b.getIsbn().equals(isbn)).peek(b -> b.setAvailableAmount(amount)).findAny();
+        return repository.findAll().stream().filter(b -> b.getIsbn().equals(isbn)).peek(b -> b.setAvailableAmount(amount)).findAny();
     }
 
     public void remove(String isbn) {
-        repository.getAll().removeIf(book -> book.getIsbn().equals(isbn));
+        repository.deleteById(isbn);
     }
 }
