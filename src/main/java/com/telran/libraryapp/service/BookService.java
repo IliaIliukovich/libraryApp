@@ -23,14 +23,14 @@ public class BookService {
     }
 
     public List<Book> getBooksByCategory(String category) {
-        return repository.findAll().stream().filter(book -> book.getCategory().equals(category)).toList();
+        return repository.findBooksByCategory(category);
     }
 
     public List<Book> getAllByTitle(String title, Integer amount) {
-        return repository.findAll().stream()
-                .filter(book -> book.getTitle().startsWith(title))
-                .filter(book -> amount == null || book.getAvailableAmount() >= amount)
-                .toList();
+        if (amount == null) {
+            amount = 0;
+        }
+        return repository.findBooksByTitleStartingWithAndAndAvailableAmountIsGreaterThanEqual(title, amount);
     }
 
     public void add(Book book) {
@@ -49,7 +49,15 @@ public class BookService {
     }
 
     public Optional<Book> updateAmountOfBooks(String isbn, Integer amount) {
-        return repository.findAll().stream().filter(b -> b.getIsbn().equals(isbn)).peek(b -> b.setAvailableAmount(amount)).findAny();
+        Optional<Book> optional = repository.findById(isbn);
+        if (optional.isPresent()) {
+            Book book = optional.get();
+            book.setAvailableAmount(amount);
+            Book updatedBook = repository.save(book);
+            return Optional.of(updatedBook);
+        } else {
+            return Optional.empty();
+        }
     }
 
     public void remove(String isbn) {
