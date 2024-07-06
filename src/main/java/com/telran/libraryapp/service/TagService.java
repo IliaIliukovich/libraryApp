@@ -17,37 +17,32 @@ public class TagService {
     }
 
     public List<Tag> getAll() {
-        return repository.getAll();
+        return repository.findAll();
     }
 
     public Optional<Tag> getById(int id) {
-        return repository.getAll().stream()
-                .filter(tag -> tag.getTagId() == id)
-                .findFirst();
+       return repository.findById(id);
     }
 
+
+
     public Tag createTag(Tag tag) {
-        List<Tag> tags = repository.getAll();
-        int newId = tags.stream().mapToInt(Tag::getTagId).max().orElse(0) + 1;
-        tag.setTagId(newId);
-        tags.add(tag);
-        return tag;
+        return repository.save(tag);
     }
 
     public boolean updateTag(Tag tag) {
-        List<Tag> tags = repository.getAll();
-
-        for (int i = 0; i < tags.size(); i++) {
-            if (tags.get(i).getTagId() == tag.getTagId()) {
-                tags.set(i, tag);
-                return true;
-            }
+        Optional<Tag> optional = repository.findById(tag.getTagId());
+        if (optional.isPresent()) {
+            repository.save(tag);
+            return true;
+        }else {
+            repository.save(tag);
+            return false;
         }
-        return false;
     }
 
     public void deleteTag(int id) {
-        repository.getAll().removeIf(tag -> tag.getTagId() == id);
+        repository.deleteById(id);
     }
 }
 

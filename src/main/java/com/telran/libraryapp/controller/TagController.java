@@ -29,9 +29,7 @@ public class TagController {
     public ResponseEntity<Tag> getById(@PathVariable int id) {
         Optional<Tag> optionalTag = service.getById(id);
 
-        return optionalTag.isPresent() ?
-                ResponseEntity.ok(optionalTag.get()) :
-                ResponseEntity.notFound().build();
+        return optionalTag.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -50,6 +48,34 @@ public class TagController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Tag> updateTagPartial(@PathVariable int id, @RequestBody Tag tag) {
+        Optional<Tag> optionalTag = service.getById(id);
+
+        if (!optionalTag.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Update the tag partially
+        Tag existingTag = optionalTag.get();
+        if (tag.getName() != null) {
+            existingTag.setName(tag.getName());
+        }
+        if (tag.getDescription() != null) {
+            existingTag.setDescription(tag.getDescription());
+        }
+
+        boolean isUpdated = service.updateTag(existingTag);
+
+        if (isUpdated) {
+            return ResponseEntity.ok(existingTag);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTag(@PathVariable int id) {

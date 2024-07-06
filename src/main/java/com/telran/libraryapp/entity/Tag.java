@@ -1,5 +1,7 @@
 package com.telran.libraryapp.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
@@ -13,17 +15,11 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Tag {
+    @Id
     private int tagId;
     private String name;
     private String description;
-
-    private static List<Tag> tagList = new ArrayList<>(Arrays.asList(
-            new Tag(1, "New", "description new Books"),
-            new Tag(2, "Java", "description Java"),
-            new Tag(3, "Fantasy", "description Fantasy"),
-            new Tag(4, "Math", "description Math")
-    ));
-
 }
 
