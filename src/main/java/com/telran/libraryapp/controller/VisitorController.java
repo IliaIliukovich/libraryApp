@@ -3,6 +3,8 @@ package com.telran.libraryapp.controller;
 import com.telran.libraryapp.entity.Visitor;
 import com.telran.libraryapp.service.VisitorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,8 +44,9 @@ public class VisitorController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteVisitor(@PathVariable Long id) {
-        visitorService.deleteById(id);
+    public ResponseEntity<?> deleteVisitorById(@PathVariable Integer id) {
+        visitorService.deleteVisitorsById(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/search")
