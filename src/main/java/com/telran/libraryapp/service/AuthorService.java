@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Service
 public class AuthorService {
-
     private final AuthorRepository authorRepository;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -40,6 +39,7 @@ public class AuthorService {
             return false;
         }
     }
+
     public void removeAuthor(int id){
         authorRepository.deleteById(id);
     }
@@ -54,6 +54,7 @@ public class AuthorService {
             return authorRepository.findAll();
         }
     }
+
     public List<Author> getAuthorByRandomWord(String randomWord){
         String formattedWord = '%' + randomWord.trim() + '%';
         return authorRepository.findAuthorByRandomWord(formattedWord);

@@ -35,7 +35,6 @@ public class AuthorController {
         }
     }
 
-
     @PostMapping
     public ResponseEntity<Author> addAuthor(@RequestBody Author author) {
         authorService.add(author);
@@ -65,6 +64,4 @@ public class AuthorController {
         List<Author> authors = authorService.getAuthorByRandomWord(randomWord);
         return new ResponseEntity<>(authors, HttpStatus.OK);
     }
-
-
 }
