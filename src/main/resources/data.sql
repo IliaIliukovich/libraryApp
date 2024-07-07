@@ -24,3 +24,8 @@ insert into book (title, author, category, available_amount, isbn)
             ('The Iliad', 'Homer', 'Epic', 5, '9780140275360'),
             ('The Hobbit', 'J.R.R. Tolkien', 'Fantasy', 9, '9780345339683'),
             ('Fahrenheit 451', 'Ray Bradbury', 'Dystopian', 4, '9781451673319');
+
+insert into book_detail (id, publisher, year, abstract_to_book)
+values (1, 'Manning Publications', 2018, 'Comprehensive guide to modern Java programming'),
+       (2, 'Addison-Wesley', 2011, 'A comprehensive introduction to algorithms'),
+       (3, 'Addison-Wesley', 1994, 'A classic guide to software design patterns');

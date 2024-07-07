@@ -18,32 +18,32 @@ public class BookDetailService {
     }
 
     public List<BookDetail> getAll() {
-        return bookDetailRepository.getAll();
-
+        return bookDetailRepository.findAll();
     }
 
+
     public Optional<BookDetail> getBDById(Integer id) {
-        return bookDetailRepository.getAll().stream().filter(bd -> bd.getId() == id).findAny();
+        return bookDetailRepository.findById(id);
+
     }
 
     public void add(BookDetail bookDetail) {
-        bookDetailRepository.getAll().add(bookDetail);
+        bookDetailRepository.save(bookDetail);
+
     }
 
-
     public boolean updateBookDetail(BookDetail bookDetail) {
-        List<BookDetail> bookDetailList = bookDetailRepository.getAll();
-        if (bookDetailList.contains(bookDetail)) {
-            int index = bookDetailList.indexOf(bookDetail);
-            bookDetailList.set(index, bookDetail);
+        Optional<BookDetail> optional = bookDetailRepository.findById(bookDetail.getId());
+        if (optional.isPresent()) {
+            bookDetailRepository.save(bookDetail);
             return true;
         } else {
-            bookDetailList.add(bookDetail);
+            bookDetailRepository.save(bookDetail);
             return false;
         }
     }
 
-    public void deleteById(Integer id) {
-        bookDetailRepository.getAll().removeIf(bd -> bd.getId() == id);
+    public void remove(Integer id) {
+        bookDetailRepository.deleteById(id);
     }
 }
