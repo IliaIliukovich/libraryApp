@@ -29,3 +29,9 @@ insert into book_detail (id, publisher, year, abstract_to_book)
 values (1, 'Manning Publications', 2018, 'Comprehensive guide to modern Java programming'),
        (2, 'Addison-Wesley', 2011, 'A comprehensive introduction to algorithms'),
        (3, 'Addison-Wesley', 1994, 'A classic guide to software design patterns');
+
+insert into category (id, name, description)
+values (1, 'Java','Learning Java'),
+       (2, 'Java','Learning Java'),
+       (3, 'Java','Learning Java'),
+       (4, 'Java','Learning Java');

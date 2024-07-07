@@ -1,53 +1,50 @@
 package com.telran.libraryapp.service;
+
 import com.telran.libraryapp.entity.Category;
 import com.telran.libraryapp.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
 
 
     private final CategoryRepository repository;
+
     @Autowired
     public CategoryService(CategoryRepository repository) {
         this.repository = repository;
     }
 
     public List<Category> getAll() {
-        return repository.getAll();
+        return repository.findAll();
     }
 
     public List<Category> getByName(String name) {
-        return repository.getAll().stream()
-                .filter(category -> category.getName().startsWith(name))
-                .toList();
+        return repository.findCategoriesByName(name);
     }
 
     public boolean updateCategory(Category category) {
-        List<Category> categories = repository.getAll();
-
-        for (int i = 0; i < categories.size(); i++) {
-            if (categories.get(i).getId() == category.getId()) {
-                categories.set(i, category);
-                return true;
-            }
+        Optional<Category> optional = repository.findById(category.getId());
+        if (optional.isPresent()) {
+            repository.save(category);
+            return true;
+        } else {
+            repository.save(category);
+            return false;
         }
-        return false;
 
     }
     public void deleteCategory(int id) {
-        repository.getAll().removeIf(category1 -> category1.getId()==id);
+        repository.deleteById(id);
     }
 
-
-    public Category createCategory(Category category) {
-        List<Category> categories = repository.getAll();
-        int newId = categories.stream().mapToInt(Category::getId).max().orElse(0) + 1;
-        category.setId(newId);
-        categories.add(category);
+    public Category add(Category category) {
+        repository.save(category);
         return category;
     }
+
 }
