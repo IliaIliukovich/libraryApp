@@ -14,8 +14,8 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Category {
-@Id
-    private int id;
+    @Id
+    private Integer id;
     private String name;
     private String description;
 

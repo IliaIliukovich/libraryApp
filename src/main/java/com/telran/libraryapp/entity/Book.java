@@ -1,9 +1,6 @@
 package com.telran.libraryapp.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,11 +23,23 @@ public class Book {
 
     private String author;
 
-    private String category;
+    @ManyToOne
+    private Category category;
 
     private int availableAmount;
 
     private String isbn;
+
+//    private Integer bookDetailId;
+
+    @OneToOne
+    private BookDetail bookDetail;
+
+    // Unidirectional - Bidirectional
+    // One to One
+    // One to Many
+    // Many to Many
+
 
     @Override
     public boolean equals(Object o) {

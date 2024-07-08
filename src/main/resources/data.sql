@@ -1,30 +1,3 @@
-insert into book (id, title, author, category, available_amount, isbn)
-    values  (1,'Java in action', 'Urma R.-G., Fusco M., Mycroft A.', 'Java', 2, '1'),
-            (2,'Algorithms', 'Robert Sedgewick, Kevin Wayne', 'Java', 1, '2'),
-            (3,'Design Patterns', 'Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides', 'Java', 4, '3'),
-            (4,'Sherlock Holmes', 'Arthur Conan Doyle', 'Detective', 3, '4'),
-            (5,'Harry Potter and the Philosopher\'s stone', 'J. K. Rowling', 'Fantasy', 4, '5'),
-            (6,'1984', 'George Orwell', 'Dystopian', 5, '9780451524935'),
-            (7,'To Kill a Mockingbird', 'Harper Lee', 'Fiction', 7, '9780061120084'),
-            (8,'Pride and Prejudice', 'Jane Austen', 'Romance', 3, '9781503290563'),
-            (9,'The Great Gatsby', 'F. Scott Fitzgerald', 'Fiction', 4, '9780743273565'),
-            (10,'Moby Dick', 'Herman Melville', 'Adventure', 2, '9781503280786'),
-            (11,'War and Peace', 'Leo Tolstoy', 'Fiction', 6, '9780199232765'),
-            (12,'The Catcher in the Rye', 'J.D. Salinger', 'Fiction', 5, '9780316769488'),
-            (13,'The Odyssey', 'Homer', 'Epic', 10, '9780140268867'),
-            (14,'The Divine Comedy', 'Dante Alighieri', 'Epic', 4, '9780142437223'),
-            (15,'Jane Eyre', 'Charlotte Brontë', 'Romance', 3, '9781503278196'),
-            (16,'Wuthering Heights', 'Emily Brontë', 'Fiction', 4, '9780141439556'),
-            (17,'Brave New World', 'Aldous Huxley', 'Dystopian', 7, '9780060850524'),
-            (18,'Madame Bovary', 'Gustave Flaubert', 'Fiction', 5, '9780140449129'),
-            (19,'One Hundred Years of Solitude', 'Gabriel Garcia Marquez', 'Magic Realism', 8, '9780060883287'),
-            (20,'In Search of Lost Time', 'Marcel Proust', 'Modernist', 2, '9780143039570'),
-            (21,'Ulysses', 'James Joyce', 'Modernist', 3, '9780199535675'),
-            (22,'Don Quixote', 'Miguel de Cervantes', 'Adventure', 7, '9780060934347'),
-            (23,'The Iliad', 'Homer', 'Epic', 5, '9780140275360'),
-            (24,'The Hobbit', 'J.R.R. Tolkien', 'Fantasy', 9, '9780345339683'),
-            (25,'Fahrenheit 451', 'Ray Bradbury', 'Dystopian', 4, '9781451673319');
-
 insert into book_detail (id, publisher, year, abstract_to_book)
 values (1, 'Manning Publications', 2018, 'Comprehensive guide to modern Java programming'),
        (2, 'Addison-Wesley', 2011, 'A comprehensive introduction to algorithms'),
@@ -32,9 +5,36 @@ values (1, 'Manning Publications', 2018, 'Comprehensive guide to modern Java pro
 
 insert into category (id, name, description)
 values (1, 'Java','Learning Java'),
-       (2, 'Java','Learning Java'),
-       (3, 'Java','Learning Java'),
-       (4, 'Java','Learning Java');
+       (2, 'Detective','Detective'),
+       (3, 'Dystopian','Dystopian'),
+       (4, 'Fiction','Fiction');
+
+insert into book (id, title, author, category_id, available_amount, isbn, book_detail_id)
+    values  (1,'Java in action', 'Urma R.-G., Fusco M., Mycroft A.', 1, 2, '1', 1),
+            (2,'Algorithms', 'Robert Sedgewick, Kevin Wayne', 1, 1, '2', 2),
+            (3,'Design Patterns', 'Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides', 1, 4, '3', 3),
+            (4,'Sherlock Holmes', 'Arthur Conan Doyle', 2, 3, '4', null),
+            (5,'Harry Potter and the Philosopher\'s stone', 'J. K. Rowling', null, 4, '5', null),
+            (6,'1984', 'George Orwell', 3, 5, '9780451524935', null),
+            (7,'To Kill a Mockingbird', 'Harper Lee', 4, 7, '9780061120084', null),
+            (8,'Pride and Prejudice', 'Jane Austen', null, 3, '9781503290563', null),
+            (9,'The Great Gatsby', 'F. Scott Fitzgerald', 4, 4, '9780743273565', null),
+            (10,'Moby Dick', 'Herman Melville', null, 2, '9781503280786', null),
+            (11,'War and Peace', 'Leo Tolstoy', 4, 6, '9780199232765', null),
+            (12,'The Catcher in the Rye', 'J.D. Salinger', 4, 5, '9780316769488', null),
+            (13,'The Odyssey', 'Homer', null, 10, '9780140268867', null),
+            (14,'The Divine Comedy', 'Dante Alighieri', null, 4, '9780142437223', null),
+            (15,'Jane Eyre', 'Charlotte Brontë', null, 3, '9781503278196', null),
+            (16,'Wuthering Heights', 'Emily Brontë', 4, 4, '9780141439556', null),
+            (17,'Brave New World', 'Aldous Huxley', 3, 7, '9780060850524', null),
+            (18,'Madame Bovary', 'Gustave Flaubert', 4, 5, '9780140449129', null),
+            (19,'One Hundred Years of Solitude', 'Gabriel Garcia Marquez', null, 8, '9780060883287', null),
+            (20,'In Search of Lost Time', 'Marcel Proust', null, 2, '9780143039570', null),
+            (21,'Ulysses', 'James Joyce', null, 3, '9780199535675', null),
+            (22,'Don Quixote', 'Miguel de Cervantes', null, 7, '9780060934347', null),
+            (23,'The Iliad', 'Homer', null, 5, '9780140275360', null),
+            (24,'The Hobbit', 'J.R.R. Tolkien', null, 9, '9780345339683', null),
+            (25,'Fahrenheit 451', 'Ray Bradbury', 3, 4, '9781451673319', null);
 
 insert into author(id, name, surname, author_info)
 values (1, 'William', 'Shakespeare',
