@@ -2,13 +2,15 @@ package com.telran.libraryapp.repository;
 
 import com.telran.libraryapp.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, String> {
+public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findBooksByCategory(String category);
 
@@ -19,5 +21,10 @@ public interface BookRepository extends JpaRepository<Book, String> {
 
     @Query(value = "select * from book b where b.title like ?1% and b.available_amount >= ?2", nativeQuery = true)
     List<Book> customNativeQuery(String title, Integer amount);
+
+    @Query(value = "update Book b set b.availableAmount = ?2 where b.id = ?1")
+    @Modifying
+    @Transactional
+    void updateAmountOfBooksOptimized(Long id, Integer amount);
 
 }

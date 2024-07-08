@@ -33,23 +33,23 @@ public class BookService {
         return repository.findBooksByTitleStartingWithAndAvailableAmountIsGreaterThanEqual(title, amount);
     }
 
-    public void add(Book book) {
-        repository.save(book);
+    public Book addOrUpdate(Book book) {
+        Book createdOrUpdated = repository.save(book);
+        return createdOrUpdated;
     }
 
-    public boolean updateBook(Book book) {
-        Optional<Book> optional = repository.findById(book.getIsbn());
+    public Book updateBook(Book book) {
+        Optional<Book> optional = repository.findById(book.getId());
         if (optional.isPresent()) {
-            repository.save(book);
-            return true;
+            Book saved = repository.save(book);
+            return saved;
         } else {
-            repository.save(book);
-            return false;
+            return null;
         }
     }
 
-    public Optional<Book> updateAmountOfBooks(String isbn, Integer amount) {
-        Optional<Book> optional = repository.findById(isbn);
+    public Optional<Book> updateAmountOfBooks(Long id, Integer amount) {
+        Optional<Book> optional = repository.findById(id);
         if (optional.isPresent()) {
             Book book = optional.get();
             book.setAvailableAmount(amount);
@@ -60,7 +60,11 @@ public class BookService {
         }
     }
 
-    public void remove(String isbn) {
-        repository.deleteById(isbn);
+    public void updateAmountOfBooksOptimized(Long id, Integer amount) {
+        repository.updateAmountOfBooksOptimized(id, amount);
+    }
+
+    public void remove(Long id) {
+        repository.deleteById(id);
     }
 }

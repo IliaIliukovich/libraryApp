@@ -5,10 +5,8 @@ import com.telran.libraryapp.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,19 +49,19 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<Book> addBook(@RequestBody Book book) {
-        service.add(book);
-        return new ResponseEntity<>(book, HttpStatus.CREATED);
+        Book createdOrUpdated = service.addOrUpdate(book);
+        return new ResponseEntity<>(createdOrUpdated, HttpStatus.CREATED);
     }
 
     @PutMapping
     public ResponseEntity<Book> updateBook(@RequestBody Book book) {
-        boolean isUpdated = service.updateBook(book);
-        return new ResponseEntity<>(book, isUpdated ? HttpStatus.OK : HttpStatus.CREATED);
+        Book updatedBook = service.updateBook(book);
+        return new ResponseEntity<>(book, updatedBook != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @PatchMapping
-    public ResponseEntity<Book> updateAmountOfBooks(@RequestParam String isbn, @RequestParam Integer amount) {
-        Optional<Book> book = service.updateAmountOfBooks(isbn, amount);
+    public ResponseEntity<Book> updateAmountOfBooks(@RequestParam Long id, @RequestParam Integer amount) {
+        Optional<Book> book = service.updateAmountOfBooks(id, amount);
         if (book.isPresent()) {
             return new ResponseEntity<>(book.get(), HttpStatus.OK);
         } else {
@@ -71,10 +69,16 @@ public class BookController {
         }
     }
 
+    @PatchMapping("/updateAmountOfBooks")
+    public ResponseEntity<?> updateAmountOfBooksOptimized(@RequestParam Long id, @RequestParam Integer amount) {
+        service.updateAmountOfBooksOptimized(id, amount);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping
 //    @RequestMapping(value = "/all", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteByIsbn(@RequestParam String isbn) {
-        service.remove(isbn);
+    public ResponseEntity<?> deleteByIsbn(@RequestParam Long id) {
+        service.remove(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
