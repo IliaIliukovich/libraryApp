@@ -51,7 +51,6 @@ values (1, 'William', 'Shakespeare',
         'English writer known for her sixty-six detective novels and fourteen short story collections, particularly those revolving around her fictional detectives Hercule Poirot and Miss Marple.');
 
 insert into visitor ( id, email, password, name, surname, role)
-
 values (12, 'john.doe@example.com', 'password123', 'John', 'Doe', 'guest'),
        (23, 'jane.smith@example.com', 'password123', 'Jane', 'Smith', 'guest'),
        (34, 'alice.jones@example.com', 'password123', 'Alice', 'Jones', 'guest'),
@@ -62,3 +61,7 @@ values (12, 'john.doe@example.com', 'password123', 'John', 'Doe', 'guest'),
        (89, 'frank.red@example.com', 'password123', 'Frank', 'Red', 'guest'),
        (90, 'grace.blue@example.com', 'password123', 'Grace', 'Blue', 'guest'),
        (101, 'hannah.yellow@example.com', 'password123', 'Hannah', 'Yellow', 'guest');
+
+insert into visitor_took_book (visitor_id, book_id)
+    values (12, 1),
+           (12, 2);

@@ -1,14 +1,14 @@
 package com.telran.libraryapp.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -26,6 +26,12 @@ public class Visitor {
     private String name;
     private String surname;
     private String role;
+
+    @ManyToMany
+    @JoinTable(name = "visitor_took_book",
+            joinColumns = @JoinColumn(name = "visitor_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private List<Book> takenBooks;
 
 
     @Override
