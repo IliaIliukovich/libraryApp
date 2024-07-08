@@ -26,7 +26,7 @@ public class VisitorService {
     }
 
     public Optional<Visitor> getVisitorById(Integer id) {
-        return visitorRepository.findVisitorById(id);
+        return visitorRepository.findById(id);
     }
 
     public void addVisitor(Visitor visitor) {
@@ -34,7 +34,7 @@ public class VisitorService {
     }
 
     public boolean updateVisitor(Visitor visitor) { // TODO
-        Optional<Visitor> optional = visitorRepository.findVisitorById(visitor.getId());
+        Optional<Visitor> optional = visitorRepository.findById(visitor.getId());
         if (optional.isPresent()) {
             visitorRepository.save(visitor);
             return true;
@@ -45,7 +45,7 @@ public class VisitorService {
     }
 
     public void deleteVisitorsById(Integer id) {
-        visitorRepository.deleteVisitorsById(id);
+        visitorRepository.deleteById(id);
     }
 
     public List<Visitor> getVisitorByName(String name) {

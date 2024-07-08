@@ -11,9 +11,7 @@ import java.util.Optional;
 
 
 @Repository
-public interface VisitorRepository extends JpaRepository<Visitor, String> {
-
-    Optional<Visitor> findVisitorById(Integer id);
+public interface VisitorRepository extends JpaRepository<Visitor, Integer> {
 
 }
 
