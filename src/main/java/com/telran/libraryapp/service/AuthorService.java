@@ -3,7 +3,6 @@ package com.telran.libraryapp.service;
 import com.telran.libraryapp.entity.Author;
 import com.telran.libraryapp.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,12 +11,11 @@ import java.util.Optional;
 @Service
 public class AuthorService {
     private final AuthorRepository authorRepository;
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
-    public AuthorService(AuthorRepository authorRepository, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+
     }
 
     public List<Author> getAll(){
