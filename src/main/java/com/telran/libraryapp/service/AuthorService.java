@@ -10,50 +10,51 @@ import java.util.Optional;
 
 @Service
 public class AuthorService {
-
     private final AuthorRepository authorRepository;
 
     @Autowired
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
+
     }
 
     public List<Author> getAll(){
-        return authorRepository.getAllAuthors();
+        return authorRepository.findAll();
     }
     public Optional<Author> getNameAuthorByID(int id) {
-        return authorRepository.getAllAuthors().stream().filter(author -> author.getId() == id).findFirst();
+        return authorRepository.findById(id);
     }
     public void add(Author author) {
-        authorRepository.getAllAuthors().add(author);
+        authorRepository.save(author);
     }
     public boolean updateAuthor(Author author) {
-        if (authorRepository.getAllAuthors().contains(author)) {
-            int index = authorRepository.getAllAuthors().indexOf(author);
-            authorRepository.getAllAuthors().set(index, author);
+        Optional<Author> authorOptional = authorRepository.findById(author.getId());
+        if (authorOptional.isPresent()){
+            authorRepository.save(author);
             return true;
-        } else {
-            authorRepository.getAllAuthors().add(author);
+        }else{
+            authorRepository.save(author);
             return false;
         }
     }
-    public  void  removeAuthor(int id){
-        authorRepository.getAllAuthors().removeIf(author1 -> author1.getId() == id);
+
+    public void removeAuthor(int id){
+        authorRepository.deleteById(id);
     }
     public List<Author> returnAuthorByNameOrSurname(String name, String surname){
         if (name != null && surname != null) {
-            return authorRepository.getAllAuthors().stream().filter(author -> author.getSurname().startsWith(surname) && author.getName().startsWith(name)).toList();
+          return authorRepository.findAuthorByNameAndSurname(name,surname);
         } else if (name != null) {
-            return authorRepository.getAllAuthors().stream().filter(author -> author.getName().startsWith(name)).toList();
+            return authorRepository.findAuthorByName(name);
         } else if (surname != null) {
-            return authorRepository.getAllAuthors().stream().filter(author -> author.getSurname().startsWith(surname)).toList();
+            return authorRepository.findAuthorBySurname(surname);
         } else {
-            return authorRepository.getAllAuthors();
+            return authorRepository.findAll();
         }
     }
+
     public List<Author> getAuthorByRandomWord(String randomWord){
-        return authorRepository.getAllAuthors().stream().filter(author -> author.getName().contains(randomWord)
-                || author.getSurname().contains(randomWord)
-                || author.getAuthorInfo().contains(randomWord)).toList();
+        String formattedWord = '%' + randomWord.trim() + '%';
+        return authorRepository.findAuthorByRandomWord(formattedWord);
     }
 }
