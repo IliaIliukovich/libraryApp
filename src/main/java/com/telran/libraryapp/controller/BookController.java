@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-
-
 @RestController
 @RequestMapping("/books")
 public class BookController {
@@ -69,15 +67,14 @@ public class BookController {
         }
     }
 
-    @PatchMapping("/updateAmountOfBooks")
+    @PatchMapping("/updateAmountOfBooksOptimized")
     public ResponseEntity<?> updateAmountOfBooksOptimized(@RequestParam Long id, @RequestParam Integer amount) {
         service.updateAmountOfBooksOptimized(id, amount);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping
-//    @RequestMapping(value = "/all", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteByIsbn(@RequestParam Long id) {
+    public ResponseEntity<?> deleteById(@RequestParam Long id) {
         service.remove(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
