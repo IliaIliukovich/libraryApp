@@ -33,9 +33,9 @@ public class BookController {
         return service.getAll();
     }
 
-    @GetMapping("/{category}")
-    public ResponseEntity<List<Book>> getAllByCategory(@PathVariable Integer id) {
-        List<Book> result = service.getBooksByCategory(id);
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<List<Book>> getAllByCategory(@PathVariable Integer categoryId) {
+        List<Book> result = service.getBooksByCategory(categoryId);
         if (result.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
