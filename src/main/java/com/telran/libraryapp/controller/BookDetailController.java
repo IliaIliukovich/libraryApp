@@ -17,10 +17,12 @@ import java.util.Optional;
 public class BookDetailController {
 
     private final BookDetailService service;
+
     @Autowired
     public BookDetailController(BookDetailService service) {
         this.service = service;
     }
+
     @GetMapping
     public List<BookDetail> getAll() {
         return service.getAll();
@@ -36,10 +38,10 @@ public class BookDetailController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<BookDetail> addBookDetail(@RequestBody BookDetail bookDetail) {
-        service.add(bookDetail);
-        return new ResponseEntity<>(bookDetail, HttpStatus.CREATED);
+    @PostMapping("/addBookDetail")
+    public ResponseEntity<BookDetail> addBookDetail(@RequestBody BookDetail bookDetail, @RequestParam Long bookID) {
+        BookDetail savedBookDetail = service.add(bookDetail, bookID);
+        return new ResponseEntity<>(savedBookDetail, HttpStatus.CREATED);
     }
 
     @PutMapping
@@ -51,6 +53,7 @@ public class BookDetailController {
             return new ResponseEntity<>(bookDetail, HttpStatus.CREATED);
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBookDetail(@PathVariable Integer id) {
         service.remove(id);
