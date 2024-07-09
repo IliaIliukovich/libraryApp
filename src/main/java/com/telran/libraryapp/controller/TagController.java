@@ -1,6 +1,7 @@
 package com.telran.libraryapp.controller;
 
 
+import com.telran.libraryapp.entity.Book;
 import com.telran.libraryapp.entity.Tag;
 import com.telran.libraryapp.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,59 +27,26 @@ public class TagController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tag> getById(@PathVariable int id) {
+    public ResponseEntity<Tag> getById(@PathVariable Integer id) {
         Optional<Tag> optionalTag = service.getById(id);
 
         return optionalTag.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Tag> createTag(@RequestBody Tag tag) {
-        Tag createdTag = service.createTag(tag);
-        return new ResponseEntity<>(createdTag, HttpStatus.CREATED);
+    public ResponseEntity<Tag> addTag(@RequestBody Tag tag) {
+        Tag createdOrUpdated = service.addOrUpdate(tag);
+        return new ResponseEntity<>(createdOrUpdated, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Tag> updateTag(@RequestBody Tag tag) {
-        boolean isUpdated = service.updateTag(tag);
-
-        if (isUpdated) {
-            return ResponseEntity.ok(tag);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+       Tag updatedTag = service.updateTag(tag);
+       return new ResponseEntity<>(tag, updatedTag != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
-
-
-    @PatchMapping("/{id}")
-    public ResponseEntity<Tag> updateTagPartial(@PathVariable int id, @RequestBody Tag tag) {
-        Optional<Tag> optionalTag = service.getById(id);
-
-        if (!optionalTag.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        // Update the tag partially
-        Tag existingTag = optionalTag.get();
-        if (tag.getName() != null) {
-            existingTag.setName(tag.getName());
-        }
-        if (tag.getDescription() != null) {
-            existingTag.setDescription(tag.getDescription());
-        }
-
-        boolean isUpdated = service.updateTag(existingTag);
-
-        if (isUpdated) {
-            return ResponseEntity.ok(existingTag);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTag(@PathVariable int id) {
+    public ResponseEntity<Void> deleteTag(@PathVariable Integer id) {
         service.deleteTag(id);
         return ResponseEntity.noContent().build();
     }
