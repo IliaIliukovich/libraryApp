@@ -1,5 +1,6 @@
 package com.telran.libraryapp.service;
 
+import com.telran.libraryapp.entity.Book;
 import com.telran.libraryapp.entity.Tag;
 import com.telran.libraryapp.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +27,20 @@ public class TagService {
 
 
 
-    public Tag createTag(Tag tag) {
-        return repository.save(tag);
+    public Tag addOrUpdate(Tag tag) {
+      Tag createdOrUpdated = repository.save(tag);
+      return createdOrUpdated;
+
     }
 
-    public boolean updateTag(Tag tag) {
+    public Tag updateTag(Tag tag) {
         Optional<Tag> optional = repository.findById(tag.getTagId());
         if (optional.isPresent()) {
-            repository.save(tag);
-            return true;
+           Tag saved = repository.save(tag);
+            return saved;
         }else {
             repository.save(tag);
-            return false;
+            return null;
         }
     }
 

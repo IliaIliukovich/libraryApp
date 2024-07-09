@@ -1,3 +1,14 @@
+insert into tag (tag_id, name, description)
+values (1, 'New', 'description new Books'),
+       (2, 'Java', 'description Java'),
+       (3, 'Fantasy', 'description Fantasy'),
+       (4, 'Math', 'description Math');
+
+insert into book_has_tag (book_id, tag_id)
+values (1, 2),
+       (2, 3);
+
+
 insert into book (title, author, category, available_amount, isbn)
     values  ('Java in action', 'Urma R.-G., Fusco M., Mycroft A.', 'Java', 2, '1'),
             ('Algorithms', 'Robert Sedgewick, Kevin Wayne', 'Java', 1, '2'),
@@ -25,9 +36,5 @@ insert into book (title, author, category, available_amount, isbn)
             ('The Hobbit', 'J.R.R. Tolkien', 'Fantasy', 9, '9780345339683'),
             ('Fahrenheit 451', 'Ray Bradbury', 'Dystopian', 4, '9781451673319');
 
-    INSERT INTO tag (tag_id, name, description) VALUES
-(1, 'New', 'description new Books'),
-(2, 'Java', 'description Java'),
-(3, 'Fantasy', 'description Fantasy'),
-(4, 'Math', 'description Math');
+
 
