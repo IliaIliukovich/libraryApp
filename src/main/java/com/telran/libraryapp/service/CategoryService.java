@@ -23,7 +23,7 @@ public class CategoryService {
         return repository.findAll();
     }
 
-    public List<Category> getByName(String name) {
+    public Optional<Category> getByName(String name) {
         return repository.findCategoriesByName(name);
     }
 

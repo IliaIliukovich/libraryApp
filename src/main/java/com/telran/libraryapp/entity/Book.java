@@ -1,5 +1,8 @@
 package com.telran.libraryapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.telran.libraryapp.entity.enums.AccessLevel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,25 +26,24 @@ public class Book {
 
     private String author;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     private Category category;
 
     private int availableAmount;
 
     private String isbn;
 
-//    private Integer bookDetailId;
-
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonIgnore
     private BookDetail bookDetail;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Building building;
-    // Unidirectional - Bidirectional
-    // One to One
-    // One to Many
-    // Many to Many
 
+    @Enumerated(EnumType.STRING)
+    private AccessLevel accessLevel;
 
     @Override
     public boolean equals(Object o) {

@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
@@ -26,8 +28,13 @@ public class CategoryController {
     }
 
     @GetMapping("/{name}")
-    public List<Category> getByName(@PathVariable String name) {
-        return service.getByName(name);
+    public ResponseEntity<Category> getByName(@PathVariable String name) {
+        Optional<Category> byName = service.getByName(name);
+        if (byName.isPresent()) {
+            return new ResponseEntity<>(byName.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping

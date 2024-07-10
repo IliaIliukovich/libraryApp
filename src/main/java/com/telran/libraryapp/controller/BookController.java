@@ -31,14 +31,14 @@ public class BookController {
         return service.getAll();
     }
 
-    @GetMapping("/{categoryId}")
-    public ResponseEntity<List<Book>> getAllByCategory(@PathVariable Integer categoryId) {
-        List<Book> result = service.getBooksByCategory(categoryId);
-        if (result.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+//    @GetMapping("/{categoryId}")
+//    public ResponseEntity<List<Book>> getAllByCategory(@PathVariable Integer categoryId) {
+//        List<Book> result = service.getBooksByCategory(categoryId);
+//        if (result.isEmpty()) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
 
     @GetMapping("/searchByTitle")
     public List<Book> getAllByTitle(@RequestParam String title, @RequestParam(required = false) Integer amount) {

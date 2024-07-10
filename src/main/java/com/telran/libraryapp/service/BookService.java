@@ -22,9 +22,9 @@ public class BookService {
         return repository.findAll();
     }
 
-    public List<Book> getBooksByCategory(Integer id) {
-        return repository.findBooksByCategoryId(id);
-    }
+//    public List<Book> getBooksByCategory(Integer id) {
+//        return repository.findBooksByCategoryId(id);
+//    }
 
     public List<Book> getAllByTitle(String title, Integer amount) {
         if (amount == null) {
