@@ -21,7 +21,7 @@ public class AuthorService {
     public List<Author> getAll(){
         return authorRepository.findAll();
     }
-    public Optional<Author> getNameAuthorByID(int id) {
+    public Optional<Author> getNameAuthorByID(Long id) {
         return authorRepository.findById(id);
     }
     public void add(Author author) {
@@ -38,7 +38,7 @@ public class AuthorService {
         }
     }
 
-    public void removeAuthor(int id){
+    public void removeAuthor(Long id){
         authorRepository.deleteById(id);
     }
     public List<Author> returnAuthorByNameOrSurname(String name, String surname){

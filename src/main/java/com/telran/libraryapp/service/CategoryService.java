@@ -38,7 +38,7 @@ public class CategoryService {
         }
 
     }
-    public void deleteCategory(int id) {
+    public void deleteCategory(Long id) {
         repository.deleteById(id);
     }
 

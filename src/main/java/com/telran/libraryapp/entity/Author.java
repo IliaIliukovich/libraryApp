@@ -19,7 +19,7 @@ import java.util.Objects;
 @Entity
 public class Author {
 @Id
-    private int id;
+    private Long id;
     private String name;
     private String surname;
     private String authorInfo;

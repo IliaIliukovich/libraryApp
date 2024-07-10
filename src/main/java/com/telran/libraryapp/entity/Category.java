@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 public class Category {
     @Id
-    private Integer id;
+    private Long id;
     private String name; // unique in DB
     private String description;
 

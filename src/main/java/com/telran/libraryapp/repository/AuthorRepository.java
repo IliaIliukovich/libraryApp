@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AuthorRepository extends JpaRepository<Author, Integer> {
+public interface AuthorRepository extends JpaRepository<Author, Long> {
     List<Author> findAuthorByNameAndSurname(String name, String surname);
     List<Author> findAuthorByName(String name);
     List<Author> findAuthorBySurname(String surname);
