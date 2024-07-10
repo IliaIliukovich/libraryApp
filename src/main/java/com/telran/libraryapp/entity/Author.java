@@ -1,14 +1,11 @@
 package com.telran.libraryapp.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,12 +15,17 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 public class Author {
-@Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String surname;
     private String authorInfo;
-
+    @ManyToMany
+    @JoinTable(name = "book_has_author",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private List<Book> books;
 
     @Override
     public boolean equals(Object o) {
