@@ -35,6 +35,8 @@ public class Book {
     @OneToOne
     private BookDetail bookDetail;
 
+    @ManyToOne
+    private Building building;
     // Unidirectional - Bidirectional
     // One to One
     // One to Many
@@ -48,7 +50,6 @@ public class Book {
         Book book = (Book) o;
         return Objects.equals(isbn, book.isbn);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(isbn);
