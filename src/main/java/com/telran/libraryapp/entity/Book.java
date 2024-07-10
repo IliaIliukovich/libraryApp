@@ -24,8 +24,6 @@ public class Book {
 
     private String title;
 
-    private String author;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private Category category;
@@ -39,7 +37,7 @@ public class Book {
     private BookDetail bookDetail;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private Building building;
 
     @Enumerated(EnumType.STRING)

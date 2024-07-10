@@ -1,8 +1,7 @@
 package com.telran.libraryapp.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +23,10 @@ public class Building {
     private String name;
     private String address;
     private boolean hasReadingRoom;
+
+    @OneToMany(mappedBy = "building")
+    @JsonManagedReference
+    List<Book> books;
 
 
 
