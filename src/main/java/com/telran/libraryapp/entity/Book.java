@@ -24,8 +24,6 @@ public class Book {
 
     private String title;
 
-    private String author;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     private Category category;
