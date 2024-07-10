@@ -26,33 +26,26 @@ public class TagController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tag> getById(@PathVariable int id) {
+    public ResponseEntity<Tag> getById(@PathVariable Long id) {
         Optional<Tag> optionalTag = service.getById(id);
 
-        return optionalTag.isPresent() ?
-                ResponseEntity.ok(optionalTag.get()) :
-                ResponseEntity.notFound().build();
+        return optionalTag.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Tag> createTag(@RequestBody Tag tag) {
-        Tag createdTag = service.createTag(tag);
-        return new ResponseEntity<>(createdTag, HttpStatus.CREATED);
+    public ResponseEntity<Tag> addTag(@RequestBody Tag tag) {
+        Tag createdOrUpdated = service.addOrUpdate(tag);
+        return new ResponseEntity<>(createdOrUpdated, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Tag> updateTag(@RequestBody Tag tag) {
-        boolean isUpdated = service.updateTag(tag);
-
-        if (isUpdated) {
-            return ResponseEntity.ok(tag);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Tag updatedTag = service.updateTag(tag);
+        return new ResponseEntity<>(tag, updatedTag != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTag(@PathVariable int id) {
+    public ResponseEntity<Void> deleteTag(@PathVariable Long id) {
         service.deleteTag(id);
         return ResponseEntity.noContent().build();
     }
