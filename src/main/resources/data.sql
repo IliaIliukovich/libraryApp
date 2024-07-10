@@ -1,12 +1,4 @@
-insert into tag (tag_id, name, description)
-values (1, 'New', 'description new Books'),
-       (2, 'Java', 'description Java'),
-       (3, 'Fantasy', 'description Fantasy'),
-       (4, 'Math', 'description Math');
 
-insert into book_has_tag (book_id, tag_id)
-values (1, 2),
-       (2, 3);
 
 
 insert into book (title, author, category, available_amount, isbn)
@@ -35,6 +27,16 @@ insert into book (title, author, category, available_amount, isbn)
             ('The Iliad', 'Homer', 'Epic', 5, '9780140275360'),
             ('The Hobbit', 'J.R.R. Tolkien', 'Fantasy', 9, '9780345339683'),
             ('Fahrenheit 451', 'Ray Bradbury', 'Dystopian', 4, '9781451673319');
+
+insert into tag (tag_id, name, description)
+values (1, 'New', 'description new Books'),
+       (2, 'Java', 'description Java'),
+       (3, 'Fantasy', 'description Fantasy'),
+       (4, 'Math', 'description Math');
+
+insert into book_has_tag (book_isbn, tag_id)
+values ('1', 2),
+       ('2', 3);
 
 
 

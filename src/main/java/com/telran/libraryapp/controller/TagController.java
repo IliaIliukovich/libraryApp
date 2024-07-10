@@ -27,7 +27,7 @@ public class TagController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tag> getById(@PathVariable Integer id) {
+    public ResponseEntity<Tag> getById(@PathVariable Long id) {
         Optional<Tag> optionalTag = service.getById(id);
 
         return optionalTag.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -46,7 +46,7 @@ public class TagController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTag(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteTag(@PathVariable Long id) {
         service.deleteTag(id);
         return ResponseEntity.noContent().build();
     }

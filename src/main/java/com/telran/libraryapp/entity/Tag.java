@@ -18,13 +18,13 @@ import java.util.List;
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer tagId;
+    private Long tagId;
     private String name;
     private String description;
 
     @ManyToMany
     @JoinTable(name = "book_has_tag",
-                joinColumns = @JoinColumn(name = "book_id"),
-                inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private List<Tag> nestedTags;
+                joinColumns = @JoinColumn(name = "tag_id") ,
+                inverseJoinColumns = @JoinColumn(name = "book_isbn"))
+    private List<Book> books;
 }

@@ -21,7 +21,7 @@ public class TagService {
         return repository.findAll();
     }
 
-    public Optional<Tag> getById(int id) {
+    public Optional<Tag> getById(Long id) {
        return repository.findById(id);
     }
 
@@ -44,7 +44,7 @@ public class TagService {
         }
     }
 
-    public void deleteTag(int id) {
+    public void deleteTag(Long id) {
         repository.deleteById(id);
     }
 }
