@@ -39,7 +39,7 @@ public class Book {
     private BookDetail bookDetail;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private Building building;
 
     @Enumerated(EnumType.STRING)
