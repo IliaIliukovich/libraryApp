@@ -12,7 +12,7 @@ public class BookDetail {
     @Id
     private Integer id;
     private String publisher;
-    private Integer year;
+    private String year;
     private String abstractToBook;
 
 

@@ -1,13 +1,38 @@
 insert into book_detail (id, publisher, year, abstract_to_book)
-values (1, 'Manning Publications', 2018, 'Comprehensive guide to modern Java programming'),
-       (2, 'Addison-Wesley', 2011, 'A comprehensive introduction to algorithms'),
-       (3, 'Addison-Wesley', 1994, 'A classic guide to software design patterns');
+values (1, 'Manning Publications', '2018', 'Comprehensive guide to modern Java programming'),
+       (2, 'Addison-Wesley', '2011', 'A comprehensive introduction to algorithms'),
+       (3, 'Addison-Wesley', '1994', 'A classic guide to software design patterns'),
+       (4, "George Newnes", '1892', "Detective stories featuring Sherlock Holmes"),
+       (5, "Bloomsbury", '1997', "The first book in the Harry Potter series"),
+       (6, "Signet Classic", '1949', "A dystopian novel about a totalitarian regime"),
+       (7, "J.B. Lippincott & Co.", '1960', "A novel about racial injustice in the Deep South"),
+       (8, "T. Egerton, Whitehall", '1813', "A romantic novel about the manners of British gentry"),
+       (9, "Charles Scribner's Sons", '1925', "A novel about the American dream in the 1920s"),
+       (10, "Harper & Brothers", '1851', "A story of the obsessive quest for a giant whale"),
+       (11, "The Russian Messenger", '1869', "A historical novel about the Napoleonic wars"),
+       (12, "Little, Brown and Company", '1951', "A novel about teenage angst and alienation"),
+       (13, "Penguin Classics", '800 BC', "An epic poem about the adventures of Odysseus"),
+       (14, "Penguin Classics", '1320', "An epic poem about the afterlife"),
+       (15, "Smith, Elder & Co.", '1847', "A novel about the experiences of the eponymous heroine"),
+       (16, "Thomas Cautley Newby", '1847', "A novel about the intense relationship between two families"),
+       (17, "Chatto & Windus", '1932', "A dystopian novel about a future World State"),
+       (18, "Revue de Paris", '1856', "A novel about the life of a doctor's wife in provincial France"),
+       (19, "Harper & Row", '1967', "A novel about the Buendía family in the town of Macondo"),
+       (20, "Grasset", '1913', "A modernist novel about involuntary memory"),
+       (21, "Sylvia Beach", '1922', "A modernist novel about the experiences of Leopold Bloom"),
+       (22, "Francisco de Robles", '1605', "A novel about the adventures of an aging knight"),
+       (23, "Penguin Classics", '762 BC', "An epic poem about the Trojan War"),
+       (24, "George Allen & Unwin", '1937', "A fantasy novel about the journey of Bilbo Baggins"),
+       (25, "Ballantine Books", '1953', "A dystopian novel about a future American society where books are banned");
+
+
 
 insert into category (id, name, description)
 values (1, 'Java','Learning Java'),
        (2, 'Detective','Detective'),
        (3, 'Dystopian','Dystopian'),
        (4, 'Fiction','Fiction');
+
 
 insert into building (id, name, address, has_reading_room)
 values (1, 'Christ\'s College', 'St Andrews St, Cambridge CB2 3BU', true),
@@ -43,6 +68,7 @@ values  (1, 1,'Java in action', 'Urma R.-G., Fusco M., Mycroft A.', 1, 2, '1', 1
         (1, 23,'The Iliad', 'Homer', null, 5, '9780140275360', null),
         (1, 24,'The Hobbit', 'J.R.R. Tolkien', null, 9, '9780345339683', null),
         (1, 25,'Fahrenheit 451', 'Ray Bradbury', 3, 4, '9781451673319', null);
+
 
 insert into author(id, name, surname, author_info)
 values (1, 'William', 'Shakespeare',
