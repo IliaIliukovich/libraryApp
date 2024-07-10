@@ -1,7 +1,9 @@
 package com.telran.libraryapp.service;
 
+import com.telran.libraryapp.entity.Book;
 import com.telran.libraryapp.entity.BookDetail;
 import com.telran.libraryapp.repository.BookDetailRepository;
+import com.telran.libraryapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +13,12 @@ import java.util.Optional;
 @Service
 public class BookDetailService {
     private final BookDetailRepository bookDetailRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public BookDetailService(BookDetailRepository bookDetailRepository) {
+    public BookDetailService(BookDetailRepository bookDetailRepository, BookRepository bookRepository) {
         this.bookDetailRepository = bookDetailRepository;
+        this.bookRepository = bookRepository;
     }
 
     public List<BookDetail> getAll() {
@@ -27,9 +31,12 @@ public class BookDetailService {
 
     }
 
-    public void add(BookDetail bookDetail) {
-        bookDetailRepository.save(bookDetail);
-
+    public BookDetail add(BookDetail bookDetail, Long bookID) {
+     BookDetail savedBookDetail = bookDetailRepository.save(bookDetail);
+     Book book = bookRepository.findById(bookID).orElseThrow(()->  new IllegalArgumentException("There is no such book"));
+     book.setBookDetail(savedBookDetail);
+     bookRepository.save(book);
+     return savedBookDetail;
     }
 
     public boolean updateBookDetail(BookDetail bookDetail) {
