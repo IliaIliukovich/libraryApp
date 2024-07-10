@@ -32,11 +32,19 @@ public class BookDetailService {
     }
 
     public BookDetail add(BookDetail bookDetail, Long bookID) {
-     BookDetail savedBookDetail = bookDetailRepository.save(bookDetail);
-     Book book = bookRepository.findById(bookID).orElseThrow(()->  new IllegalArgumentException("There is no such book"));
-     book.setBookDetail(savedBookDetail);
-     bookRepository.save(book);
-     return savedBookDetail;
+        Optional<Book> optional = bookRepository.findById(bookID);
+        if (optional.isPresent()) {
+            BookDetail savedBookDetail = bookDetailRepository.save(bookDetail);
+            Book book = optional.get();
+            BookDetail old = book.getBookDetail();
+            book.setBookDetail(savedBookDetail);
+            bookRepository.save(book);
+            if (old != null) {
+                bookDetailRepository.deleteById(old.getId());
+            }
+            return savedBookDetail;
+        }
+        throw new RuntimeException("Book with id" + bookID + " not found");
     }
 
     public boolean updateBookDetail(BookDetail bookDetail) {
@@ -51,6 +59,13 @@ public class BookDetailService {
     }
 
     public void remove(Integer id) {
+        BookDetail bookDetail = bookDetailRepository.getReferenceById(id);
+        Optional<Book> optional = bookRepository.findBookByBookDetail(bookDetail);
+        if (optional.isPresent()) {
+            Book book = optional.get();
+            book.setBookDetail(null);
+            bookRepository.save(book);
+        }
         bookDetailRepository.deleteById(id);
     }
 }

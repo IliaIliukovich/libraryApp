@@ -32,7 +32,7 @@ public class Book {
 
 //    private Integer bookDetailId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private BookDetail bookDetail;
 
     // Unidirectional - Bidirectional
