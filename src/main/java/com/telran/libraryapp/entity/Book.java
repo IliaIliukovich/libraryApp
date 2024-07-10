@@ -1,6 +1,7 @@
 package com.telran.libraryapp.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,33 +18,16 @@ import java.util.Objects;
 @Entity
 public class Book {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private String title;
 
     private String author;
 
-    @ManyToOne
-    private Category category;
+    private String category;
 
     private int availableAmount;
 
+    @Id
     private String isbn;
-
-//    private Integer bookDetailId;
-
-    @OneToOne
-    private BookDetail bookDetail;
-
-    @ManyToOne
-    private Building building;
-    // Unidirectional - Bidirectional
-    // One to One
-    // One to Many
-    // Many to Many
-
 
     @Override
     public boolean equals(Object o) {

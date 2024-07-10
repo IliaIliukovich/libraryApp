@@ -2,7 +2,6 @@ package com.telran.libraryapp.service;
 
 import com.telran.libraryapp.entity.Building;
 import com.telran.libraryapp.repository.BuildingRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,50 +13,52 @@ public class BuildingService {
     private static final String ZIPCODE_REGEX = "\\s[A-Z]{2}\\d\\s\\d[A-Z]{2}";
     private final BuildingRepository repository;
 
-    @Autowired
+
     public BuildingService(BuildingRepository repository) {
         this.repository = repository;
     }
 
 
     public List<Building> getAll() {
-        return repository.findAll();
+        return repository.getAll();
     }
 
 
     public Optional<Building> getBuildingById(Integer id) {
-        return repository.findById(id);
+        return repository.getAll().stream().filter(b -> b.getId() == id).findAny();
     }
 
 
     public void addBuilding(Building building) {
-        repository.save(building);
+        repository.getAll().add(building);
     }
 
 
-    public Building updateBuilding(Building building) {
-        Optional<Building> optional = repository.findById(building.getId());
-        if (optional.isPresent()) {
-            Building saved = repository.save(building);
-            return saved;
+    public boolean updateBuilding(Building building) {
+        List<Building> buildingList = repository.getAll();
+        if (buildingList.contains(building)) {
+            int index = repository.getAll().indexOf(building);
+            repository.getAll().set(index, building);
+            return true;
         } else {
-            return null;
+            repository.getAll().add(building);
+            return false;
         }
     }
 
 
     public void deleteById(Integer id) {
-        repository.deleteById(id);
+        repository.getAll().removeIf(building -> building.getId() == id);
     }
 
 
     public List<Building> getBuildingByName(String name) {
-        return repository.findBuildingByNameStartingWith(name);
+        return repository.getAll().stream().filter(b -> b.getName().startsWith(name)).toList();
     }
 
 
     public void deleteAllZipCodes() {
-        repository.findAll().forEach(building -> building.setAddress(building.getAddress()
+        repository.getAll().forEach(building -> building.setAddress(building.getAddress()
                 .replaceAll(ZIPCODE_REGEX, "")));
     }
 

@@ -2,7 +2,6 @@ package com.telran.libraryapp.controller;
 
 import com.telran.libraryapp.entity.Building;
 import com.telran.libraryapp.service.BuildingService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ public class BuildingController {
 
     private final BuildingService service;
 
-    @Autowired
     public BuildingController(BuildingService service) {
         this.service = service;
     }
@@ -51,8 +49,8 @@ public class BuildingController {
 
     @PutMapping
     public ResponseEntity<Building> updateBuilding(@RequestBody Building building) {
-        Building updatedBuilding = service.updateBuilding(building);
-        return new ResponseEntity<>(building, updatedBuilding != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        boolean isUpdated = service.updateBuilding(building);
+        return new ResponseEntity<>(building, isUpdated ? HttpStatus.OK : HttpStatus.CREATED);
     }
 
 
@@ -63,8 +61,8 @@ public class BuildingController {
     }
 
 
-    @GetMapping("/{name}")
-    public ResponseEntity<List<Building>> getBuildingByName(@PathVariable String name) {
+    @GetMapping("/searchByName")
+    public ResponseEntity<List<Building>> getBuildingByName(@RequestParam String name) {
         List<Building> buildings = service.getBuildingByName(name);
         if (!buildings.isEmpty()) {
             return new ResponseEntity<>(buildings, HttpStatus.OK);
