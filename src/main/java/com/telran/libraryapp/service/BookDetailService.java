@@ -26,7 +26,7 @@ public class BookDetailService {
     }
 
 
-    public Optional<BookDetail> getBDById(Integer id) {
+    public Optional<BookDetail> getBDById(Long id) {
         return bookDetailRepository.findById(id);
 
     }
@@ -58,7 +58,7 @@ public class BookDetailService {
         }
     }
 
-    public void remove(Integer id) {
+    public void remove(Long id) {
         BookDetail bookDetail = bookDetailRepository.getReferenceById(id);
         Optional<Book> optional = bookRepository.findBookByBookDetail(bookDetail);
         if (optional.isPresent()) {

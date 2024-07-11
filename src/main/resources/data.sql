@@ -10,7 +10,7 @@ values (1, 'Manning Publications', '2018', 'Comprehensive guide to modern Java p
        (9, 'Charles Scribner\'s Sons', '1925', 'A novel about the American dream in the 1920s'),
        (10, 'Harper & Brothers', '1851', 'A story of the obsessive quest for a giant whale'),
        (11, 'The Russian Messenger', '1869', 'A historical novel about the Napoleonic wars'),
-       (12, 'Little, Brown and Company', '1951', 'A novel about teenage angst and alienation'),
+       (12, 'Little, Brown and Company ', '1951', 'A novel about teenage angst and alienation'),
        (13, 'Penguin Classics', '800 BC', 'An epic poem about the adventures of Odysseus'),
        (14, 'Penguin Classics', '1320', 'An epic poem about the afterlife'),
        (15, 'Smith, Elder & Co.', '1847', 'A novel about the experiences of the eponymous heroine'),
@@ -28,10 +28,10 @@ values (1, 'Manning Publications', '2018', 'Comprehensive guide to modern Java p
 
 
 insert into category (id, name, description)
-values (1, 'Java','Learning Java'),
-       (2, 'Detective','Detective'),
-       (3, 'Dystopian','Dystopian'),
-       (4, 'Fiction','Fiction');
+values (1, 'Java', 'Learning Java'),
+       (2, 'Detective', 'Detective'),
+       (3, 'Dystopian', 'Dystopian'),
+       (4, 'Fiction', 'Fiction');
 
 
 insert into building (id, name, address, has_reading_room)
@@ -130,21 +130,21 @@ values (1, 'Urma', 'R.-G.',
        (30, 'Ray', 'Bradbury', 'Ray Bradbury was an American author and screenwriter,
         best known for his dystopian novel Fahrenheit 451.');
 
-insert into visitor ( id, email, password, name, surname, role)
-values (12, 'john.doe@example.com', 'password123', 'John', 'Doe', 'guest'),
-       (23, 'jane.smith@example.com', 'password123', 'Jane', 'Smith', 'guest'),
-       (34, 'alice.jones@example.com', 'password123', 'Alice', 'Jones', 'guest'),
-       (45, 'bob.brown@example.com', 'password123', 'Bob', 'Brown', 'guest'),
-       (56, 'charlie.black@example.com', 'password123', 'Charlie', 'Black', 'guest'),
-       (67, 'david.white@example.com', 'password123', 'David', 'White', 'guest'),
-       (78, 'eve.green@example.com', 'password123', 'Eve', 'Green', 'guest'),
-       (89, 'frank.red@example.com', 'password123', 'Frank', 'Red', 'guest'),
-       (90, 'grace.blue@example.com', 'password123', 'Grace', 'Blue', 'guest'),
-       (101, 'hannah.yellow@example.com', 'password123', 'Hannah', 'Yellow', 'guest');
+insert into visitor (email, password, name, surname, visitor_role)
+values ('john.doe@example.com', 'password123', 'John', 'Doe', 'USER'),
+       ('jane.smith@example.com', 'password123', 'Jane', 'Smith', 'USER'),
+       ('alice.jones@example.com', 'password123', 'Alice', 'Jones', 'USER'),
+       ('bob.brown@example.com', 'password123', 'Bob', 'Brown', 'USER'),
+       ('charlie.black@example.com', 'password123', 'Charlie', 'Black', 'USER'),
+       ('david.white@example.com', 'password123', 'David', 'White', 'USER'),
+       ('eve.green@example.com', 'password123', 'Eve', 'Green', 'USER'),
+       ('frank.red@example.com', 'password123', 'Frank', 'Red', 'USER'),
+       ('grace.blue@example.com', 'password123', 'Grace', 'Blue', 'USER'),
+       ('hannah.yellow@example.com', 'password123', 'Hannah', 'Yellow', 'USER');
 
 insert into visitor_took_book (visitor_id, book_id)
-    values (12, 1),
-           (12, 2);
+    values ('john.doe@example.com', 1),
+           ('jane.smith@example.com', 2);
 
 insert into book_has_author(author_id, book_id)
 values (1, 1),

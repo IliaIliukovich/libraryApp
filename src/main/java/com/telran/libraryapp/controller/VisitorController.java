@@ -27,7 +27,7 @@ public class VisitorController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Visitor> getVisitorById(@PathVariable Integer id) {
+    public Optional<Visitor> getVisitorById(@PathVariable String id) {
         return visitorService.getVisitorById(id);
     }
 
@@ -38,13 +38,13 @@ public class VisitorController {
     }
 
     @PutMapping("/{id}")
-    public boolean updateVisitor(@PathVariable Integer id, @RequestBody Visitor visitorDetails) { // TODO
-        visitorDetails.setId(id);
+    public boolean updateVisitor(@PathVariable String id, @RequestBody Visitor visitorDetails) { // TODO
+        visitorDetails.setEmail(id);
         return visitorService.updateVisitor(visitorDetails);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteVisitorById(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteVisitorById(@PathVariable String id) {
         visitorService.deleteVisitorsById(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

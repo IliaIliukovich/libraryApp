@@ -27,7 +27,7 @@ public class BuildingController {
         return service.getAll();
     }
     @GetMapping("/searchById")
-    public ResponseEntity<Building> getBildById(@RequestParam Integer id) {
+    public ResponseEntity<Building> getBildById(@RequestParam Long id) {
         Optional<Building> building = service.getBuildingById(id);
         if (building.isPresent()) {
             return new ResponseEntity<>(building.get(), HttpStatus.OK);
@@ -49,7 +49,7 @@ public class BuildingController {
 
 
     @DeleteMapping
-    public ResponseEntity<?> deleteById(@RequestParam Integer id) {
+    public ResponseEntity<?> deleteById(@RequestParam Long id) {
         service.deleteById(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

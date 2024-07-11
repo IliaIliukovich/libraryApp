@@ -1,6 +1,8 @@
 package com.telran.libraryapp.entity;
 
 
+import com.telran.libraryapp.entity.enums.AccessLevel;
+import com.telran.libraryapp.entity.enums.VisitorRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,16 +18,15 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-
-
 public class Visitor {
     @Id
-    private Integer id;
     private String email;
     private String password;
     private String name;
     private String surname;
-    private String role;
+
+    @Enumerated(EnumType.STRING)
+    private VisitorRole visitorRole;
 
     @ManyToMany
     @JoinTable(name = "visitor_took_book",
@@ -39,11 +40,11 @@ public class Visitor {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Visitor visitor = (Visitor) o;
-        return Objects.equals(id, visitor.id);
+        return Objects.equals(email, visitor.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(email);
     }
 }

@@ -19,7 +19,7 @@ import java.util.Objects;
 public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
     private String address;
     private boolean hasReadingRoom;

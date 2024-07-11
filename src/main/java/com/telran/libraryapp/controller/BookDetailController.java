@@ -29,7 +29,7 @@ public class BookDetailController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDetail> getBookDetailById(@PathVariable Integer id) {
+    public ResponseEntity<BookDetail> getBookDetailById(@PathVariable Long id) {
         Optional<BookDetail> bookDetail = service.getBDById(id);
         if (bookDetail.isPresent()) {
             return new ResponseEntity<>(bookDetail.get(), HttpStatus.OK);
@@ -55,7 +55,7 @@ public class BookDetailController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBookDetail(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteBookDetail(@PathVariable Long id) {
         service.remove(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

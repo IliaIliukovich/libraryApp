@@ -25,7 +25,7 @@ public class BuildingService {
     }
 
 
-    public Optional<Building> getBuildingById(Integer id) {
+    public Optional<Building> getBuildingById(Long id) {
         return repository.findById(id);
     }
 
@@ -46,7 +46,7 @@ public class BuildingService {
     }
 
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         repository.deleteById(id);
     }
 
