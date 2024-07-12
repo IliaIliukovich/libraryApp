@@ -2,6 +2,7 @@ package com.telran.libraryapp.controller;
 
 import com.telran.libraryapp.entity.Author;
 import com.telran.libraryapp.service.AuthorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,13 +37,13 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<Author> addAuthor(@RequestBody Author author) {
+    public ResponseEntity<Author> addAuthor(@RequestBody @Valid Author author) {
         authorService.add(author);
         return new ResponseEntity<>(author, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Author> updateAuthor(@RequestBody Author author) {
+    public ResponseEntity<Author> updateAuthor(@RequestBody @Valid Author author) {
         boolean isUpdated = authorService.updateAuthor(author);
         return new ResponseEntity<>(author, isUpdated ? HttpStatus.OK : HttpStatus.CREATED);
 
@@ -55,7 +56,8 @@ public class AuthorController {
     }
 
     @GetMapping("/findAuthorByName")
-    public List<Author> getAuthorByNameOrSurname(@RequestParam(required = false) String name, @RequestParam(required = false) String surname) {
+    public List<Author> getAuthorByNameOrSurname(@RequestParam(required = false) String name,
+                                                 @RequestParam(required = false) String surname) {
         return authorService.returnAuthorByNameOrSurname(name, surname);
     }
 
