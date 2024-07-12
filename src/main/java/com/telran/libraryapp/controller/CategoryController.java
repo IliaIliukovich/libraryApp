@@ -30,11 +30,8 @@ public class CategoryController {
     @GetMapping("/{name}")
     public ResponseEntity<Category> getByName(@PathVariable String name) {
         Optional<Category> byName = service.getByName(name);
-        if (byName.isPresent()) {
-            return new ResponseEntity<>(byName.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return byName.map(category -> new ResponseEntity<>(category, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
