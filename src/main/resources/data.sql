@@ -1,3 +1,16 @@
+insert into category (id, name, description)
+values (1, 'Java', 'Learning Java'),
+       (2, ' Technology', 'Books about the latest in technology'),
+       (3, 'Science Fiction', 'Books set in futuristic settings with advanced technology'),
+       (4, 'Mystery', 'Books filled with suspense and secrets'),
+       (5, 'Fantasy', 'Books with magical worlds and mythical creatures'),
+       (6, 'Biography', 'Books that tell the story of someones life'),
+       (7, 'History', 'Books that explore historical events and periods'),
+       (8, 'Romance', 'Books focused on love and relationships'),
+       (9, 'Self-Help', 'Books designed to help you improve your life'),
+       (10, 'Health', 'Books about health, wellness, and fitness'),
+       (11, 'Travel', 'Books about exploring new places and cultures');
+
 insert into book_detail (id, publisher, year, abstract_to_book)
 values (1, 'Manning Publications', '2018', 'Comprehensive guide to modern Java programming'),
        (2, 'Addison-Wesley', '2011', 'A comprehensive introduction to algorithms'),
@@ -24,14 +37,6 @@ values (1, 'Manning Publications', '2018', 'Comprehensive guide to modern Java p
        (23, 'Penguin Classics', '762 BC', 'An epic poem about the Trojan War'),
        (24, 'George Allen & Unwin', '1937', 'A fantasy novel about the journey of Bilbo Baggins'),
        (25, 'Ballantine Books', '1953', 'A dystopian novel about a future American society where books are banned');
-
-
-
-insert into category (id, name, description)
-values (1, 'Java', 'Learning Java'),
-       (2, 'Detective', 'Detective'),
-       (3, 'Dystopian', 'Dystopian'),
-       (4, 'Fiction', 'Fiction');
 
 
 insert into building (id, name, address, has_reading_room)
@@ -188,3 +193,5 @@ values (1, 'New', 'description new Books'),
 insert into book_has_tag (book_isbn, tag_id)
 values ('1', 2),
        ('2', 3);
+
+
