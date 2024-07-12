@@ -1,8 +1,7 @@
 package com.telran.libraryapp.controller;
 
-import com.telran.libraryapp.entity.Book;
+
 import com.telran.libraryapp.entity.BookDetail;
-import com.telran.libraryapp.entity.Building;
 import com.telran.libraryapp.service.BookDetailService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
