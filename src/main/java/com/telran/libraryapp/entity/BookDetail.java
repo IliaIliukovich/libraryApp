@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -20,7 +22,7 @@ public class BookDetail {
     @Length(max= 90, message = "{validation.bookDetail.publisher}")
     private String publisher;
 
-    @Pattern(regexp = "^\\d{1,4} BC$", message = "{validation.bookDetail.year}")
+    @Pattern(regexp = "^\\d{1,4}( BC)?$", message = "{validation.bookDetail.year}")
     private String year;
 
 
