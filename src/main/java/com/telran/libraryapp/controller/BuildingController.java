@@ -2,9 +2,11 @@ package com.telran.libraryapp.controller;
 
 import com.telran.libraryapp.entity.Building;
 import com.telran.libraryapp.service.BuildingService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/buildings")
+@Validated
 public class BuildingController {
 
     private final BuildingService service;
@@ -22,10 +25,12 @@ public class BuildingController {
     public BuildingController(BuildingService service) {
         this.service = service;
     }
+
     @GetMapping
     public List<Building> getAll() {
         return service.getAll();
     }
+
     @GetMapping("/searchById")
     public ResponseEntity<Building> getBildById(@RequestParam Long id) {
         Optional<Building> building = service.getBuildingById(id);
@@ -36,13 +41,13 @@ public class BuildingController {
         }
     }
     @PostMapping
-    public ResponseEntity<Building> addBuilding(@RequestBody Building building) {
+    public ResponseEntity<Building> addBuilding(@RequestBody @Valid Building building) {
         service.addBuilding(building);
         return new ResponseEntity<>(building, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Building> updateBuilding(@RequestBody Building building) {
+    public ResponseEntity<Building> updateBuilding(@RequestBody @Valid Building building) {
         Building updatedBuilding = service.updateBuilding(building);
         return new ResponseEntity<>(building, updatedBuilding != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
