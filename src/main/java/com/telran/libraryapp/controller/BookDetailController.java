@@ -4,6 +4,7 @@ import com.telran.libraryapp.entity.Book;
 import com.telran.libraryapp.entity.BookDetail;
 import com.telran.libraryapp.entity.Building;
 import com.telran.libraryapp.service.BookDetailService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,13 +40,13 @@ public class BookDetailController {
     }
 
     @PostMapping("/addBookDetail")
-    public ResponseEntity<BookDetail> addBookDetail(@RequestBody BookDetail bookDetail, @RequestParam Long bookID) {
+    public ResponseEntity<BookDetail> addBookDetail(@RequestBody @Valid BookDetail bookDetail, @RequestParam Long bookID) {
         BookDetail savedBookDetail = service.add(bookDetail, bookID);
         return new ResponseEntity<>(savedBookDetail, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<BookDetail> updateBookDetail(@RequestBody BookDetail bookDetail) {
+    public ResponseEntity<BookDetail> updateBookDetail(@RequestBody @Valid BookDetail bookDetail) {
         boolean isUpdated = service.updateBookDetail(bookDetail);
         if (isUpdated) {
             return new ResponseEntity<>(bookDetail, HttpStatus.OK);
