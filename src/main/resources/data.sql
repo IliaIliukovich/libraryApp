@@ -178,3 +178,13 @@ values (1, 1),
        (19, 23),
        (29, 24),
        (30, 25);
+
+insert into tag (tag_id, name, description)
+values (1, 'New', 'description new Books'),
+       (2, 'Java', 'description Java'),
+       (3, 'Fantasy', 'description Fantasy'),
+       (4, 'Math', 'description Math');
+
+insert into book_has_tag (book_isbn, tag_id)
+values ('1', 2),
+       ('2', 3);
