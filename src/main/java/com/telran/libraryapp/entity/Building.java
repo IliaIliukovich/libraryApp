@@ -25,7 +25,7 @@ public class Building {
     private boolean hasReadingRoom;
 
     @OneToMany(mappedBy = "building")
-    @JsonManagedReference
+    @JsonManagedReference("building")
     List<Book> books;
 
 
