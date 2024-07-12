@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/buildings")
-@Validated
 public class BuildingController {
 
     private final BuildingService service;
