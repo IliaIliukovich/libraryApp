@@ -77,7 +77,7 @@ public class BookController {
     @PatchMapping("/updateAmountOfBooksOptimized")
     public ResponseEntity<?> updateAmountOfBooksOptimized(@RequestParam Long id,
                                                           @RequestParam
-
+                                                          @Min(value = 0, message = "{validation.book.availableAmount}")
                                                           Integer amount) {
         service.updateAmountOfBooksOptimized(id, amount);
         return new ResponseEntity<>(HttpStatus.OK);
