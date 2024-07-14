@@ -18,7 +18,6 @@ public class VisitorService {
     @Autowired
     public VisitorService(VisitorRepository visitorRepository) {
         this.visitorRepository = visitorRepository;
-
     }
 
     public List<Visitor> getAll() {
@@ -29,8 +28,8 @@ public class VisitorService {
         return visitorRepository.findById(id);
     }
 
-    public void addVisitor(Visitor visitor) {
-        visitorRepository.save(visitor);
+    public Visitor addVisitor(Visitor visitor) {
+        return visitorRepository.save(visitor);
     }
 
     public boolean updateVisitor(Visitor visitor) { // TODO

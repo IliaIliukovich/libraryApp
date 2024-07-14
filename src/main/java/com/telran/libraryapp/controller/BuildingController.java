@@ -27,7 +27,7 @@ public class BuildingController {
     }
 
     @GetMapping("/searchById")
-    public ResponseEntity<Building> getBildById(@RequestParam Long id) {
+    public ResponseEntity<Building> getBuildingById(@RequestParam Long id) {
         Optional<Building> building = service.getBuildingById(id);
         if (building.isPresent()) {
             return new ResponseEntity<>(building.get(), HttpStatus.OK);

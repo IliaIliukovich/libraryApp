@@ -56,9 +56,9 @@ public class BuildingService {
     }
 
 
-    public void deleteAllZipCodes() {
-        repository.findAll().forEach(building -> building.setAddress(building.getAddress()
-                .replaceAll(ZIPCODE_REGEX, "")));
+    public void deleteAllZipCodes() { // TODO
+//        repository.findAll().forEach(building -> building.setAddress(building.getAddress()
+//                .replaceAll(ZIPCODE_REGEX, "")));
     }
 
 }

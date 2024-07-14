@@ -50,7 +50,7 @@ public class BookDetailController {
         if (isUpdated) {
             return new ResponseEntity<>(bookDetail, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(bookDetail, HttpStatus.CREATED);
+            return new ResponseEntity<>(bookDetail, HttpStatus.NOT_FOUND);
         }
     }
 

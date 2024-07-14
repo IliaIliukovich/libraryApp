@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import java.util.Objects;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -51,15 +49,4 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private AccessLevel accessLevel;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Book book = (Book) o;
-        return Objects.equals(isbn, book.isbn);
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(isbn);
-    }
 }

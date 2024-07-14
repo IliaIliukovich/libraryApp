@@ -34,17 +34,4 @@ public class Visitor {
             inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> takenBooks;
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Visitor visitor = (Visitor) o;
-        return Objects.equals(email, visitor.email);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(email);
-    }
 }

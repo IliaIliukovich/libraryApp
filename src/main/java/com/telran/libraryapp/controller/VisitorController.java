@@ -33,8 +33,8 @@ public class VisitorController {
 
     @PostMapping
     public Visitor createVisitor(@RequestBody Visitor visitor) {
-        visitorService.addVisitor(visitor);
-        return visitor;
+        Visitor created = visitorService.addVisitor(visitor);
+        return created;
     }
 
     @PutMapping("/{id}")
