@@ -2,6 +2,7 @@ package com.telran.libraryapp.controller;
 
 import com.telran.libraryapp.entity.Category;
 import com.telran.libraryapp.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +36,13 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> createCategory(@RequestBody @Valid Category category) {
        Category add = service.add(category);
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> updateCategory(@RequestBody @Valid Category category) {
         boolean isUpdated = service.updateCategory(category);
 
         if (isUpdated) {
