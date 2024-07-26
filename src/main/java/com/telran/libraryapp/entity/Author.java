@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,20 +25,21 @@ public class Author {
 
     @NotNull
     @Length(max=45,message = "{validation.author.name}")
-    @Pattern(regexp = "[A-Za-z\\s.]{1,45}", message = "{validation.author.name}")
+    @Pattern(regexp = "[A-Za-z\\s.'-]{1,45}", message = "{validation.author.name}")
     private String name;
 
-    @Length(max=45,message = "{validation.author.name}")
-    @Pattern(regexp = "[A-Za-z\\s.]{0,45}", message = "{validation.author.surname}")
+    @Length(max=45,message = "{validation.author.surname}")
+    @Pattern(regexp = "[A-Za-z\\s.'-]{0,45}", message = "{validation.author.surname}")
     private String surname;
 
     @Length(max=255)
     private String authorInfo;
+
     @ManyToMany
     @JoinTable(name = "book_has_author",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private List<Book> books;
+    private List<Book> authorHasBooks;
 
     @Override
     public boolean equals(Object o) {
