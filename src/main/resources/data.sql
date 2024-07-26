@@ -48,11 +48,11 @@ values (1, 'Christ\'s College', 'St Andrews St, Cambridge CB2 3BU', true),
        (6, 'Wolfson College', 'Barton Rd, Cambridge CB3 9BB', true);
 
 insert into book (access_level, building_id, id, title, category_id, available_amount, isbn, book_detail_id)
-values  ('OPEN', 1, 1,'Java in action', 1, 2, '1', 1),
-        ('OPEN', 1, 2,'Algorithms', 1, 1, '2', 2),
-        ('OPEN', 1, 3,'Design Patterns', 1, 4, '3', 3),
-        ('OPEN', 1, 4,'Sherlock Holmes', 2, 3, '4', null),
-        ('OPEN', 1, 5,'Harry Potter and the Philosopher\'s stone', null, 4, '5', null),
+values  ('OPEN', 1, 1,'Java in action', 1, 2, '9780451524935', 1),
+        ('OPEN', 1, 2,'Algorithms', 1, 1, '9780451524935', 2),
+        ('OPEN', 1, 3,'Design Patterns', 1, 4, '9780451524935', 3),
+        ('OPEN', 1, 4,'Sherlock Holmes', 2, 3, '9780451524935', null),
+        ('OPEN', 1, 5,'Harry Potter and the Philosopher\'s stone', null, 4, '9780451524935', null),
         ('OPEN', 1, 6,'1984', 3, 5, '9780451524935', null),
         ('OPEN', 1, 7,'To Kill a Mockingbird',4, 7, '9780061120084', null),
         ('OPEN', 1, 8,'Pride and Prejudice', null, 3, '9781503290563', null),

@@ -4,10 +4,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.telran.libraryapp.entity.enums.AccessLevel;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.Objects;
 
@@ -22,14 +26,18 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "{validation.book.title}")
+    @Length(max = 90, message = "{validation.book.title}")
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference("category")
     private Category category;
 
+    @Min(value = 0, message = "{validation.book.availableAmount}")
     private int availableAmount;
 
+    @Pattern(regexp = "[\\d]{13}", message = "{validation.book.isbn}")
     private String isbn;
 
     @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
@@ -37,7 +45,7 @@ public class Book {
     private BookDetail bookDetail;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference("building")
     private Building building;
 
     @Enumerated(EnumType.STRING)
