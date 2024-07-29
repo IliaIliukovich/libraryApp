@@ -24,7 +24,7 @@ public class Category {
     @NotNull(message = "{validation.category.name}")
     @Length(max = 45, message = "{validation.category.name}")
     private String name; // unique in DB
-
+    @NotNull(message = "Category description should be not null and no more than 255 characters")
     @Length(max = 255, message = "{validation.category.description}")
     private String description;
 
