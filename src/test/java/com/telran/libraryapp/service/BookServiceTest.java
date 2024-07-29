@@ -2,7 +2,7 @@ package com.telran.libraryapp.service;
 
 import com.telran.libraryapp.entity.Book;
 import com.telran.libraryapp.repository.BookRepository;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -15,8 +15,8 @@ public class BookServiceTest {
     private static BookService bookService;
     private static BookRepository repository;
 
-    @BeforeAll
-    public static void init() {
+    @BeforeEach
+    public void init() {
         repository = Mockito.mock(BookRepository.class);
         bookService = new BookService(repository);
     }
@@ -94,12 +94,17 @@ public class BookServiceTest {
         Book updatedBook = bookService.updateAmountOfBooks(1L, 100).get();
 
         Mockito.verify(repository).findById(1L);
-        Mockito.verify(repository).save(book);
+//        Mockito.verify(repository).save(any());
+//        Mockito.verify(repository).save(eq(book));
+//        Mockito.verify(repository, Mockito.times(1)).save(book);
+//        Mockito.verify(repository, Mockito.never()).save(book);
 
         assertEquals(100, updatedBook.getAvailableAmount());
 
         Mockito.when(repository.findById(777L)).thenReturn(Optional.empty());
         Optional<Book> optional = bookService.updateAmountOfBooks(777L, 100);
         assertTrue(optional.isEmpty());
+
+        Mockito.verify(repository, Mockito.times(1)).save(book);
     }
 }
