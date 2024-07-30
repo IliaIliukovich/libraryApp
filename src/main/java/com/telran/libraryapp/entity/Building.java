@@ -37,18 +37,4 @@ public class Building {
     @JsonManagedReference("building")
     List<Book> books;
 
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Building building = (Building) o;
-        return id == building.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
 }

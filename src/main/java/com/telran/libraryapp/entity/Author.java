@@ -39,6 +39,7 @@ public class Author {
     @JoinTable(name = "book_has_author",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
+
     private List<Book> authorHasBooks;
 
 

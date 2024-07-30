@@ -53,7 +53,6 @@ public class BookDetailService {
             bookDetailRepository.save(bookDetail);
             return true;
         } else {
-            bookDetailRepository.save(bookDetail);
             return false;
         }
     }

@@ -11,7 +11,6 @@ import java.util.Optional;
 @Service
 public class CategoryService {
 
-
     private final CategoryRepository repository;
 
     @Autowired
@@ -33,10 +32,8 @@ public class CategoryService {
             repository.save(category);
             return true;
         } else {
-            repository.save(category);
             return false;
         }
-
     }
     public void deleteCategory(Long id) {
         repository.deleteById(id);

@@ -35,15 +35,6 @@ public class BookController {
         return service.getAll();
     }
 
-//    @GetMapping("/{categoryId}")
-//    public ResponseEntity<List<Book>> getAllByCategory(@PathVariable Integer categoryId) {
-//        List<Book> result = service.getBooksByCategory(categoryId);
-//        if (result.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(result, HttpStatus.OK);
-//    }
-
     @GetMapping("/searchByTitle")
     public List<Book> getAllByTitle(@RequestParam String title, @RequestParam(required = false) Integer amount) {
         return service.getAllByTitle(title, amount);
@@ -77,7 +68,7 @@ public class BookController {
     @PatchMapping("/updateAmountOfBooksOptimized")
     public ResponseEntity<?> updateAmountOfBooksOptimized(@RequestParam Long id,
                                                           @RequestParam
-
+                                                          @Min(value = 0, message = "{validation.book.availableAmount}")
                                                           Integer amount) {
         service.updateAmountOfBooksOptimized(id, amount);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -88,44 +79,5 @@ public class BookController {
         service.remove(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
-
-//    //    REST запрос на вывод одной книги по ее isbn.
-//    @GetMapping("/findOneBook")
-//    public ResponseEntity<Book> findBookByIsbn(@RequestParam String isbn) {
-//        Optional<Book> firstFindBook = library.stream().filter(book -> book.getIsbn().equals(isbn)).findFirst();
-//        if (firstFindBook.isPresent()) {
-//            return new ResponseEntity<>(firstFindBook.get(), HttpStatus.OK);
-//
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
-
-//    //REST запрос на вывод общего числа книг в библиотеке (с учетом копий).
-//    @GetMapping("/countBooks")
-//    public int countBooks() {
-//        return library.stream().mapToInt(Book::getAvailableAmount).sum();
-//    }
-//
-//    //REST запрос на вывод общего числа книг в отдельной категории.
-//    @GetMapping("/{category}/count")
-//    public int countInOneCategories(@PathVariable String category) {
-//        return library.stream()
-//                .filter(book -> book.getCategory().equals(category)).mapToInt(Book::getAvailableAmount).sum();
-//    }
-//
-//    //REST запрос на заполнение всех пустых полей author значением "Unknown".
-//    @PatchMapping("/updateUnknownAuthors")
-//    public ResponseEntity<?> updateUnknownAuthors() {
-//        library.stream().filter(book -> book.getAuthor() == null || book.getAuthor().isEmpty()).forEach(book -> book.setAuthor("Unknown"));
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//
-//    //REST запрос на удаление из списка книг всех книг, у которых не указан title.
-//    @DeleteMapping("/deleteWithoutTitle")
-//    public ResponseEntity<?> deleteBooksWithoutTitle(){
-//        library.removeIf(book -> !StringUtils.hasText(book.getTitle()));
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
 
 }
