@@ -135,21 +135,29 @@ values (1, 'Urma', 'R.-G.',
        (30, 'Ray', 'Bradbury', 'Ray Bradbury was an American author and screenwriter,
         best known for his dystopian novel Fahrenheit 451.');
 
-insert into visitor (email, password, name, surname, visitor_role)
-values ('john.doe@example.com', 'password123', 'John', 'Doe', 'USER'),
-       ('jane.smith@example.com', 'password123', 'Jane', 'Smith', 'USER'),
-       ('alice.jones@example.com', 'password123', 'Alice', 'Jones', 'USER'),
-       ('bob.brown@example.com', 'password123', 'Bob', 'Brown', 'USER'),
-       ('charlie.black@example.com', 'password123', 'Charlie', 'Black', 'USER'),
-       ('david.white@example.com', 'password123', 'David', 'White', 'USER'),
-       ('eve.green@example.com', 'password123', 'Eve', 'Green', 'USER'),
-       ('frank.red@example.com', 'password123', 'Frank', 'Red', 'USER'),
-       ('grace.blue@example.com', 'password123', 'Grace', 'Blue', 'USER'),
-       ('hannah.yellow@example.com', 'password123', 'Hannah', 'Yellow', 'USER');
+insert into visitor (id, email, password, name, surname, visitor_role)
+values (11, 'john.doe@example.com', 'password123', 'John', 'Doe', 'USER'),
+       (22, 'jane.smith@example.com', 'password123', 'Jane', 'Smith', 'USER'),
+       (33, 'alice.jones@example.com', 'password123', 'Alice', 'Jones', 'USER'),
+       (44, 'bob.brown@example.com', 'password123', 'Bob', 'Brown', 'USER'),
+       (55, 'charlie.black@example.com', 'password123', 'Charlie', 'Black', 'USER'),
+       (66, 'david.white@example.com', 'password123', 'David', 'White', 'USER'),
+       (77, 'eve.green@example.com', 'password123', 'Eve', 'Green', 'USER'),
+       (88, 'frank.red@example.com', 'password123', 'Frank', 'Red', 'USER'),
+       (99, 'grace.blue@example.com', 'password123', 'Grace', 'Blue', 'USER'),
+       (110, 'hannah.yellow@example.com', 'password123', 'Hannah', 'Yellow', 'USER');
+
 
 insert into visitor_took_book (visitor_id, book_id)
-    values ('john.doe@example.com', 1),
-           ('jane.smith@example.com', 2);
+    values (11, 1),
+           (22, 2);
+
+insert into visitor_reading_room_book(visitor_id, book_id)
+    values (11, 1),
+            (22, 2);
+
+
+
 
 insert into book_has_author(author_id, book_id)
 values (1, 1),

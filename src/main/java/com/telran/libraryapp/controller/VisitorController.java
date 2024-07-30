@@ -2,6 +2,7 @@ package com.telran.libraryapp.controller;
 
 import com.telran.libraryapp.entity.Visitor;
 import com.telran.libraryapp.service.VisitorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,40 +23,39 @@ public class VisitorController {
     }
 
     @GetMapping
-    public List<Visitor> getAllVisitors() {
-        return visitorService.getAll();
+    public ResponseEntity<List<Visitor>> getAllVisitors() {
+        List<Visitor> visitors = visitorService.getAll();
+        return new ResponseEntity<>(visitors, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Optional<Visitor> getVisitorById(@PathVariable String id) {
-        return visitorService.getVisitorById(id);
+    public ResponseEntity<Visitor> getVisitorById(@PathVariable Long id) {
+        Optional<Visitor> visitorOpt = visitorService.getVisitorById(id);
+        return visitorOpt.map(visitor -> new ResponseEntity<>(visitor, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
-    public Visitor createVisitor(@RequestBody Visitor visitor) {
+    public ResponseEntity<Visitor> createVisitor(@RequestBody @Valid  Visitor visitor) {
         Visitor created = visitorService.addVisitor(visitor);
-        return created;
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public boolean updateVisitor(@PathVariable String id, @RequestBody Visitor visitorDetails) { // TODO
-        visitorDetails.setEmail(id);
-        return visitorService.updateVisitor(visitorDetails);
+    public ResponseEntity<Visitor> updateVisitor(@PathVariable Long id, @Valid @RequestBody Visitor visitorDetails) {
+        visitorDetails.setId(id);
+        boolean updated = visitorService.updateVisitor(visitorDetails);
+        if (updated) {
+            return new ResponseEntity<>(visitorDetails, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteVisitorById(@PathVariable String id) {
+    public ResponseEntity<Void> deleteVisitorById(@PathVariable Long id) {
         visitorService.deleteVisitorsById(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/search")
-    public List<Visitor> getVisitorByName(@RequestParam String name) {
-        return visitorService.getVisitorByName(name);
-    }
-
-    @DeleteMapping("/roles")
-    public void deleteAllRoles() {
-        visitorService.deleteAllRoles();
-    }
 }
