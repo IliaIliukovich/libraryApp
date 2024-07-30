@@ -41,16 +41,5 @@ public class Author {
             inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> authorHasBooks;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Author author = (Author) o;
-        return Objects.equals(id, author.id);
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
 
 }
