@@ -26,15 +26,15 @@ public class CategoryService {
         return repository.findCategoriesByName(name);
     }
 
-    public boolean updateCategory(Category category) {
+    public Category updateCategory(Category category) {
         Optional<Category> optional = repository.findById(category.getId());
         if (optional.isPresent()) {
-            repository.save(category);
-            return true;
+            return repository.save(category);
         } else {
-            return false;
+            return null;
         }
     }
+
     public void deleteCategory(Long id) {
         repository.deleteById(id);
     }
