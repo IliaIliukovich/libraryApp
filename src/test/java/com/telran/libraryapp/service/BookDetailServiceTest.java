@@ -18,14 +18,13 @@ class BookDetailServiceTest {
     private static BookDetailService bookDetailService;
     private static BookDetailRepository bookDetailRepository;
     private static BookRepository bookRepository;
-    private static BookService bookService;
+
 
     @BeforeEach
     public void init() {
         bookDetailRepository = Mockito.mock(BookDetailRepository.class);
         bookRepository = Mockito.mock(BookRepository.class);
         bookDetailService = new BookDetailService(bookDetailRepository, bookRepository);
-        bookService = new BookService(bookRepository);
     }
 
     @Test
@@ -105,7 +104,7 @@ class BookDetailServiceTest {
 
         Mockito.verify(bookDetailRepository).findById(newBookDetail.getId());
         Mockito.verify(bookDetailRepository).save(newBookDetail);
-        assertEquals(true, result);
+        assertTrue(result);
 
     }
 
