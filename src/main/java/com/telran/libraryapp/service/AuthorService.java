@@ -15,7 +15,6 @@ public class AuthorService {
     @Autowired
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
-
     }
 
     public List<Author> getAll(){
@@ -33,7 +32,6 @@ public class AuthorService {
             authorRepository.save(author);
             return true;
         }else{
-            authorRepository.save(author);
             return false;
         }
     }
