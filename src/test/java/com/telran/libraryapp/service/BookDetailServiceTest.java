@@ -109,6 +109,23 @@ class BookDetailServiceTest {
     }
 
     @Test
+    public void updateBookDetailFailed() {
+        BookDetail newBookDetail = new BookDetail();
+        newBookDetail.setPublisher("New publisher");
+        newBookDetail.setId(44L);
+
+        BookDetail oldBookDetail = new BookDetail();
+        oldBookDetail.setPublisher("Old publisher");
+        oldBookDetail.setId(44L);
+
+        Mockito.when(bookDetailRepository.findById(oldBookDetail.getId())).thenReturn(Optional.empty());
+        Boolean result = bookDetailService.updateBookDetail(newBookDetail);
+
+        Mockito.verify(bookDetailRepository).findById(newBookDetail.getId());
+        assertFalse(result);
+
+    }
+    @Test
     public void updateBookDetailNotFound() {
 
         BookDetail newBookDetail = new BookDetail();
