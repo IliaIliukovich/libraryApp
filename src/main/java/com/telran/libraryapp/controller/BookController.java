@@ -4,6 +4,7 @@ import com.telran.libraryapp.entity.Book;
 import com.telran.libraryapp.service.BookService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/books")
 @Validated
+@Slf4j
 public class BookController {
     
     private final BookService service;
@@ -43,6 +45,7 @@ public class BookController {
     @PostMapping
     public ResponseEntity<Book> addBook(@RequestBody @Valid Book book) {
         Book createdOrUpdated = service.addOrUpdate(book);
+        log.info("Book with id = {} created", createdOrUpdated.getId());
         return new ResponseEntity<>(createdOrUpdated, HttpStatus.CREATED);
     }
 

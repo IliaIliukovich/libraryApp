@@ -2,6 +2,8 @@ package com.telran.libraryapp.service;
 
 import com.telran.libraryapp.entity.Book;
 import com.telran.libraryapp.repository.BookRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import java.util.Optional;
 @Service
 public class BookService {
 
+    private static final Logger logger = LogManager.getLogger(BookService.class);
+
     private final BookRepository repository;
 
     @Autowired
@@ -19,7 +23,21 @@ public class BookService {
     }
 
     public List<Book> getAll() {
-        return repository.findAll();
+        List<Book> books = repository.findAll();
+
+//        logger.debug("Books retrieved from DB: " + books.stream().map(Book::getTitle).toList());
+
+//        if (logger.isDebugEnabled()) {
+//            logger.debug("Books retrieved from DB: {}", books.stream().map(Book::getTitle).toList());
+//        }
+
+        logger.debug("Books retrieved from DB: {}", () -> books.stream().map(Book::getTitle).toList());
+
+//        logger.info("info");
+//        logger.warn("warn");
+//        logger.error("error");
+//        logger.fatal("fatal");
+        return books;
     }
 
     public List<Book> getAllByTitle(String title, Integer amount) {
