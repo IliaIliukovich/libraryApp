@@ -44,7 +44,7 @@ public class BookDetailService {
             }
             return savedBookDetail;
         }
-        throw new RuntimeException("Book with id" + bookID + " not found");
+        throw new RuntimeException("Book with id " + bookID + " not found");
     }
 
     public boolean updateBookDetail(BookDetail bookDetail) {
