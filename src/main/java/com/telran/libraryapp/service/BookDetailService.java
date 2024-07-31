@@ -6,6 +6,7 @@ import com.telran.libraryapp.repository.BookDetailRepository;
 import com.telran.libraryapp.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,7 @@ public class BookDetailService {
 
     }
 
+    @Transactional
     public BookDetail add(BookDetail bookDetail, Long bookID) {
         Optional<Book> optional = bookRepository.findById(bookID);
         if (optional.isPresent()) {
@@ -57,6 +59,7 @@ public class BookDetailService {
         }
     }
 
+    @Transactional
     public void remove(Long id) {
         BookDetail bookDetail = bookDetailRepository.getReferenceById(id);
         Optional<Book> optional = bookRepository.findBookByBookDetail(bookDetail);
