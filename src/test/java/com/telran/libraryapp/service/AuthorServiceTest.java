@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,8 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class AuthorServiceTest {
     private static AuthorService authorService;
     private static AuthorRepository authorRepository;
+
     @BeforeEach
-    public void init(){
+    public void init() {
         authorRepository = Mockito.mock(AuthorRepository.class);
         authorService = new AuthorService(authorRepository);
     }
@@ -33,17 +35,16 @@ class AuthorServiceTest {
     }
 
     @Test
-  public void add() {
+    public void add() {
         Author author = new Author();
         author.setId(156L);
         author.setName("Agata");
-        Mockito.when(authorRepository.save(author)).thenReturn(author);
-
+        authorService.add(author);
         Mockito.verify(authorRepository).save(author);
     }
 
     @Test
-   public void updateAuthor() {
+    public void updateAuthor() {
         Author author = new Author();
         author.setName("New name author");
         author.setId(123L);
@@ -80,14 +81,23 @@ class AuthorServiceTest {
 
     @Test
     void returnAuthorByNameOrSurname() {
+        authorService.returnAuthorByNameOrSurname("Dave", "Big");
+        Mockito.verify(authorRepository).findAuthorByNameAndSurname("Dave","Big");
 
+        authorService.returnAuthorByNameOrSurname("Daniel", null);
+        Mockito.verify(authorRepository).findAuthorByName("Daniel");
+
+        authorService.returnAuthorByNameOrSurname(null, "Rowling");
+        Mockito.verify(authorRepository).findAuthorBySurname("Rowling");
+
+        authorService.returnAuthorByNameOrSurname(null, null);
+        Mockito.verify(authorRepository).findAll();
 
     }
 
     @Test
     void getAuthorByRandomWord() {
-
-
-
+        authorService.getAuthorByRandomWord("Jane");
+        Mockito.verify(authorRepository).findAuthorByRandomWord("%Jane%");
     }
 }
