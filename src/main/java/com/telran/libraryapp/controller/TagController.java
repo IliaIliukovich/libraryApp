@@ -3,6 +3,7 @@ package com.telran.libraryapp.controller;
 import com.telran.libraryapp.entity.Tag;
 import com.telran.libraryapp.service.TagService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/tags")
+@Slf4j
 public class TagController {
     private final TagService service;
 
@@ -45,6 +47,7 @@ public class TagController {
     @PostMapping
     public ResponseEntity<Tag> addTag(@RequestBody @Valid Tag tag) {
         Tag createdOrUpdated = service.addOrUpdate(tag);
+        log.info("Tag with name = {} created", createdOrUpdated.getName());
         return new ResponseEntity<>(createdOrUpdated, HttpStatus.CREATED);
     }
 
