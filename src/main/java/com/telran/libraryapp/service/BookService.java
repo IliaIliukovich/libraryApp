@@ -1,6 +1,8 @@
 package com.telran.libraryapp.service;
 
+import com.telran.libraryapp.dto.BookDto;
 import com.telran.libraryapp.entity.Book;
+import com.telran.libraryapp.mapper.BookMapper;
 import com.telran.libraryapp.repository.BookRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,12 +19,15 @@ public class BookService {
 
     private final BookRepository repository;
 
+    private final BookMapper bookMapper;
+
     @Autowired
-    public BookService(BookRepository repository) {
+    public BookService(BookRepository repository, BookMapper bookMapper) {
         this.repository = repository;
+        this.bookMapper = bookMapper;
     }
 
-    public List<Book> getAll() {
+    public List<BookDto> getAll() {
         List<Book> books = repository.findAll();
 
 //        logger.debug("Books retrieved from DB: " + books.stream().map(Book::getTitle).toList());
@@ -37,38 +42,40 @@ public class BookService {
 //        logger.warn("warn");
 //        logger.error("error");
 //        logger.fatal("fatal");
-        return books;
+        return bookMapper.entityListToDto(books);
     }
 
-    public List<Book> getAllByTitle(String title, Integer amount) {
+    public List<BookDto> getAllByTitle(String title, Integer amount) {
         if (amount == null) {
             amount = 0;
         }
-        return repository.findBooksByTitleStartingWithAndAvailableAmountIsGreaterThanEqual(title, amount);
+        List<Book> books = repository.findBooksByTitleStartingWithAndAvailableAmountIsGreaterThanEqual(title, amount);
+        return bookMapper.entityListToDto(books);
     }
 
-    public Book addOrUpdate(Book book) {
+    public BookDto addOrUpdate(BookDto bookDto) {
+        Book book = bookMapper.dtoToEntity(bookDto);
         Book createdOrUpdated = repository.save(book);
-        return createdOrUpdated;
+        return bookMapper.entityToDto(createdOrUpdated);
     }
 
-    public Book updateBook(Book book) {
-        Optional<Book> optional = repository.findById(book.getId());
+    public BookDto updateBook(BookDto bookDto) {
+        Optional<Book> optional = repository.findById(bookDto.getId());
         if (optional.isPresent()) {
-            Book saved = repository.save(book);
-            return saved;
+            Book saved = repository.save(bookMapper.dtoToEntity(bookDto));
+            return bookMapper.entityToDto(saved);
         } else {
             return null;
         }
     }
 
-    public Optional<Book> updateAmountOfBooks(Long id, Integer amount) {
+    public Optional<BookDto> updateAmountOfBooks(Long id, Integer amount) {
         Optional<Book> optional = repository.findById(id);
         if (optional.isPresent()) {
             Book book = optional.get();
             book.setAvailableAmount(amount);
             Book updatedBook = repository.save(book);
-            return Optional.of(updatedBook);
+            return Optional.of(bookMapper.entityToDto(updatedBook));
         } else {
             return Optional.empty();
         }

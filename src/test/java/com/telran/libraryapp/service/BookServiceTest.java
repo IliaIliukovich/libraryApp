@@ -1,24 +1,31 @@
 package com.telran.libraryapp.service;
 
+import com.telran.libraryapp.dto.BookDto;
 import com.telran.libraryapp.entity.Book;
+import com.telran.libraryapp.mapper.BookMapper;
 import com.telran.libraryapp.repository.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.mockito.Mockito;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.eq;
 
 public class BookServiceTest {
 
     private static BookService bookService;
     private static BookRepository repository;
 
+    private static BookMapper bookMapper;
+
     @BeforeEach
     public void init() {
         repository = Mockito.mock(BookRepository.class);
-        bookService = new BookService(repository);
+        bookMapper = Mappers.getMapper(BookMapper.class);
+        bookService = new BookService(repository, bookMapper);
     }
 
 
@@ -46,7 +53,7 @@ public class BookServiceTest {
         book.setTitle("Test title");
 
         Mockito.when(repository.save(book)).thenReturn(book);
-        Book resultBook = bookService.addOrUpdate(book);
+        BookDto resultBook = bookService.addOrUpdate(bookMapper.entityToDto(book));
 
         Mockito.verify(repository).save(book);
         assertEquals(book.getTitle(), resultBook.getTitle());
@@ -65,10 +72,10 @@ public class BookServiceTest {
         Mockito.when(repository.findById(newBook.getId())).thenReturn(Optional.of(oldBook));
         Mockito.when(repository.save(newBook)).thenReturn(newBook);
 
-        Book result = bookService.updateBook(newBook);
+        BookDto result = bookService.updateBook(bookMapper.entityToDto(newBook));
 
         Mockito.verify(repository).findById(newBook.getId());
-        Mockito.verify(repository).save(newBook);
+        Mockito.verify(repository).save(eq(newBook));
         assertEquals(newBook.getTitle(), result.getTitle());
 
         newBook = new Book();
@@ -76,7 +83,7 @@ public class BookServiceTest {
         newBook.setId(777L);
 
         Mockito.when(repository.findById(777L)).thenReturn(Optional.empty());
-        result = bookService.updateBook(newBook);
+        result = bookService.updateBook(bookMapper.entityToDto(newBook));
         assertNull(result);
     }
 
@@ -91,7 +98,7 @@ public class BookServiceTest {
         Mockito.when(repository.save(book)).thenReturn(book);
 
         assertEquals(1, book.getAvailableAmount());
-        Book updatedBook = bookService.updateAmountOfBooks(1L, 100).get();
+        BookDto updatedBook = bookService.updateAmountOfBooks(1L, 100).get();
 
         Mockito.verify(repository).findById(1L);
 //        Mockito.verify(repository).save(any());
@@ -102,7 +109,7 @@ public class BookServiceTest {
         assertEquals(100, updatedBook.getAvailableAmount());
 
         Mockito.when(repository.findById(777L)).thenReturn(Optional.empty());
-        Optional<Book> optional = bookService.updateAmountOfBooks(777L, 100);
+        Optional<BookDto> optional = bookService.updateAmountOfBooks(777L, 100);
         assertTrue(optional.isEmpty());
 
         Mockito.verify(repository, Mockito.times(1)).save(book);

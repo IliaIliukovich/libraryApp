@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.Objects;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -24,22 +26,17 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "{validation.book.title}")
-    @Length(max = 90, message = "{validation.book.title}")
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference("category")
     private Category category;
 
-    @Min(value = 0, message = "{validation.book.availableAmount}")
     private int availableAmount;
 
-    @Pattern(regexp = "[\\d]{13}", message = "{validation.book.isbn}")
     private String isbn;
 
     @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    @JsonIgnore
     private BookDetail bookDetail;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -49,4 +46,16 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private AccessLevel accessLevel;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return availableAmount == book.availableAmount && Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(isbn, book.isbn) && accessLevel == book.accessLevel;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, availableAmount, isbn, accessLevel);
+    }
 }

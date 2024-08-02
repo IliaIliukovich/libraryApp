@@ -1,6 +1,6 @@
 package com.telran.libraryapp.controller;
 
-import com.telran.libraryapp.entity.Book;
+import com.telran.libraryapp.dto.BookDto;
 import com.telran.libraryapp.service.BookService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -33,34 +33,34 @@ public class BookController {
     }
 
     @GetMapping("/all")
-    public List<Book> getAll() {
+    public List<BookDto> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/searchByTitle")
-    public List<Book> getAllByTitle(@RequestParam String title, @RequestParam(required = false) Integer amount) {
+    public List<BookDto> getAllByTitle(@RequestParam String title, @RequestParam(required = false) Integer amount) {
         return service.getAllByTitle(title, amount);
     }
 
     @PostMapping
-    public ResponseEntity<Book> addBook(@RequestBody @Valid Book book) {
-        Book createdOrUpdated = service.addOrUpdate(book);
+    public ResponseEntity<BookDto> addBook(@RequestBody @Valid BookDto book) {
+        BookDto createdOrUpdated = service.addOrUpdate(book);
         log.info("Book with id = {} created", createdOrUpdated.getId());
         return new ResponseEntity<>(createdOrUpdated, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Book> updateBook(@RequestBody @Valid Book book) {
-        Book updatedBook = service.updateBook(book);
-        return new ResponseEntity<>(book, updatedBook != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+    public ResponseEntity<BookDto> updateBook(@RequestBody @Valid BookDto book) {
+        BookDto updatedBook = service.updateBook(book);
+        return new ResponseEntity<>(updatedBook, updatedBook != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @PatchMapping
-    public ResponseEntity<Book> updateAmountOfBooks(@RequestParam Long id,
+    public ResponseEntity<BookDto> updateAmountOfBooks(@RequestParam Long id,
                                                     @RequestParam
                                                     @Min(value = 0, message = "{validation.book.availableAmount}")
                                                     Integer amount) {
-        Optional<Book> book = service.updateAmountOfBooks(id, amount);
+        Optional<BookDto> book = service.updateAmountOfBooks(id, amount);
         if (book.isPresent()) {
             return new ResponseEntity<>(book.get(), HttpStatus.OK);
         } else {

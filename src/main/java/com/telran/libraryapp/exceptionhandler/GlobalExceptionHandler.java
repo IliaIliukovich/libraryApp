@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleAllOtherExceptions(Exception ex) {
         log.error("Exception: ", ex);
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("Some problem on the server. Try again later", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
