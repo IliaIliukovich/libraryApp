@@ -26,9 +26,9 @@ public class VisitorController {
         return visitorService.getAll();
     }
 
-    @GetMapping("/{id}")
-    public Optional<Visitor> getVisitorById(@PathVariable String id) {
-        return visitorService.getVisitorById(id);
+    @GetMapping("/{email}")
+    public Optional<Visitor> getVisitorByEmail(@PathVariable String email) {
+        return visitorService.getVisitorByEmail(email);
     }
 
     @PostMapping
@@ -37,23 +37,21 @@ public class VisitorController {
         return created;
     }
 
-    @PutMapping("/{id}")
-    public boolean updateVisitor(@PathVariable String id, @RequestBody Visitor visitorDetails) { // TODO
-        visitorDetails.setEmail(id);
+    @PutMapping("/{email}")
+    public boolean updateVisitor(@PathVariable String email, @RequestBody Visitor visitorDetails) { // TODO
+        visitorDetails.setEmail(email);
         return visitorService.updateVisitor(visitorDetails);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteVisitorById(@PathVariable String id) {
-        visitorService.deleteVisitorsById(id);
+    @DeleteMapping("/{email}")
+    public ResponseEntity<?> deleteVisitorByEmail(@PathVariable String email) {
+        visitorService.deleteVisitorsByEmail(email);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
-
     @GetMapping("/search")
     public List<Visitor> getVisitorByName(@RequestParam String name) {
         return visitorService.getVisitorByName(name);
     }
-
     @DeleteMapping("/roles")
     public void deleteAllRoles() {
         visitorService.deleteAllRoles();
