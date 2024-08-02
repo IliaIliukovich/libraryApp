@@ -48,7 +48,6 @@ public class VisitorController {
         visitorService.deleteVisitorsByEmail(email);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
-
     @GetMapping("/search")
     public List<Visitor> getVisitorByName(@RequestParam String name) {
         return visitorService.getVisitorByName(name);

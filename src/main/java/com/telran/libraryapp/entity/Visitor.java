@@ -29,7 +29,6 @@ public class Visitor {
     private String surname;
     @Enumerated(EnumType.STRING)
     private VisitorRole visitorRole;
-
     @ManyToMany
     @JoinTable(name = "visitor_took_book",
             joinColumns = @JoinColumn(name = "visitor_email"),
