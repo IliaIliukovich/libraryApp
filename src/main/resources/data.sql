@@ -147,9 +147,13 @@ values ('john.doe@example.com', 'password123', 'John', 'Doe', 'USER'),
        ('grace.blue@example.com', 'password123', 'Grace', 'Blue', 'USER'),
        ('hannah.yellow@example.com', 'password123', 'Hannah', 'Yellow', 'USER');
 
-insert into visitor_took_book (visitor_id, book_id)
+insert into visitor_took_book (visitor_email, book_id)
     values ('john.doe@example.com', 1),
            ('jane.smith@example.com', 2);
+
+insert into visitor_reading_room_book(visitor_email, book_id)
+    values ('john.doe@example.com', 1),
+            ('jane.smith@example.com', 2);
 
 insert into book_has_author(author_id, book_id)
 values (1, 1),

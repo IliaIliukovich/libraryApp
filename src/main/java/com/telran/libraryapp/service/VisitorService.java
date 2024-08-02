@@ -1,7 +1,7 @@
 package com.telran.libraryapp.service;
 
 
-import com.telran.libraryapp.entity.Book;
+
 import com.telran.libraryapp.entity.Visitor;
 import com.telran.libraryapp.repository.VisitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,8 @@ public class VisitorService {
         return visitorRepository.findAll();
     }
 
-    public Optional<Visitor> getVisitorById(String id) {
-        return visitorRepository.findById(id);
+    public Optional<Visitor> getVisitorByEmail(String email) {
+        return visitorRepository.findById(email);
     }
 
     public Visitor addVisitor(Visitor visitor) {
@@ -43,8 +43,8 @@ public class VisitorService {
         }
     }
 
-    public void deleteVisitorsById(String id) {
-        visitorRepository.deleteById(id);
+    public void deleteVisitorsByEmail(String email) {
+        visitorRepository.deleteById(email);
     }
 
     public List<Visitor> getVisitorByName(String name) {
