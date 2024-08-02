@@ -19,7 +19,6 @@ public class VisitorService {
     public VisitorService(VisitorRepository visitorRepository) {
         this.visitorRepository = visitorRepository;
     }
-
     public List<Visitor> getAll() {
         return visitorRepository.findAll();
     }

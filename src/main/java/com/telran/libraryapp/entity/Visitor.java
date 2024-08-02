@@ -27,7 +27,6 @@ public class Visitor {
     private String name;
     @Size(max = 45,message = "validation.visitor.name")
     private String surname;
-
     @Enumerated(EnumType.STRING)
     private VisitorRole visitorRole;
 

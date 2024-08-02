@@ -150,7 +150,6 @@ values ('john.doe@example.com', 'password123', 'John', 'Doe', 'USER'),
 insert into visitor_took_book (visitor_email, book_id)
     values ('john.doe@example.com', 1),
            ('jane.smith@example.com', 2);
-
 insert into visitor_reading_room_book(visitor_email, book_id)
     values ('john.doe@example.com', 1),
             ('jane.smith@example.com', 2);

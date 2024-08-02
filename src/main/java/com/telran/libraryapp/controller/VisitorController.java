@@ -53,7 +53,6 @@ public class VisitorController {
     public List<Visitor> getVisitorByName(@RequestParam String name) {
         return visitorService.getVisitorByName(name);
     }
-
     @DeleteMapping("/roles")
     public void deleteAllRoles() {
         visitorService.deleteAllRoles();
