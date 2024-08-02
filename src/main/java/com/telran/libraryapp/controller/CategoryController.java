@@ -43,13 +43,8 @@ public class CategoryController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@RequestBody @Valid Category category) {
-        boolean isUpdated = service.updateCategory(category);
-
-        if (isUpdated) {
-            return ResponseEntity.ok(category);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        Category updateCategory = service.updateCategory(category);
+        return new ResponseEntity<>(category,updateCategory != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
