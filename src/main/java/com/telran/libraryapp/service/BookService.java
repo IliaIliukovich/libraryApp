@@ -1,8 +1,12 @@
 package com.telran.libraryapp.service;
 
 import com.telran.libraryapp.dto.BookDto;
+import com.telran.libraryapp.dto.BookFullInfoDto;
 import com.telran.libraryapp.entity.Book;
+import com.telran.libraryapp.entity.BookDetail;
+import com.telran.libraryapp.mapper.BookFullInfoMapper;
 import com.telran.libraryapp.mapper.BookMapper;
+import com.telran.libraryapp.repository.BookDetailRepository;
 import com.telran.libraryapp.repository.BookRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,13 +22,16 @@ public class BookService {
     private static final Logger logger = LogManager.getLogger(BookService.class);
 
     private final BookRepository repository;
-
+    private final BookDetailRepository bookDetailRepository;
     private final BookMapper bookMapper;
+    private final BookFullInfoMapper bookFullInfoMapper;
 
     @Autowired
-    public BookService(BookRepository repository, BookMapper bookMapper) {
+    public BookService(BookRepository repository, BookDetailRepository bookDetailRepository, BookMapper bookMapper, BookFullInfoMapper bookFullInfoMapper) {
         this.repository = repository;
+        this.bookDetailRepository = bookDetailRepository;
         this.bookMapper = bookMapper;
+        this.bookFullInfoMapper = bookFullInfoMapper;
     }
 
     public List<BookDto> getAll() {
@@ -57,6 +64,15 @@ public class BookService {
         Book book = bookMapper.dtoToEntity(bookDto);
         Book createdOrUpdated = repository.save(book);
         return bookMapper.entityToDto(createdOrUpdated);
+    }
+
+    public BookFullInfoDto addBookFullInfo(BookFullInfoDto bookFullInfoDto) {
+        Book book = bookFullInfoMapper.dtoToBook(bookFullInfoDto);
+        BookDetail bookDetail = bookFullInfoMapper.dtoToBookDetail(bookFullInfoDto);
+        bookDetail = bookDetailRepository.save(bookDetail);
+        book.setBookDetail(bookDetail);
+        book = repository.save(book);
+        return bookFullInfoMapper.entityToDto(book, bookDetail);
     }
 
     public BookDto updateBook(BookDto bookDto) {

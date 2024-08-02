@@ -1,7 +1,10 @@
 package com.telran.libraryapp.controller;
 
 import com.telran.libraryapp.dto.BookDto;
+import com.telran.libraryapp.dto.BookFullInfoDto;
 import com.telran.libraryapp.service.BookService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +21,7 @@ import java.util.Optional;
 @RequestMapping("/books")
 @Validated
 @Slf4j
+@Tag(name = "Book Controller", description = "Actions with book")
 public class BookController {
     
     private final BookService service;
@@ -33,11 +37,13 @@ public class BookController {
     }
 
     @GetMapping("/all")
+    @Operation(summary = "Retrieve all book")
     public List<BookDto> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/searchByTitle")
+    @Operation(summary = "Search By Title")
     public List<BookDto> getAllByTitle(@RequestParam String title, @RequestParam(required = false) Integer amount) {
         return service.getAllByTitle(title, amount);
     }
@@ -45,6 +51,13 @@ public class BookController {
     @PostMapping
     public ResponseEntity<BookDto> addBook(@RequestBody @Valid BookDto book) {
         BookDto createdOrUpdated = service.addOrUpdate(book);
+        log.info("Book with id = {} created", createdOrUpdated.getId());
+        return new ResponseEntity<>(createdOrUpdated, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/full")
+    public ResponseEntity<BookFullInfoDto> addBook(@RequestBody @Valid BookFullInfoDto book) {
+        BookFullInfoDto createdOrUpdated = service.addBookFullInfo(book);
         log.info("Book with id = {} created", createdOrUpdated.getId());
         return new ResponseEntity<>(createdOrUpdated, HttpStatus.CREATED);
     }
