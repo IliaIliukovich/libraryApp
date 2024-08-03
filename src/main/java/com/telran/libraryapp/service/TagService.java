@@ -1,6 +1,8 @@
 package com.telran.libraryapp.service;
 
+import com.telran.libraryapp.dto.TagDto;
 import com.telran.libraryapp.entity.Tag;
+import com.telran.libraryapp.mapper.TagMapper;
 import com.telran.libraryapp.repository.TagRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,39 +17,50 @@ public class TagService {
 
     private static final Logger logger = LogManager.getLogger(TagService.class);
     private final TagRepository repository;
+    private final TagMapper tagMapper;
 
     @Autowired
-    public TagService(TagRepository repository) {
+    public TagService(TagRepository repository, TagMapper tagMapper) {
         this.repository = repository;
+        this.tagMapper = tagMapper;
     }
 
-    public List<Tag> getAll() {
+    public List<TagDto> getAll() {
         List<Tag> tags = repository.findAll();
-
         logger.debug("Tags retrieved from DB: {}", () -> tags.size());
-        return tags;
+        return tagMapper.entityListToDto(tags);
     }
 
-    public Optional<Tag> getById(Long id) {
-        return repository.findById(id);
+    public Optional<TagDto> getById(Long id) {
+       Optional<Tag> tag = repository.findById(id);
+       if (tag.isPresent()) {
+         return Optional.of(tagMapper.entityToDto(tag.get()));
+       } else {
+           return Optional.empty();
+       }
     }
 
-    public Optional<Tag> getByName(String name) {
-        return repository.findTagsByName(name);
+    public Optional<TagDto> getByName(String name) {
+        Optional<Tag> tag = repository.findTagsByName(name);
+        if (tag.isPresent()) {
+            return Optional.of(tagMapper.entityToDto(tag.get()));
+        } else {
+            return Optional.empty();
+        }
     }
 
-    public Tag addOrUpdate(Tag tag) {
+    public TagDto addOrUpdate(TagDto tagDto) {
+        Tag tag = tagMapper.dtoToEntity(tagDto);
         Tag createdOrUpdated = repository.save(tag);
-        return createdOrUpdated;
+        return tagMapper.entityToDto(createdOrUpdated);
     }
 
-    public Tag updateTag(Tag tag) {
-        Optional<Tag> optional = repository.findById(tag.getTagId());
+    public TagDto updateTag(TagDto tagDto) {
+        Optional<Tag> optional = repository.findById(tagDto.getTagId());
         if (optional.isPresent()) {
-            Tag saved = repository.save(tag);
-            return saved;
+            Tag saved = repository.save(tagMapper.dtoToEntity(tagDto));
+            return tagMapper.entityToDto(saved);
         }else {
-            repository.save(tag);
             return null;
         }
     }
