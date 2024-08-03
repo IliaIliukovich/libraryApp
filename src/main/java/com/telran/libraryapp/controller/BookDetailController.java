@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/bookDetails")
-@Validated
+
 @Slf4j
 public class BookDetailController {
 
