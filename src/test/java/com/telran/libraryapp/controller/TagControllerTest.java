@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Optional;
 
+import com.telran.libraryapp.dto.TagDto;
 import com.telran.libraryapp.entity.Tag;
 import com.telran.libraryapp.service.TagService;
 import org.junit.jupiter.api.Test;
@@ -29,10 +30,10 @@ public class TagControllerTest {
 
     @Test
     public void getTagsByName() throws Exception {
-        Tag tag = new Tag();
-        tag.setName("exampleTag");
+        TagDto tagDto = new TagDto();
+        tagDto.setName("exampleTag");
 
-        when(service.getByName("exampleTag")).thenReturn(Optional.of(tag));
+        when(service.getByName("exampleTag")).thenReturn(Optional.of(tagDto));
 
         mockMvc.perform(get("/tags/name/exampleTag")
                         .accept(MediaType.APPLICATION_JSON))

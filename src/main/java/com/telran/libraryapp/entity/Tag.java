@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -20,8 +21,6 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
 
-    @NotNull(message = "{validation.tag.name}")
-    @Length(max = 45, message = "{validation.tag.name}")
     private String name;
 
     private String description;
@@ -31,6 +30,19 @@ public class Tag {
             joinColumns = @JoinColumn(name = "tag_id") ,
             inverseJoinColumns = @JoinColumn(name = "book_isbn"))
     private List<Book> books;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tag tag = (Tag) o;
+        return Objects.equals(tagId, tag.tagId) && Objects.equals(name, tag.name) && Objects.equals(description, tag.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tagId, name, description);
+    }
 }
 
 
