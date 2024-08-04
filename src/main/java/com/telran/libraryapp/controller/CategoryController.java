@@ -1,18 +1,23 @@
 package com.telran.libraryapp.controller;
 
-import com.telran.libraryapp.entity.Category;
+import com.telran.libraryapp.dto.CategoryDto;
 import com.telran.libraryapp.service.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-
+@Slf4j
+@Validated
 @RestController
 @RequestMapping("/categories")
+@Tag(name = "Category Controller",description = "Actions with categories")
 public class CategoryController {
 
     private final CategoryService service;
@@ -24,30 +29,27 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<Category> getCategories() {
+    @Operation(summary = "Retrieve all category")
+    public List<CategoryDto> getCategories() {
         return service.getAll();
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<Category> getByName(@PathVariable String name) {
-        Optional<Category> byName = service.getByName(name);
-        return byName.map(category -> new ResponseEntity<>(category, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @PutMapping("/{id}")
+    @Operation(summary = "Update categories")
+    public ResponseEntity<CategoryDto> updateCategory(@RequestBody @Valid CategoryDto category) {
+        CategoryDto updateCategory = service.updateCategory(category);
+        return new ResponseEntity<>(updateCategory,(category!= null) ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody @Valid Category category) {
-       Category add = service.add(category);
+    @Operation(summary = "Create categories")
+    public ResponseEntity<CategoryDto> createCategory(@RequestBody @Valid CategoryDto category) {
+       CategoryDto add = service.add(category);
         return new ResponseEntity<>(add, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@RequestBody @Valid Category category) {
-        Category updateCategory = service.updateCategory(category);
-        return new ResponseEntity<>(category,updateCategory != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
-    }
-
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete categories")
     public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
         service.deleteCategory(id);
         return ResponseEntity.noContent().build();
