@@ -2,6 +2,8 @@ package com.telran.libraryapp.service;
 
 import com.telran.libraryapp.entity.Tag;
 import com.telran.libraryapp.repository.TagRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,8 @@ import java.util.Optional;
 
 @Service
 public class TagService {
+
+    private static final Logger logger = LogManager.getLogger(TagService.class);
     private final TagRepository repository;
 
     @Autowired
@@ -18,7 +22,10 @@ public class TagService {
     }
 
     public List<Tag> getAll() {
-        return repository.findAll();
+        List<Tag> tags = repository.findAll();
+
+        logger.debug("Tags retrieved from DB: {}", () -> tags.size());
+        return tags;
     }
 
     public Optional<Tag> getById(Long id) {
