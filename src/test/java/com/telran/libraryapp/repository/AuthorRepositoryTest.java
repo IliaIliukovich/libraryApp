@@ -1,5 +1,6 @@
 package com.telran.libraryapp.repository;
 
+import com.telran.libraryapp.dto.AuthorDto;
 import com.telran.libraryapp.entity.Author;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

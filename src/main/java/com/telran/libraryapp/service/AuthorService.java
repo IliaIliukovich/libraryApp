@@ -1,60 +1,74 @@
 package com.telran.libraryapp.service;
 
+import com.telran.libraryapp.dto.AuthorDto;
 import com.telran.libraryapp.entity.Author;
+import com.telran.libraryapp.mapper.AuthorMapper;
 import com.telran.libraryapp.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AuthorService {
     private final AuthorRepository authorRepository;
+    private final AuthorMapper authorMapper;
 
     @Autowired
-    public AuthorService(AuthorRepository authorRepository) {
+    public AuthorService(AuthorRepository authorRepository, AuthorMapper authorMapper) {
         this.authorRepository = authorRepository;
-
+        this.authorMapper = authorMapper;
     }
 
-    public List<Author> getAll(){
-        return authorRepository.findAll();
+    public List<AuthorDto> getAll() {
+        List<Author> authors = authorRepository.findAll();
+        return authorMapper.entityListToDto(authors);
     }
-    public Optional<Author> getNameAuthorByID(Long id) {
-        return authorRepository.findById(id);
+
+    public Optional<AuthorDto> getNameAuthorByID(Long id) {
+        Optional<Author> authorOptional = authorRepository.findById(id);
+        return Optional.of(authorMapper.entityToDto(authorOptional.get()));
     }
-    public void add(Author author) {
-        authorRepository.save(author);
+
+    public void add(AuthorDto authorDto) {
+        Author saved = authorRepository.save(authorMapper.dtoToEntity(authorDto));
     }
-    public boolean updateAuthor(Author author) {
-        Optional<Author> authorOptional = authorRepository.findById(author.getId());
-        if (authorOptional.isPresent()){
-            authorRepository.save(author);
+
+    public boolean updateAuthor(AuthorDto authorDto) {
+        Optional<Author> authorOptional = authorRepository.findById(authorDto.getId());
+        if (authorOptional.isPresent()) {
+            authorRepository.save(authorMapper.dtoToEntity(authorDto));
             return true;
-        }else{
-            authorRepository.save(author);
+        } else {
+            authorRepository.save(authorMapper.dtoToEntity(authorDto));
             return false;
         }
     }
 
-    public void removeAuthor(Long id){
+    public void removeAuthor(Long id) {
         authorRepository.deleteById(id);
-    }
-    public List<Author> returnAuthorByNameOrSurname(String name, String surname){
-        if (name != null && surname != null) {
-          return authorRepository.findAuthorByNameAndSurname(name,surname);
-        } else if (name != null) {
-            return authorRepository.findAuthorByName(name);
-        } else if (surname != null) {
-            return authorRepository.findAuthorBySurname(surname);
-        } else {
-            return authorRepository.findAll();
-        }
+
     }
 
-    public List<Author> getAuthorByRandomWord(String randomWord){
+    public List<AuthorDto> returnAuthorByNameOrSurname(String name, String surname) {
+        List<Author> result = new ArrayList<>();
+        if (name != null && surname != null) {
+            result = authorRepository.findAuthorByNameAndSurname(name, surname);
+        } else if (name != null) {
+            result = authorRepository.findAuthorByName(name);
+        } else if (surname != null) {
+            result = authorRepository.findAuthorBySurname(surname);
+        } else {
+            result = authorRepository.findAll();
+        }
+        return authorMapper.entityListToDto(result);
+    }
+
+    public List<AuthorDto> getAuthorByRandomWord(String randomWord) {
         String formattedWord = '%' + randomWord.trim() + '%';
-        return authorRepository.findAuthorByRandomWord(formattedWord);
+        List<Author> result = authorRepository.findAuthorByRandomWord(formattedWord);
+        return authorMapper.entityListToDto(result);
     }
 }

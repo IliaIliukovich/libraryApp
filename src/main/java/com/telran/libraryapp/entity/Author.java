@@ -24,16 +24,10 @@ public class Author {
     @Column(name = "author_id")
     private Long id;
 
-    @NotNull
-    @Length(max=45,message = "{validation.author.name}")
-    @Pattern(regexp = "[A-Za-z\\s.'-]{1,45}", message = "{validation.author.name}")
     private String name;
 
-    @Length(max=45,message = "{validation.author.surname}")
-    @Pattern(regexp = "[A-Za-z\\s.'-]{0,45}", message = "{validation.author.surname}")
     private String surname;
 
-    @Length(max=255)
     private String authorInfo;
 
     @ManyToMany

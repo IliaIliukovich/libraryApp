@@ -1,11 +1,15 @@
 package com.telran.libraryapp.controller;
 
-import com.telran.libraryapp.entity.Author;
+import com.telran.libraryapp.dto.AuthorDto;
 import com.telran.libraryapp.service.AuthorService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +17,9 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/authors")
+@Validated
+@Slf4j
+@Tag(name = "Author Controller", description = "Actions with author")
 public class AuthorController {
     private final AuthorService authorService;
 
@@ -22,13 +29,15 @@ public class AuthorController {
     }
 
     @GetMapping
-    public List<Author> getAuthors() {
+    @Operation(summary = "Retrieve all author")
+    public List<AuthorDto> getAuthors() {
         return authorService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Author> getAuthorById(@PathVariable Long id) {
-        Optional<Author> authorOptional = authorService.getNameAuthorByID(id);
+    @Operation(summary ="Search by id")
+    public ResponseEntity<AuthorDto> getAuthorById(@PathVariable Long id) {
+        Optional<AuthorDto> authorOptional = authorService.getNameAuthorByID(id);
         if (authorOptional.isPresent()) {
             return new ResponseEntity<>(authorOptional.get(), HttpStatus.OK);
         } else {
@@ -37,33 +46,38 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> addAuthor(@RequestBody @Valid Author author) {
+    @Operation(summary = "add author")
+    public ResponseEntity<AuthorDto> addAuthor(@RequestBody @Valid AuthorDto author) {
         authorService.add(author);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(author, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Author> updateAuthor(@RequestBody @Valid Author author) {
+    @Operation(summary = "update author")
+    public ResponseEntity<AuthorDto> updateAuthor(@RequestBody @Valid AuthorDto author) {
         boolean isUpdated = authorService.updateAuthor(author);
         return new ResponseEntity<>(author, isUpdated ? HttpStatus.OK : HttpStatus.CREATED);
 
     }
 
     @DeleteMapping
-    public ResponseEntity<Author> deleteAuthor(@RequestParam Long id) {
+    @Operation(summary = "remove author")
+    public ResponseEntity<AuthorDto> deleteAuthor(@RequestParam Long id) {
         authorService.removeAuthor(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/findAuthorByName")
-    public List<Author> getAuthorByNameOrSurname(@RequestParam(required = false) String name,
+    @Operation(summary = "search author by name or surname")
+    public List<AuthorDto> getAuthorByNameOrSurname(@RequestParam(required = false) String name,
                                                  @RequestParam(required = false) String surname) {
         return authorService.returnAuthorByNameOrSurname(name, surname);
     }
 
     @GetMapping("/findAuthorByRandomWord")
-    public ResponseEntity<List<Author>> getAuthorByRandomWord(@RequestParam String randomWord) {
-        List<Author> authors = authorService.getAuthorByRandomWord(randomWord);
+    @Operation(summary = "search author by random word")
+    public ResponseEntity<List<AuthorDto>> getAuthorByRandomWord(@RequestParam String randomWord) {
+        List<AuthorDto> authors = authorService.getAuthorByRandomWord(randomWord);
         return new ResponseEntity<>(authors, HttpStatus.OK);
     }
 }
