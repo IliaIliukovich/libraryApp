@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-class BuildingServiceTest {
+public class BuildingServiceTest {
 
     private static BuildingService buildingService;
 
@@ -80,6 +80,7 @@ class BuildingServiceTest {
         Mockito.when(repository.findById(555L)).thenReturn(Optional.empty());
         result = buildingService.updateBuilding(newBuilding);
         assertNull(result);
+
 
     }
 
