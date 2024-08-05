@@ -1,8 +1,5 @@
 package com.telran.libraryapp.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.telran.libraryapp.entity.Book;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,5 +24,5 @@ public class TagDto {
 
     private String description;
 
-    private List<Book> books;
+    private List<BookDto> books;
 }

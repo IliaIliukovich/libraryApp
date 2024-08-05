@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,4 +31,8 @@ public class VisitorDto {
     private String surname;
 
     private VisitorRole visitorRole;
+
+    private List<BookDto> takenBooks;
+
+    private List<BookDto> readingRoomBooks;
 }
