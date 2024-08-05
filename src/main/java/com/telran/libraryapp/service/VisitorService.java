@@ -2,7 +2,9 @@ package com.telran.libraryapp.service;
 
 
 
+import com.telran.libraryapp.dto.VisitorDto;
 import com.telran.libraryapp.entity.Visitor;
+import com.telran.libraryapp.mapper.VisitorMapper;
 import com.telran.libraryapp.repository.VisitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,40 +15,47 @@ import java.util.Optional;
 public class VisitorService {
 
     private final VisitorRepository visitorRepository;
+    private final VisitorMapper visitorMapper;
 
     @Autowired
-    public VisitorService(VisitorRepository visitorRepository) {
+    public VisitorService(VisitorRepository visitorRepository, VisitorMapper visitorMapper) {
         this.visitorRepository = visitorRepository;
-    }
-    public List<Visitor> getAll() {
-        return visitorRepository.findAll();
+        this.visitorMapper = visitorMapper;
     }
 
-    public Optional<Visitor> getVisitorByEmail(String email) {
-        return visitorRepository.findById(email);
+    public List<VisitorDto> getAll() {
+        List<Visitor> visitors = visitorRepository.findAll();
+        return visitorMapper.entityListToDto(visitors);
     }
 
-    public Visitor addVisitor(Visitor visitor) {
-        return visitorRepository.save(visitor);
+    public Optional<VisitorDto> getVisitorByEmail(String email) {
+        Optional<Visitor> visitor = visitorRepository.findById(email);
+        return visitor.map(visitorMapper::entityToDto);
     }
 
-    public boolean updateVisitor(Visitor visitor) { // TODO
-        Optional<Visitor> optional = visitorRepository.findById(visitor.getEmail());
+    public VisitorDto addVisitor(VisitorDto visitorDto) {
+        Visitor visitor = visitorMapper.dtoToEntity(visitorDto);
+        Visitor savedVisitor = visitorRepository.save(visitor);
+        return visitorMapper.entityToDto(savedVisitor);
+    }
+
+    public boolean updateVisitor(VisitorDto visitorDto) {
+        Optional<Visitor> optional = visitorRepository.findById(visitorDto.getEmail());
         if (optional.isPresent()) {
-            visitorRepository.save(visitor);
+            visitorRepository.save(visitorMapper.dtoToEntity(visitorDto));
             return true;
         } else {
-            visitorRepository.save(visitor);
             return false;
         }
     }
 
-    public void deleteVisitorsByEmail(String email) {
+    public void deleteVisitorByEmail(String email) {
         visitorRepository.deleteById(email);
     }
 
-    public List<Visitor> getVisitorByName(String name) {
-        return visitorRepository.findAll();
+    public List<VisitorDto> getVisitorByName(String name) {
+        List<Visitor> visitors = visitorRepository.findVisitorsByName(name);
+        return visitorMapper.entityListToDto(visitors);
     }
 
     public void deleteAllRoles() {
