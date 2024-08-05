@@ -40,7 +40,7 @@ public class Book {
     private BookDetail bookDetail;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference("building")
+//    @JsonBackReference("building")
     private Building building;
 
     @Enumerated(EnumType.STRING)
