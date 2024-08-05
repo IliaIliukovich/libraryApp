@@ -1,5 +1,6 @@
 package com.telran.libraryapp.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.telran.libraryapp.entity.BookDetail;
 import com.telran.libraryapp.entity.Building;
@@ -41,8 +42,8 @@ public class BookDto {
     @JsonIgnore
     private BookDetail bookDetail;
 
-//    @JsonBackReference("building")
-    @JsonIgnore
-    private Building building;
+    @JsonBackReference("building")
+//    @JsonIgnore
+    private BuildingDto building;
 
 }

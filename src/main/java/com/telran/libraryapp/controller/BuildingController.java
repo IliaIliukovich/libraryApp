@@ -1,6 +1,6 @@
 package com.telran.libraryapp.controller;
 
-import com.telran.libraryapp.entity.Building;
+import com.telran.libraryapp.dto.BuildingDto;
 import com.telran.libraryapp.service.BuildingService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -24,13 +24,13 @@ public class BuildingController {
     }
 
     @GetMapping
-    public List<Building> getAll() {
+    public List<BuildingDto> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/searchById")
-    public ResponseEntity<Building> getBuildingById(@RequestParam Long id) {
-        Optional<Building> building = service.getBuildingById(id);
+    public ResponseEntity<BuildingDto> getBuildingById(@RequestParam Long id) {
+        Optional<BuildingDto> building = service.getBuildingById(id);
         if (building.isPresent()) {
             return new ResponseEntity<>(building.get(), HttpStatus.OK);
         } else {
@@ -38,17 +38,17 @@ public class BuildingController {
         }
     }
     @PostMapping
-    public ResponseEntity<Building> addBuilding(@RequestBody @Valid Building building) {
+    public ResponseEntity<BuildingDto> addBuilding(@RequestBody @Valid BuildingDto building) {
         service.addBuilding(building);
         log.info("Building with id = {} and name = {} created", building.getId(), building.getName());
         return new ResponseEntity<>(building, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Building> updateBuilding(@RequestBody @Valid Building building) {
-        Building updatedBuilding = service.updateBuilding(building);
+    public ResponseEntity<BuildingDto> updateBuilding(@RequestBody @Valid BuildingDto building) {
+        BuildingDto updatedBuilding = service.updateBuilding(building);
         log.info(updatedBuilding != null ? "Building with id = " + building.getId() + " updated" : "Building is not updated. Id = " + building.getId() + " does not exist");
-        return new ResponseEntity<>(building, updatedBuilding != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(updatedBuilding, updatedBuilding != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
 
@@ -61,14 +61,15 @@ public class BuildingController {
 
 
     @GetMapping("/{name}")
-    public ResponseEntity<List<Building>> getBuildingByName(@PathVariable String name) {
-        List<Building> buildings = service.getBuildingByName(name);
+    public ResponseEntity<List<BuildingDto>> getBuildingByName(@PathVariable String name) {
+        List<BuildingDto> buildings = service.getBuildingByName(name);
         if (!buildings.isEmpty()) {
             return new ResponseEntity<>(buildings, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     @PatchMapping("/deleteAllZipCodes")
     public ResponseEntity<?> deleteAllZipCodes() {
         service.deleteAllZipCodes();

@@ -1,6 +1,8 @@
 package com.telran.libraryapp.service;
 
+import com.telran.libraryapp.dto.BuildingDto;
 import com.telran.libraryapp.entity.Building;
+import com.telran.libraryapp.mapper.BuildingMapper;
 import com.telran.libraryapp.repository.BuildingRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,32 +17,39 @@ public class BuildingService {
 
     private final BuildingRepository repository;
 
+    private final BuildingMapper buildingMapper;
+
     @Autowired
-    public BuildingService(BuildingRepository repository) {
+    public BuildingService(BuildingRepository repository, BuildingMapper buildingMapper) {
         this.repository = repository;
+        this.buildingMapper = buildingMapper;
     }
 
 
-    public List<Building> getAll() {
-        return repository.findAll();
+    public List<BuildingDto> getAll() {
+        return buildingMapper.entityListToDto(repository.findAll());
     }
 
 
-    public Optional<Building> getBuildingById(Long id) {
-        return repository.findById(id);
+    public Optional<BuildingDto> getBuildingById(Long id) {
+        Optional<Building> optional = repository.findById(id);
+        Building building = optional.get();
+        return Optional.of(buildingMapper.entityToDto(building));
     }
 
 
-    public void addBuilding(Building building) {
-        repository.save(building);
+    public BuildingDto addBuilding(BuildingDto buildingDto) {
+        Building building = buildingMapper.dtoToEntity(buildingDto);
+        Building saved = repository.save(building);
+        return buildingMapper.entityToDto(saved);
     }
 
 
-    public Building updateBuilding(Building building) {
-        Optional<Building> optional = repository.findById(building.getId());
+    public BuildingDto updateBuilding(BuildingDto buildingDto) {
+        Optional<Building> optional = repository.findById(buildingDto.getId());
         if (optional.isPresent()) {
-            Building saved = repository.save(building);
-            return saved;
+            Building saved = repository.save(buildingMapper.dtoToEntity(buildingDto));
+            return buildingMapper.entityToDto(saved);
         } else {
             return null;
         }
@@ -52,8 +61,8 @@ public class BuildingService {
     }
 
 
-    public List<Building> getBuildingByName(String name) {
-        return repository.findBuildingByNameStartingWith(name);
+    public List<BuildingDto> getBuildingByName(String name) {
+        return buildingMapper.entityListToDto(repository.findBuildingByNameStartingWith(name));
     }
 
 
