@@ -85,10 +85,18 @@
 			<version>2.5.0</version>
 		</dependency>
 
+<!--        Liquibase db migration tool -->
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 			<version>4.27.0</version>
+		</dependency>
+
+<!--        Library for RSS feed support -->
+		<dependency>
+			<groupId>com.rometools</groupId>
+			<artifactId>rome</artifactId>
+			<version>2.1.0</version>
 		</dependency>
 	</dependencies>
 
