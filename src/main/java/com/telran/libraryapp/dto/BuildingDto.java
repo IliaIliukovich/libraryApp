@@ -1,7 +1,6 @@
 package com.telran.libraryapp.dto;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.telran.libraryapp.entity.Book;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +28,8 @@ public class BuildingDto {
 
     private boolean hasReadingRoom;
 
-    @JsonManagedReference("building")
+//    @JsonManagedReference("building")
+    @JsonIgnore
     List<BookDto> books;
 
 }

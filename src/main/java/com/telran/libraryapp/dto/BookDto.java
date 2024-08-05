@@ -42,8 +42,8 @@ public class BookDto {
     @JsonIgnore
     private BookDetail bookDetail;
 
-    @JsonBackReference("building")
+//    @JsonBackReference("building")
 //    @JsonIgnore
-    private BuildingDto building;
+//    private BuildingDto building;
 
 }

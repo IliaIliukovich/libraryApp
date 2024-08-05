@@ -1,24 +1,32 @@
 package com.telran.libraryapp.service;
 
+import com.telran.libraryapp.dto.BuildingDto;
 import com.telran.libraryapp.entity.Building;
+import com.telran.libraryapp.mapper.BuildingMapper;
 import com.telran.libraryapp.repository.BuildingRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.mockito.Mockito;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-public class BuildingServiceTest {
+import static org.mockito.ArgumentMatchers.eq;
+
+public    class BuildingServiceTest {
 
     private static BuildingService buildingService;
 
     private static BuildingRepository repository;
 
+    private static BuildingMapper buildingMapper;
+
     @BeforeAll
     public static void init() {
         repository = Mockito.mock(BuildingRepository.class);
-        buildingService = new BuildingService(repository);
+        buildingMapper = Mappers.getMapper(BuildingMapper.class);
+        buildingService = new BuildingService(repository, buildingMapper);
     }
 
     @Test
@@ -35,7 +43,7 @@ public class BuildingServiceTest {
 
         Mockito.when(repository.findById(3L)).thenReturn(Optional.of(building));
 
-       Building result = buildingService.getBuildingById(3L).get();
+        BuildingDto result = buildingService.getBuildingById(3L).get();
 
         Mockito.verify(repository).findById(3L);
         assertEquals(building.getId(), result.getId());
@@ -45,10 +53,13 @@ public class BuildingServiceTest {
     void addBuilding() {
         Building building = new Building();
         building.setName("Name");
+        building.setAddress("Address");
 
-        buildingService.addBuilding(building);
+        Mockito.when(repository.save(building)).thenReturn(building);
+        BuildingDto resultBuilding = buildingService.addBuilding(buildingMapper.entityToDto(building));
 
         Mockito.verify(repository).save(building);
+        assertEquals(building.getName(), buildingMapper.dtoToEntity(resultBuilding).getName());
     }
 
     @Test
@@ -66,11 +77,10 @@ public class BuildingServiceTest {
         Mockito.when(repository.findById(1L)).thenReturn(Optional.of(oldBuilding));
         Mockito.when(repository.save(newBuilding)).thenReturn(newBuilding);
 
-        Building result = buildingService.updateBuilding(newBuilding);
+        BuildingDto result = buildingService.updateBuilding(buildingMapper.entityToDto(newBuilding));
+
         Mockito.verify(repository).findById(1L);
-        Mockito.verify(repository).save(newBuilding);
-        assertEquals(newBuilding.getName(), result.getName());
-        assertEquals(newBuilding.getAddress(), result.getAddress());
+        Mockito.verify(repository).save(eq(newBuilding));
 
         newBuilding = new Building();
         newBuilding.setName("New name");
@@ -78,7 +88,7 @@ public class BuildingServiceTest {
         newBuilding.setId(555L);
 
         Mockito.when(repository.findById(555L)).thenReturn(Optional.empty());
-        result = buildingService.updateBuilding(newBuilding);
+        result = buildingService.updateBuilding(buildingMapper.entityToDto(newBuilding));
         assertNull(result);
 
 
