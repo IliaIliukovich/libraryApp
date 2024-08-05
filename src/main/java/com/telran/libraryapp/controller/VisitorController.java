@@ -1,5 +1,6 @@
 package com.telran.libraryapp.controller;
 
+import com.telran.libraryapp.dto.VisitorDto;
 import com.telran.libraryapp.entity.Visitor;
 import com.telran.libraryapp.service.VisitorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,38 +23,48 @@ public class VisitorController {
     }
 
     @GetMapping
-    public List<Visitor> getAllVisitors() {
+    public List<VisitorDto> getAllVisitors() {
         return visitorService.getAll();
     }
 
     @GetMapping("/{email}")
-    public Optional<Visitor> getVisitorByEmail(@PathVariable String email) {
-        return visitorService.getVisitorByEmail(email);
+    public ResponseEntity<VisitorDto> getVisitorByEmail(@PathVariable String email) {
+        Optional<VisitorDto> optionalVisitorDto = visitorService.getVisitorByEmail(email);
+        return optionalVisitorDto.map(ResponseEntity::ok)
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
-    public Visitor createVisitor(@RequestBody Visitor visitor) {
-        Visitor created = visitorService.addVisitor(visitor);
-        return created;
+    public ResponseEntity<VisitorDto> createVisitor(@RequestBody VisitorDto visitorDto) {
+        VisitorDto created = visitorService.addVisitor(visitorDto);
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @PutMapping("/{email}")
-    public boolean updateVisitor(@PathVariable String email, @RequestBody Visitor visitorDetails) { // TODO
+    public ResponseEntity<VisitorDto> updateVisitor(@PathVariable String email, @RequestBody VisitorDto visitorDetails) {
         visitorDetails.setEmail(email);
-        return visitorService.updateVisitor(visitorDetails);
+        boolean isUpdated = visitorService.updateVisitor(visitorDetails);
+        if (isUpdated) {
+            return new ResponseEntity<>(visitorDetails, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(visitorDetails, HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{email}")
-    public ResponseEntity<?> deleteVisitorByEmail(@PathVariable String email) {
-        visitorService.deleteVisitorsByEmail(email);
+    public ResponseEntity<Void> deleteVisitorByEmail(@PathVariable String email) {
+        visitorService.deleteVisitorByEmail(email);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
     @GetMapping("/search")
-    public List<Visitor> getVisitorByName(@RequestParam String name) {
+    public List<VisitorDto> getVisitorByName(@RequestParam String name) {
         return visitorService.getVisitorByName(name);
     }
+
     @DeleteMapping("/roles")
-    public void deleteAllRoles() {
+    public ResponseEntity<Void> deleteAllRoles() {
         visitorService.deleteAllRoles();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
