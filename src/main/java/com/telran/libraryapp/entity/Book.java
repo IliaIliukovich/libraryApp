@@ -24,12 +24,14 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
     private Long id;
 
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference("category")
+    @JoinColumn(name = "category_id")
     private Category category;
 
     private int availableAmount;
@@ -37,9 +39,11 @@ public class Book {
     private String isbn;
 
     @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_detail_id")
     private BookDetail bookDetail;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "building_id")
 //    @JsonBackReference("building")
     private Building building;
 

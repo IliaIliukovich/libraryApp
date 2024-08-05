@@ -1,9 +1,6 @@
 package com.telran.libraryapp.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
@@ -16,6 +13,7 @@ import org.hibernate.validator.constraints.Length;
 public class BookDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_detail_id")
     private Long id;
 
     @Length(max= 90, message = "{validation.bookDetail.publisher}")

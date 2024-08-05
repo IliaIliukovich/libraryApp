@@ -1,4 +1,4 @@
-insert into category (id, name, description)
+insert into category (category_id, name, description)
 values (1, 'Java', 'Learning Java'),
        (2, ' Technology', 'Books about the latest in technology'),
        (3, 'Science Fiction', 'Books set in futuristic settings with advanced technology'),
@@ -11,7 +11,7 @@ values (1, 'Java', 'Learning Java'),
        (10, 'Health', 'Books about health, wellness, and fitness'),
        (11, 'Travel', 'Books about exploring new places and cultures');
 
-insert into book_detail (id, publisher, year, abstract_to_book)
+insert into book_detail (book_detail_id, publisher, year, abstract)
 values (1, 'Manning Publications', '2018', 'Comprehensive guide to modern Java programming'),
        (2, 'Addison-Wesley', '2011', 'A comprehensive introduction to algorithms'),
        (3, 'Addison-Wesley', '1994', 'A classic guide to software design patterns'),
@@ -39,7 +39,7 @@ values (1, 'Manning Publications', '2018', 'Comprehensive guide to modern Java p
        (25, 'Ballantine Books', '1953', 'A dystopian novel about a future American society where books are banned');
 
 
-insert into building (id, name, address, has_reading_room)
+insert into building (building_id, name, address, has_reading_room)
 values (1, 'Christ\'s College', 'St Andrews St, Cambridge CB2 3BU', true),
        (2, 'Churchill College', 'Storey\'s Way, Cambridge CB3 0DS', true),
        (3, 'Clare College', 'Trinity Ln, Cambridge CB2 1TL', true),
@@ -47,35 +47,35 @@ values (1, 'Christ\'s College', 'St Andrews St, Cambridge CB2 3BU', true),
        (5, 'Trinity Hall', 'Trinity Ln, Cambridge CB2 1TJ', true),
        (6, 'Wolfson College', 'Barton Rd, Cambridge CB3 9BB', true);
 
-insert into book (access_level, building_id, id, title, category_id, available_amount, isbn, book_detail_id)
+insert into book (access_level, building_id, book_id, title, category_id, available_amount, isbn, book_detail_id)
 values  ('OPEN', 1, 1,'Java in action', 1, 2, '9780451524935', 1),
         ('OPEN', 1, 2,'Algorithms', 1, 1, '9780451524935', 2),
         ('OPEN', 1, 3,'Design Patterns', 1, 4, '9780451524935', 3),
         ('OPEN', 1, 4,'Sherlock Holmes', 2, 3, '9780451524935', null),
-        ('OPEN', 1, 5,'Harry Potter and the Philosopher\'s stone', null, 4, '9780451524935', null),
+        ('OPEN', 1, 5,'Harry Potter and the Philosopher\'s stone', 1, 4, '9780451524935', null),
         ('OPEN', 1, 6,'1984', 3, 5, '9780451524935', null),
         ('OPEN', 1, 7,'To Kill a Mockingbird',4, 7, '9780061120084', null),
-        ('OPEN', 1, 8,'Pride and Prejudice', null, 3, '9781503290563', null),
+        ('OPEN', 1, 8,'Pride and Prejudice', 1, 3, '9781503290563', null),
         ('OPEN', 1, 9,'The Great Gatsby', 4, 4, '9780743273565', null),
-        ('OPEN', 1, 10,'Moby Dick', null, 2, '9781503280786', null),
+        ('OPEN', 1, 10,'Moby Dick', 1, 2, '9781503280786', null),
         ('OPEN', 1, 11,'War and Peace', 4, 6, '9780199232765', null),
         ('OPEN', 1, 12,'The Catcher in the Rye', 4, 5, '9780316769488', null),
-        ('OPEN', 1, 13,'The Odyssey', null, 10, '9780140268867', null),
-        ('OPEN', 1, 14,'The Divine Comedy', null, 4, '9780142437223', null),
-        ('OPEN', 1, 15,'Jane Eyre', null, 3, '9781503278196', null),
+        ('OPEN', 1, 13,'The Odyssey', 1, 10, '9780140268867', null),
+        ('OPEN', 1, 14,'The Divine Comedy', 1, 4, '9780142437223', null),
+        ('OPEN', 1, 15,'Jane Eyre', 1, 3, '9781503278196', null),
         ('OPEN', 1, 16,'Wuthering Heights', 4, 4, '9780141439556', null),
         ('OPEN', 1, 17,'Brave New World', 3, 7, '9780060850524', null),
         ('OPEN', 1, 18,'Madame Bovary', 4, 5, '9780140449129', null),
-        ('OPEN', 1, 19,'One Hundred Years of Solitude', null, 8, '9780060883287', null),
-        ('OPEN', 1, 20,'In Search of Lost Time', null, 2, '9780143039570', null),
-        ('OPEN', 1, 21,'Ulysses', null, 3, '9780199535675', null),
-        ('OPEN', 1, 22,'Don Quixote', null, 7, '9780060934347', null),
-        ('OPEN', 1, 23,'The Iliad', null, 5, '9780140275360', null),
-        ('OPEN', 1, 24,'The Hobbit', null, 9, '9780345339683', null),
+        ('OPEN', 1, 19,'One Hundred Years of Solitude', 1, 8, '9780060883287', null),
+        ('OPEN', 1, 20,'In Search of Lost Time', 1, 2, '9780143039570', null),
+        ('OPEN', 1, 21,'Ulysses', 1, 3, '9780199535675', null),
+        ('OPEN', 1, 22,'Don Quixote', 1, 7, '9780060934347', null),
+        ('OPEN', 1, 23,'The Iliad', 1, 5, '9780140275360', null),
+        ('OPEN', 1, 24,'The Hobbit', 1, 9, '9780345339683', null),
         ('OPEN', 1, 25,'Fahrenheit 451', 3, 4, '9781451673319', null);
 
 
-insert into author (id, name, surname, author_info)
+insert into author (author_id, name, surname, author_info)
 values (1, 'Urma', 'R.-G.',
         'Raoul-Gabriel Urma is the CEO and co-founder of Cambridge Spark, a learning and development platform for data scientists and developers.'),
        (2, 'Fusco', 'M.', 'Mario Fusco is a senior software engineer at Red Hat, working on the Drools project.'),
@@ -135,7 +135,7 @@ values (1, 'Urma', 'R.-G.',
        (30, 'Ray', 'Bradbury', 'Ray Bradbury was an American author and screenwriter,
         best known for his dystopian novel Fahrenheit 451.');
 
-insert into visitor (email, password, name, surname, visitor_role)
+insert into visitor (email, password, name, surname, role)
 values ('john.doe@example.com', 'password123', 'John', 'Doe', 'USER'),
        ('jane.smith@example.com', 'password123', 'Jane', 'Smith', 'USER'),
        ('alice.jones@example.com', 'password123', 'Alice', 'Jones', 'USER'),
@@ -194,7 +194,7 @@ values (1, 'New', 'description new Books'),
        (3, 'Fantasy', 'description Fantasy'),
        (4, 'Math', 'description Math');
 
-insert into book_has_tag (book_isbn, tag_id)
+insert into book_has_tag (book_id, tag_id)
 values ('1', 2),
        ('2', 3);
 

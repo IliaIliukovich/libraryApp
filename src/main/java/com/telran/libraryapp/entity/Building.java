@@ -15,6 +15,7 @@ import java.util.Objects;
 public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "building_id")
     private Long id;
 
     private String name;

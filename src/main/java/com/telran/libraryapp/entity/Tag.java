@@ -28,7 +28,7 @@ public class Tag {
     @ManyToMany
     @JoinTable(name = "book_has_tag",
             joinColumns = @JoinColumn(name = "tag_id") ,
-            inverseJoinColumns = @JoinColumn(name = "book_isbn"))
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> books;
 
     @Override
