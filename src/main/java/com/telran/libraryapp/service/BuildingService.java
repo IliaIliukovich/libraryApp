@@ -12,6 +12,7 @@ import java.util.Optional;
 public class BuildingService {
 
     private static final String ZIPCODE_REGEX = "\\s[A-Z]{2}\\d\\s\\d[A-Z]{2}";
+
     private final BuildingRepository repository;
 
     @Autowired
