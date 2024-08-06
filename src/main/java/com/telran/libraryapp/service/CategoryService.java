@@ -40,8 +40,7 @@ public class CategoryService {
     }
 
     public Category add(Category category) {
-        repository.save(category);
-        return category;
+        return repository.save(category);
     }
 
 }

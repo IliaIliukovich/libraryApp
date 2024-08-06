@@ -2,6 +2,7 @@ package com.telran.libraryapp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.telran.libraryapp.entity.Book;
+import com.telran.libraryapp.entity.enums.AccessLevel;
 import com.telran.libraryapp.repository.BookRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,8 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -36,9 +36,10 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testPostRequest() throws Exception {
+    public void testPostAndDeleteRequest() throws Exception {
         Book book = new Book();
         book.setTitle("Title");
+        book.setAccessLevel(AccessLevel.OPEN);
 
         mockMvc.perform(post("/books")
                         .contentType("application/json")
@@ -47,6 +48,15 @@ public class IntegrationTest {
 
         List<Book> books = repository.findBooksByTitleStartingWithAndAvailableAmountIsGreaterThanEqual("Title", 0);
         Assertions.assertEquals(1, books.size());
+
+        Long id = books.get(0).getId();
+        mockMvc.perform(delete("/books?id=" + id)
+                        .contentType("application/json")
+                        .content(objectMapper.writeValueAsString(book)))
+                .andExpect(status().isAccepted());
+
+        books = repository.findBooksByTitleStartingWithAndAvailableAmountIsGreaterThanEqual("Title", 0);
+        Assertions.assertEquals(0, books.size());
     }
 
 

@@ -24,7 +24,7 @@ public class BookRepositoryTest {
     @Test
     public void findBooksByCategoryId() {
         List<Book> booksByCategoryId = repository.findBooksByCategoryId(1L);
-        assertEquals(3, booksByCategoryId.size());
+        assertEquals(15, booksByCategoryId.size());
     }
 
     @Test

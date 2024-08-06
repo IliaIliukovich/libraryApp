@@ -7,5 +7,6 @@
     <include file="db/migrations/001_schema.sql"/>
     <include file="db/migrations/002_data.sql"/>
     <include file="db/migrations/003_update_book.sql"/>
+    <include file="/db/migrations/004_db_fixes.sql"/>
 
 </databaseChangeLog>

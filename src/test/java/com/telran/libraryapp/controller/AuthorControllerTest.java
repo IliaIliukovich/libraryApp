@@ -60,10 +60,7 @@ class AuthorControllerTest {
         mockMvc.perform(post("/authors")
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(author)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(12L))
-                .andExpect(jsonPath("$.name").value("Jane"))
-                .andExpect(jsonPath("$.surname").value("Done"));
+                .andExpect(status().isCreated());
 
         verify(service).add(Mockito.any(Author.class));
 

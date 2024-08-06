@@ -3,6 +3,7 @@ package com.telran.libraryapp.controller;
 import com.telran.libraryapp.dto.VisitorDto;
 import com.telran.libraryapp.entity.Visitor;
 import com.telran.libraryapp.service.VisitorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +36,13 @@ public class VisitorController {
     }
 
     @PostMapping
-    public ResponseEntity<VisitorDto> createVisitor(@RequestBody VisitorDto visitorDto) {
+    public ResponseEntity<VisitorDto> createVisitor(@RequestBody @Valid VisitorDto visitorDto) {
         VisitorDto created = visitorService.addVisitor(visitorDto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @PutMapping("/{email}")
-    public ResponseEntity<VisitorDto> updateVisitor(@PathVariable String email, @RequestBody VisitorDto visitorDetails) {
+    public ResponseEntity<VisitorDto> updateVisitor(@PathVariable String email, @RequestBody @Valid VisitorDto visitorDetails) {
         visitorDetails.setEmail(email);
         boolean isUpdated = visitorService.updateVisitor(visitorDetails);
         if (isUpdated) {

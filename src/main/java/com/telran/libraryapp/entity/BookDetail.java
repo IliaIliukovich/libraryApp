@@ -24,6 +24,7 @@ public class BookDetail {
 
 
     @Length(max = 255, message = "{validation.bookDetail.abstractToBook}")
+    @Column(name = "abstract")
     private String abstractToBook;
 
 

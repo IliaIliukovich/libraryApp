@@ -39,9 +39,9 @@ public class BuildingController {
     }
     @PostMapping
     public ResponseEntity<BuildingDto> addBuilding(@RequestBody @Valid BuildingDto building) {
-        service.addBuilding(building);
-        log.info("Building with id = {} and name = {} created", building.getId(), building.getName());
-        return new ResponseEntity<>(building, HttpStatus.CREATED);
+        BuildingDto added = service.addBuilding(building);
+        log.info("Building with id = {} and name = {} created", added.getId(), added.getName());
+        return new ResponseEntity<>(added, HttpStatus.CREATED);
     }
 
     @PutMapping

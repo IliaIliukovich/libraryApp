@@ -1,0 +1,26 @@
+-- liquibase formatted sql
+-- changeset ilia:004
+SET FOREIGN_KEY_CHECKS = 0;
+
+ALTER TABLE book
+    MODIFY COLUMN building_id INT NULL;
+
+ALTER TABLE book
+    MODIFY COLUMN category_id INT NULL;
+
+ALTER TABLE category
+    MODIFY COLUMN category_id INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE tag
+    MODIFY COLUMN tag_id INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE building
+    MODIFY COLUMN building_id INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE book_detail
+    MODIFY COLUMN book_detail_id INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE author
+    MODIFY COLUMN author_id INT NOT NULL AUTO_INCREMENT;
+
+SET FOREIGN_KEY_CHECKS = 1;

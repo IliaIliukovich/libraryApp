@@ -37,9 +37,9 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<Author> addAuthor(@RequestBody @Valid Author author) {
+    public ResponseEntity<Void> addAuthor(@RequestBody @Valid Author author) {
         authorService.add(author);
-        return new ResponseEntity<>(author, HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping
