@@ -1,24 +1,30 @@
 package com.telran.libraryapp.service;
 
+import com.telran.libraryapp.dto.CategoryDto;
 import com.telran.libraryapp.entity.Category;
+import com.telran.libraryapp.mapper.CategoryMapper;
 import com.telran.libraryapp.repository.CategoryRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.mockito.Mockito;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 
 class CategoryServiceTest {
     private static CategoryService categoryService;
     private static CategoryRepository repository;
+    private static CategoryMapper categoryMapper;
 
     @BeforeAll
     public static void setUp() {
         repository = Mockito.mock(CategoryRepository.class);
-        categoryService = new CategoryService(repository);
+        categoryMapper = Mappers.getMapper(CategoryMapper.class);
+        categoryService = new CategoryService(repository, categoryMapper);
     }
 
     @Test
@@ -43,7 +49,7 @@ class CategoryServiceTest {
         Mockito.when(repository.findById(category.getId())).thenReturn(Optional.of(category));
         Mockito.when(repository.save(category)).thenReturn(category);
 
-        categoryService.updateCategory(category);
+        categoryService.updateCategory(categoryMapper.entityToDto(category));
         Mockito.verify(repository).findById(category.getId());
         Mockito.verify(repository).save(category);
 
@@ -52,11 +58,9 @@ class CategoryServiceTest {
         category1.setId(24L);
 
         Mockito.when(repository.findById(24L)).thenReturn(Optional.empty());
-        Category result = categoryService.updateCategory(category1);
+        CategoryDto result = categoryService.updateCategory(categoryMapper.entityToDto(category1));
         Mockito.verify(repository,times(0)).save(category1);
         assertNull(result);
-
-
     }
 
     @Test
@@ -68,8 +72,8 @@ class CategoryServiceTest {
     @Test
     void add() {
         Category category = new Category();
-        categoryService.add(category);
-        Mockito.verify(repository).save(category);
+        categoryService.add(categoryMapper.entityToDto(category));
+        Mockito.verify(repository).save(eq(category));
 
 
     }
