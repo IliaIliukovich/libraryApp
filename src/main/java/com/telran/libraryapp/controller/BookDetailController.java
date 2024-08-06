@@ -1,6 +1,7 @@
 package com.telran.libraryapp.controller;
 
 
+import com.telran.libraryapp.dto.BookDetailDto;
 import com.telran.libraryapp.entity.BookDetail;
 import com.telran.libraryapp.service.BookDetailService;
 import jakarta.validation.Valid;
@@ -28,14 +29,14 @@ public class BookDetailController {
     }
 
     @GetMapping
-    public List<BookDetail> getAll() {
+    public List<BookDetailDto> getAll() {
         log.info("Get all book details");
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDetail> getBookDetailById(@PathVariable Long id) {
-        Optional<BookDetail> bookDetail = service.getBDById(id);
+    public ResponseEntity<BookDetailDto> getBookDetailById(@PathVariable Long id) {
+        Optional<BookDetailDto> bookDetail = service.getBDById(id);
         if (bookDetail.isPresent()) {
             log.info("Get book detail by id: {} successfully ", id);
             return new ResponseEntity<>(bookDetail.get(), HttpStatus.OK);
@@ -46,14 +47,14 @@ public class BookDetailController {
     }
 
     @PostMapping("/addBookDetail")
-    public ResponseEntity<BookDetail> addBookDetail(@RequestBody @Valid BookDetail bookDetail, @RequestParam Long bookID) {
-        BookDetail savedBookDetail = service.add(bookDetail, bookID);
+    public ResponseEntity<BookDetailDto> addBookDetail(@RequestBody @Valid BookDetailDto bookDetail, @RequestParam Long bookID) {
+        BookDetailDto savedBookDetail = service.add(bookDetail, bookID);
         log.info("BookDetail with id = {} created", savedBookDetail.getId());
         return new ResponseEntity<>(savedBookDetail, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<BookDetail> updateBookDetail(@RequestBody @Valid BookDetail bookDetail) {
+    public ResponseEntity<BookDetailDto> updateBookDetail(@RequestBody @Valid BookDetailDto bookDetail) {
         boolean isUpdated = service.updateBookDetail(bookDetail);
         if (isUpdated) {
             log.info("BookDetail with id = {} updated", bookDetail.getId());
