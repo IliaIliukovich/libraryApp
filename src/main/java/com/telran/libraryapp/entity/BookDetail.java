@@ -1,9 +1,12 @@
 package com.telran.libraryapp.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
-import lombok.*;
-import org.hibernate.validator.constraints.Length;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,18 +19,24 @@ public class BookDetail {
     @Column(name = "book_detail_id")
     private Long id;
 
-    @Length(max= 90, message = "{validation.bookDetail.publisher}")
     private String publisher;
 
-    @Pattern(regexp = "^\\d{1,4}( BC)?$", message = "{validation.bookDetail.year}")
     private String year;
-
-
-    @Length(max = 255, message = "{validation.bookDetail.abstractToBook}")
-    @Column(name = "abstract")
+    @Column(name="abstract")
     private String abstractToBook;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookDetail that = (BookDetail) o;
+        return Objects.equals(id, that.id) && Objects.equals(publisher, that.publisher) && Objects.equals(year, that.year) && Objects.equals(abstractToBook, that.abstractToBook);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, publisher, year, abstractToBook);
+    }
 }
 
 

@@ -1,12 +1,15 @@
 package com.telran.libraryapp.service;
 
+import com.telran.libraryapp.dto.BookDetailDto;
 import com.telran.libraryapp.entity.Book;
 import com.telran.libraryapp.entity.BookDetail;
+import com.telran.libraryapp.mapper.BookDetailMapper;
 import com.telran.libraryapp.repository.BookDetailRepository;
 import com.telran.libraryapp.repository.BookRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.mockito.Mockito;
 
 import java.util.Optional;
@@ -18,13 +21,16 @@ class BookDetailServiceTest {
     private static BookDetailService bookDetailService;
     private static BookDetailRepository bookDetailRepository;
     private static BookRepository bookRepository;
+    private static BookDetailMapper bookDetailMapper;
+
 
 
     @BeforeEach
     public void init() {
         bookDetailRepository = Mockito.mock(BookDetailRepository.class);
         bookRepository = Mockito.mock(BookRepository.class);
-        bookDetailService = new BookDetailService(bookDetailRepository, bookRepository);
+        bookDetailMapper = Mappers.getMapper(BookDetailMapper.class);
+        bookDetailService = new BookDetailService(bookDetailRepository, bookRepository, bookDetailMapper);
     }
 
     @Test
@@ -37,7 +43,7 @@ class BookDetailServiceTest {
     public void getBDById() {
         Long testId = 77L;
         when(bookDetailRepository.findById(testId)).thenReturn(Optional.of(new BookDetail(testId, "Test", "1987", "dsd")));
-        Optional<BookDetail> result = bookDetailService.getBDById(testId);
+        Optional<BookDetailDto> result = bookDetailService.getBDById(testId);
         assertEquals("Test", result.get().getPublisher());
         Mockito.verify(bookDetailRepository).findById(testId);
 
@@ -61,11 +67,10 @@ class BookDetailServiceTest {
         Mockito.when(bookDetailRepository.save(newBookDetail)).thenReturn(newBookDetail);
         Mockito.when(bookRepository.save(book)).thenReturn(book);
 
-        BookDetail result = bookDetailService.add(newBookDetail, bookId);
+         bookDetailService.add(bookDetailMapper.entityToDto(newBookDetail), bookId);
 
-        assertEquals(newBookDetail, result);
         Mockito.verify(bookRepository).findById(bookId);
-        Mockito.verify(bookDetailRepository).save(newBookDetail);
+        Mockito.verify(bookDetailRepository).save(eq(newBookDetail));
         Mockito.verify(bookRepository).save(book);
         Mockito.verify(bookDetailRepository).deleteById(bookDetail.getId());
     }
@@ -78,7 +83,7 @@ class BookDetailServiceTest {
 
         Mockito.when(bookRepository.findById(bookId)).thenReturn(Optional.empty());
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            bookDetailService.add(bookDetail, bookId);
+            bookDetailService.add(bookDetailMapper.entityToDto(bookDetail), bookId);
         });
         assertEquals("Book with id 88 not found", exception.getMessage());
         Mockito.verify(bookRepository).findById(bookId);
@@ -100,7 +105,7 @@ class BookDetailServiceTest {
         Mockito.when(bookDetailRepository.findById(oldBookDetail.getId())).thenReturn(Optional.of(oldBookDetail));
         Mockito.when(bookDetailRepository.save(newBookDetail)).thenReturn(newBookDetail);
 
-        Boolean result = bookDetailService.updateBookDetail(newBookDetail);
+        Boolean result = bookDetailService.updateBookDetail(bookDetailMapper.entityToDto(newBookDetail));
 
         Mockito.verify(bookDetailRepository).findById(newBookDetail.getId());
         Mockito.verify(bookDetailRepository).save(newBookDetail);
@@ -119,7 +124,7 @@ class BookDetailServiceTest {
         oldBookDetail.setId(44L);
 
         Mockito.when(bookDetailRepository.findById(oldBookDetail.getId())).thenReturn(Optional.empty());
-        Boolean result = bookDetailService.updateBookDetail(newBookDetail);
+        Boolean result = bookDetailService.updateBookDetail(bookDetailMapper.entityToDto(newBookDetail));
 
         Mockito.verify(bookDetailRepository).findById(newBookDetail.getId());
         assertFalse(result);
@@ -133,7 +138,7 @@ class BookDetailServiceTest {
         newBookDetail.setId(44L);
 
         Mockito.when(bookDetailRepository.findById(newBookDetail.getId())).thenReturn(Optional.empty());
-        Boolean result = bookDetailService.updateBookDetail(newBookDetail);
+        Boolean result = bookDetailService.updateBookDetail(bookDetailMapper.entityToDto(newBookDetail));
 
 
         Mockito.verify(bookDetailRepository).findById(newBookDetail.getId());

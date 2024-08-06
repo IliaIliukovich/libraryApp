@@ -1,5 +1,6 @@
 package com.telran.libraryapp.controller;
 
+import com.telran.libraryapp.dto.BookDetailDto;
 import com.telran.libraryapp.entity.BookDetail;
 import com.telran.libraryapp.service.BookDetailService;
 import org.junit.jupiter.api.Test;
@@ -37,7 +38,7 @@ class BookDetailControllerTest {
     @Test
     public void getBookDetailById() throws Exception {
         when(bookDetailService.getBDById(anyLong()))
-                .thenReturn(Optional.of(new BookDetail(22L, "Addison-Wesley", "2011", "A comprehensive introduction to algorithms")));
+                .thenReturn(Optional.of(new BookDetailDto(22L, "Addison-Wesley", "2011", "A comprehensive introduction to algorithms")));
         this.mockMvc.perform(get("/bookDetails/{id}", 1))
                 .andExpect(status().isOk());
         Mockito.verify(bookDetailService, times(1)).getBDById(anyLong());
