@@ -1,6 +1,7 @@
 package com.telran.libraryapp.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.telran.libraryapp.dto.AuthorDto;
 import com.telran.libraryapp.entity.Author;
 import com.telran.libraryapp.service.AuthorService;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ class AuthorControllerTest {
 
     @Test
     void getAuthorById() throws Exception {
-        Author author = new Author();
+        AuthorDto author = new AuthorDto();
         author.setId(15L);
 
         when(service.getNameAuthorByID(15L)).thenReturn(Optional.of(author));
@@ -52,17 +53,22 @@ class AuthorControllerTest {
 
     @Test
     void addAuthor() throws Exception {
-        Author author = new Author();
+        AuthorDto author = new AuthorDto();
         author.setId(12L);
         author.setName("Jane");
-        author.setSurname("Done");
-        Mockito.doNothing().when(service).add(Mockito.any(Author.class));
+        author.setSurname("Doe");
+
+        Mockito.doNothing().when(service).add(Mockito.any(AuthorDto.class));
+
         mockMvc.perform(post("/authors")
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(author)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(12L))
+                .andExpect(jsonPath("$.name").value("Jane"))
+                .andExpect(jsonPath("$.surname").value("Doe"));
 
-        verify(service).add(Mockito.any(Author.class));
+        verify(service).add(Mockito.any(AuthorDto.class));
 
     }
 

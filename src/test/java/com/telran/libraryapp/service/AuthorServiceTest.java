@@ -1,45 +1,56 @@
 package com.telran.libraryapp.service;
 
+import com.telran.libraryapp.dto.AuthorDto;
 import com.telran.libraryapp.entity.Author;
+import com.telran.libraryapp.mapper.AuthorMapper;
 import com.telran.libraryapp.repository.AuthorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.mockito.Mockito;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class AuthorServiceTest {
     private static AuthorService authorService;
     private static AuthorRepository authorRepository;
+    private static AuthorMapper authorMapper;
 
     @BeforeEach
     public void init() {
         authorRepository = Mockito.mock(AuthorRepository.class);
-        authorService = new AuthorService(authorRepository);
+        authorService = new AuthorService(authorRepository,authorMapper);
+        authorMapper = Mappers.getMapper(AuthorMapper.class);
     }
 
     @Test
-    void getAll() {
+    public void getAll() {
         authorService.getAll();
         Mockito.verify(authorRepository).findAll();
     }
 
     @Test
-    void getNameAuthorByID() {
-        Long id = 2L;
-        authorService.getNameAuthorByID(id);
-        Mockito.verify(authorRepository).findById(id);
+    public void getNameAuthorByID() {
+        Author author = new Author();
+        author.setId(2L);
+        Mockito.when(authorRepository.findById(2L)).thenReturn(Optional.of(author));
+        AuthorDto authorDto = authorService.getNameAuthorByID(2L).get();
+        Mockito.verify(authorRepository).findById(2L);
+        assertEquals(author.getId(), authorDto.getId());
+
     }
 
     @Test
     public void add() {
         Author author = new Author();
-        author.setId(156L);
-        author.setName("Agata");
-        authorService.add(author);
+        author.setName("Olga");
+
+        Mockito.when(authorRepository.save(author)).thenReturn(author);
+        authorService.add(authorMapper.entityToDto(author));
+
         Mockito.verify(authorRepository).save(author);
     }
 
@@ -56,19 +67,11 @@ class AuthorServiceTest {
         Mockito.when(authorRepository.findById(author.getId())).thenReturn(Optional.of(oldAuthor));
         Mockito.when(authorRepository.save(author)).thenReturn(author);
 
-        boolean result = authorService.updateAuthor(author);
+        boolean result = authorService.updateAuthor(authorMapper.entityToDto(author));
 
         Mockito.verify(authorRepository).findById(author.getId());
         Mockito.verify(authorRepository).save(author);
         assertTrue(result);
-
-        author = new Author();
-        author.setName("New name author");
-        author.setId(777L);
-
-        Mockito.when(authorRepository.findById(777L)).thenReturn(Optional.empty());
-        result = authorService.updateAuthor(author);
-        assertFalse(result);
     }
 
     @Test
@@ -79,7 +82,7 @@ class AuthorServiceTest {
     }
 
     @Test
-    void returnAuthorByNameOrSurname() {
+    public void returnAuthorByNameOrSurname() {
         authorService.returnAuthorByNameOrSurname("Dave", "Big");
         Mockito.verify(authorRepository).findAuthorByNameAndSurname("Dave","Big");
 
@@ -95,7 +98,7 @@ class AuthorServiceTest {
     }
 
     @Test
-    void getAuthorByRandomWord() {
+    public void getAuthorByRandomWord() {
         authorService.getAuthorByRandomWord("Jane");
         Mockito.verify(authorRepository).findAuthorByRandomWord("%Jane%");
     }
