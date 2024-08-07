@@ -1,6 +1,5 @@
 package com.telran.libraryapp.dto;
 
-import com.telran.libraryapp.entity.Book;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;

@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -49,6 +50,9 @@ public class Book {
 
     @Enumerated(EnumType.STRING)
     private AccessLevel accessLevel;
+
+    @ManyToMany(mappedBy = "authors")
+    private List<Author> authors;
 
     @Override
     public boolean equals(Object o) {
