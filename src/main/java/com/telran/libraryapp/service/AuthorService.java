@@ -39,7 +39,7 @@ public class AuthorService {
 
     public void add(AuthorDto authorDto) {
         Author author = authorMapper.dtoToEntity(authorDto);
-        Author saved = authorRepository.save(author);
+        authorRepository.save(author);
     }
 
     public boolean updateAuthor(AuthorDto authorDto) {

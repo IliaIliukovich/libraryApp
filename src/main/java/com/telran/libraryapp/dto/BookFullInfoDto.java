@@ -1,9 +1,6 @@
 package com.telran.libraryapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.telran.libraryapp.entity.BookDetail;
-import com.telran.libraryapp.entity.Building;
-import com.telran.libraryapp.entity.Category;
 import com.telran.libraryapp.entity.enums.AccessLevel;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -35,13 +32,13 @@ public class BookFullInfoDto {
     private AccessLevel accessLevel;
 
     @JsonIgnore
-    private Category category;
+    private CategoryDto category;
 
     @JsonIgnore
-    private BookDetail bookDetail;
+    private BookDetailDto bookDetail;
 
     @JsonIgnore
-    private Building building;
+    private BuildingDto building;
 
     @Length(max= 90, message = "{validation.bookDetail.publisher}")
     private String publisher;

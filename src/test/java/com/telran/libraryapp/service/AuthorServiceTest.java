@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.eq;
 
 
 class AuthorServiceTest {
@@ -22,8 +23,8 @@ class AuthorServiceTest {
     @BeforeEach
     public void init() {
         authorRepository = Mockito.mock(AuthorRepository.class);
-        authorService = new AuthorService(authorRepository,authorMapper);
         authorMapper = Mappers.getMapper(AuthorMapper.class);
+        authorService = new AuthorService(authorRepository,authorMapper);
     }
 
     @Test
@@ -50,8 +51,7 @@ class AuthorServiceTest {
 
         Mockito.when(authorRepository.save(author)).thenReturn(author);
         authorService.add(authorMapper.entityToDto(author));
-
-        Mockito.verify(authorRepository).save(author);
+        Mockito.verify(authorRepository).save(eq(author));
     }
 
     @Test

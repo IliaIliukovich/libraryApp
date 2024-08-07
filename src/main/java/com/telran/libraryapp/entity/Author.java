@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -30,8 +31,18 @@ public class Author {
     @JoinTable(name = "book_has_author",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
-
     private List<Book> authorHasBooks;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return Objects.equals(id, author.id) && Objects.equals(name, author.name) && Objects.equals(surname, author.surname) && Objects.equals(authorInfo, author.authorInfo);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, authorInfo);
+    }
 }

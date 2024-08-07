@@ -1,10 +1,6 @@
 package com.telran.libraryapp.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.telran.libraryapp.entity.BookDetail;
-import com.telran.libraryapp.entity.Building;
-import com.telran.libraryapp.entity.Category;
 import com.telran.libraryapp.entity.enums.AccessLevel;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -36,11 +32,11 @@ public class BookDto {
     private AccessLevel accessLevel;
 
 //    @JsonBackReference("category")
-    @JsonIgnore
-    private Category category;
+//    @JsonIgnore
+//    private CategoryDto category;
 
     @JsonIgnore
-    private BookDetail bookDetail;
+    private BookDetailDto bookDetail;
 
 //    @JsonBackReference("building")
 //    @JsonIgnore

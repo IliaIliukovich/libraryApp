@@ -26,6 +26,6 @@ public class CategoryDto {
     @Length(max = 255, message = "{validation.category.description}")
     private String description;
   //  @JsonIgnore
-    private List<Book> books;
+    private List<BookDto> books;
 
 }

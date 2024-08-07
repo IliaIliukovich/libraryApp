@@ -51,7 +51,7 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private AccessLevel accessLevel;
 
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(mappedBy = "authorHasBooks")
     private List<Author> authors;
 
     @Override

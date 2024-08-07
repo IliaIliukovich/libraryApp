@@ -50,10 +50,10 @@ public class AuthorController {
 
     @PostMapping
     @Operation(summary = "add author")
-    public ResponseEntity<AuthorDto> addAuthor(@RequestBody @Valid AuthorDto author) {
+    public ResponseEntity<Void> addAuthor(@RequestBody @Valid AuthorDto author) {
         authorService.add(author);
-        log.info("Author with id = {} created", author.getId());
-        return new ResponseEntity<>(author, HttpStatus.CREATED);
+        log.info("Author created");
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping
