@@ -31,7 +31,6 @@ public class Book {
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference("category")
     @JoinColumn(name = "category_id")
     private Category category;
 
@@ -45,7 +44,6 @@ public class Book {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "building_id")
-    @JsonIgnore
     private Building building;
 
     @Enumerated(EnumType.STRING)

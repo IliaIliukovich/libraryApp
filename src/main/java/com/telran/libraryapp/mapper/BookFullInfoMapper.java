@@ -10,6 +10,8 @@ import org.mapstruct.Mapping;
 public interface BookFullInfoMapper {
 
     @Mapping(target = "id", source = "book.id")
+    @Mapping(target = "categoryId", source = "book.category.id")
+    @Mapping(target = "buildingId", source = "book.building.id")
     BookFullInfoDto entityToDto(Book book, BookDetail bookDetail);
 
     Book dtoToBook(BookFullInfoDto bookFullInfoDto);

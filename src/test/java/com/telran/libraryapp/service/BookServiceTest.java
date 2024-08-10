@@ -6,6 +6,8 @@ import com.telran.libraryapp.mapper.BookFullInfoMapper;
 import com.telran.libraryapp.mapper.BookMapper;
 import com.telran.libraryapp.repository.BookDetailRepository;
 import com.telran.libraryapp.repository.BookRepository;
+import com.telran.libraryapp.repository.BuildingRepository;
+import com.telran.libraryapp.repository.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -28,8 +30,11 @@ public class BookServiceTest {
         repository = Mockito.mock(BookRepository.class);
         BookDetailRepository bookDetailRepository = Mockito.mock(BookDetailRepository.class);
         BookFullInfoMapper bookFullInfoMapper = Mockito.mock(BookFullInfoMapper.class);
+        CategoryRepository categoryRepository = Mockito.mock(CategoryRepository.class);
+        BuildingRepository buildingRepository = Mockito.mock(BuildingRepository.class);
         bookMapper = Mappers.getMapper(BookMapper.class);
-        bookService = new BookService(repository, bookDetailRepository, bookMapper, bookFullInfoMapper);
+        bookService = new BookService(repository, bookDetailRepository, categoryRepository,
+                buildingRepository, bookMapper, bookFullInfoMapper);
     }
 
 

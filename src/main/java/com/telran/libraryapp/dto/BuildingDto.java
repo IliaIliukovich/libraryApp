@@ -28,8 +28,6 @@ public class BuildingDto {
 
     private boolean hasReadingRoom;
 
-//    @JsonManagedReference("building")
-    @JsonIgnore
     List<BookDto> books;
 
 }

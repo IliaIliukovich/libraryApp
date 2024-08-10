@@ -27,7 +27,6 @@ public class Category {
     private String description;
 
     @OneToMany(mappedBy = "category")
-    @JsonManagedReference("category")
     private List<Book> books;
 
     @Override

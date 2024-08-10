@@ -1,18 +1,25 @@
 package com.telran.libraryapp.mapper;
 
+import com.telran.libraryapp.dto.BookDto;
 import com.telran.libraryapp.dto.CategoryDto;
+import com.telran.libraryapp.entity.Book;
 import com.telran.libraryapp.entity.Category;
 import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
-import java.util.Optional;
 
 @Mapper(componentModel = "spring")
-public interface CategoryMapper {
-    Category dtoToEntity(CategoryDto categoryDto);
+public abstract class CategoryMapper {
 
-    CategoryDto entityToDto(Category category);
+    public abstract Category dtoToEntity(CategoryDto categoryDto);
 
-    List<CategoryDto> entityListToDto(List<Category> categories);
+    public abstract CategoryDto entityToDto(Category category);
+
+    public BookDto bookToBookDto(Book book) {
+        return Mappers.getMapper(BookMapper.class).entityToDto(book);
+    }
+
+    public abstract List<CategoryDto> entityListToDto(List<Category> categories);
 
 }

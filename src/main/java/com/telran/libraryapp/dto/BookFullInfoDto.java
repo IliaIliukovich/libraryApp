@@ -31,15 +31,6 @@ public class BookFullInfoDto {
 
     private AccessLevel accessLevel;
 
-    @JsonIgnore
-    private CategoryDto category;
-
-    @JsonIgnore
-    private BookDetailDto bookDetail;
-
-    @JsonIgnore
-    private BuildingDto building;
-
     @Length(max= 90, message = "{validation.bookDetail.publisher}")
     private String publisher;
 
@@ -48,5 +39,9 @@ public class BookFullInfoDto {
 
     @Length(max = 255, message = "{validation.bookDetail.abstractToBook}")
     private String abstractToBook;
+
+    private Long categoryId;
+
+    private Long buildingId;
 
 }

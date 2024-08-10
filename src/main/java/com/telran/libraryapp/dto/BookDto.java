@@ -31,15 +31,11 @@ public class BookDto {
 
     private AccessLevel accessLevel;
 
-//    @JsonBackReference("category")
-//    @JsonIgnore
-//    private CategoryDto category;
-
     @JsonIgnore
     private BookDetailDto bookDetail;
 
-//    @JsonBackReference("building")
-//    @JsonIgnore
-//    private BuildingDto building;
+    private Long categoryId;
+
+    private Long buildingId;
 
 }
