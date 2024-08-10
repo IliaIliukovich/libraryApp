@@ -33,8 +33,7 @@ public class BuildingService {
 
     public Optional<BuildingDto> getBuildingById(Long id) {
         Optional<Building> optional = repository.findById(id);
-        Building building = optional.get();
-        return Optional.of(buildingMapper.entityToDto(building));
+        return optional.map(buildingMapper::entityToDto);
     }
 
 
