@@ -31,7 +31,6 @@ public class BookDto {
 
     private AccessLevel accessLevel;
 
-    @JsonIgnore
     private BookDetailDto bookDetail;
 
     private Long categoryId;

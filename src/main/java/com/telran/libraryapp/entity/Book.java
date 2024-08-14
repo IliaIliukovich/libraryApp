@@ -38,7 +38,7 @@ public class Book {
 
     private String isbn;
 
-    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinColumn(name = "book_detail_id")
     private BookDetail bookDetail;
 
