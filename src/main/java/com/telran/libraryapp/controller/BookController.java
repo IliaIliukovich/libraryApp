@@ -9,6 +9,11 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -41,6 +46,20 @@ public class BookController {
     public List<BookDto> getAll() {
         return service.getAll();
     }
+
+    @GetMapping("/withSort")
+    public List<BookDto> getAll(@SortDefault(sort = "title", direction = Sort.Direction.DESC) Sort sort) {
+        return service.getAllSorted(sort);
+    }
+
+    @GetMapping("/pages")
+    public Page<BookDto> getAll(@PageableDefault(size = 10)
+                                @SortDefault.SortDefaults({@SortDefault(sort = "title")})
+                                    Pageable pageable) {
+        return service.getAllByPages(pageable);
+    }
+
+
 
     @GetMapping("/searchByTitle")
     @Operation(summary = "Search By Title")

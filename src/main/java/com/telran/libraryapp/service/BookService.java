@@ -15,6 +15,9 @@ import com.telran.libraryapp.repository.CategoryRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,6 +62,14 @@ public class BookService {
 //        logger.error("error");
 //        logger.fatal("fatal");
         return bookMapper.entityListToDto(books);
+    }
+
+    public List<BookDto> getAllSorted(Sort sort) {
+        return repository.findAll(sort).stream().map(bookMapper::entityToDto).toList();
+    }
+
+    public Page<BookDto> getAllByPages(Pageable pageable) {
+        return repository.findAll(pageable).map(bookMapper::entityToDto);
     }
 
     public List<BookDto> getAllByTitle(String title, Integer amount) {

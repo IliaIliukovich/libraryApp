@@ -2,6 +2,7 @@ package com.telran.libraryapp.repository;
 
 import com.telran.libraryapp.entity.Book;
 import com.telran.libraryapp.entity.BookDetail;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findBooksByCategoryId(Long category);
+
+    List<Book> findBooksByCategoryId(Long category, Sort sort);
 
     List<Book> findBooksByTitleStartingWithAndAvailableAmountIsGreaterThanEqual(String title, Integer amount);
 
