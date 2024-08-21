@@ -19,6 +19,7 @@ import java.util.Objects;
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "int")
     private Long tagId;
 
     private String name;

@@ -15,13 +15,14 @@ import java.util.Objects;
 public class Building {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "building_id")
+    @Column(name = "building_id", columnDefinition = "int")
     private Long id;
 
     private String name;
 
     private String address;
 
+    @Column(columnDefinition = "tinyint")
     private boolean hasReadingRoom;
 
     @OneToMany(mappedBy = "building")

@@ -16,7 +16,7 @@ import java.util.Objects;
 public class BookDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_detail_id")
+    @Column(name = "book_detail_id", columnDefinition = "int")
     private Long id;
 
     private String publisher;
