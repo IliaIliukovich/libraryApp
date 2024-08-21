@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `book_detail` (
   `book_detail_id` INT NOT NULL,
   `abstract` VARCHAR(255) NULL,
   `publisher` VARCHAR(90) NULL,
-  `year` VARCHAR(10) NULL,
+  `book_year` VARCHAR(10) NULL,
   PRIMARY KEY (`book_detail_id`));
 
 CREATE TABLE IF NOT EXISTS `book` (

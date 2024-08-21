@@ -1,6 +1,3 @@
--- liquibase formatted sql
--- changeset ilia:002
-
 insert into category (category_id, name, description)
 values (1, 'Java', 'Learning Java'),
        (2, ' Technology', 'Books about the latest in technology'),
@@ -23,7 +20,7 @@ values (1, 'Manning Publications', '2018', 'Comprehensive guide to modern Java p
        (6, 'Signet Classic', '1949', 'A dystopian novel about a totalitarian regime'),
        (7, 'J.B. Lippincott & Co.', '1960', 'A novel about racial injustice in the Deep South'),
        (8, 'T. Egerton, Whitehall', '1813', 'A romantic novel about the manners of British gentry'),
-       (9, 'Charles Scribner\'s Sons', '1925', 'A novel about the American dream in the 1920s'),
+       (9, 'Charles Scribners Sons', '1925', 'A novel about the American dream in the 1920s'),
        (10, 'Harper & Brothers', '1851', 'A story of the obsessive quest for a giant whale'),
        (11, 'The Russian Messenger', '1869', 'A historical novel about the Napoleonic wars'),
        (12, 'Little, Brown and Company ', '1951', 'A novel about teenage angst and alienation'),
@@ -32,7 +29,7 @@ values (1, 'Manning Publications', '2018', 'Comprehensive guide to modern Java p
        (15, 'Smith, Elder & Co.', '1847', 'A novel about the experiences of the eponymous heroine'),
        (16, 'Thomas Cautley Newby', '1847', 'A novel about the intense relationship between two families'),
        (17, 'Chatto & Windus', '1932', 'A dystopian novel about a future World State'),
-       (18, 'Revue de Paris', '1856', 'A novel about the life of a doctor\'s wife in provincial France'),
+       (18, 'Revue de Paris', '1856', 'A novel about the life of a doctors wife in provincial France'),
        (19, 'Harper & Row', '1967', 'A novel about the Buendía family in the town of Macondo'),
        (20, 'Grasset', '1913', 'A modernist novel about involuntary memory'),
        (21, 'Sylvia Beach', '1922', 'A modernist novel about the experiences of Leopold Bloom'),
@@ -43,8 +40,8 @@ values (1, 'Manning Publications', '2018', 'Comprehensive guide to modern Java p
 
 
 insert into building (building_id, name, address, has_reading_room)
-values (1, 'Christ\'s College', 'St Andrews St, Cambridge CB2 3BU', true),
-       (2, 'Churchill College', 'Storey\'s Way, Cambridge CB3 0DS', true),
+values (1, 'Christs College', 'St Andrews St, Cambridge CB2 3BU', true),
+       (2, 'Churchill College', 'Storeys Way, Cambridge CB3 0DS', true),
        (3, 'Clare College', 'Trinity Ln, Cambridge CB2 1TL', true),
        (4, 'Trinity College', 'Trinity St, Cambridge CB2 1TQ', true),
        (5, 'Trinity Hall', 'Trinity Ln, Cambridge CB2 1TJ', true),
@@ -55,7 +52,7 @@ values  ('OPEN', 1, 1,'Java in action', 1, 2, '9780451524935', 1),
         ('OPEN', 1, 2,'Algorithms', 1, 1, '9780451524935', 2),
         ('OPEN', 1, 3,'Design Patterns', 1, 4, '9780451524935', 3),
         ('OPEN', 1, 4,'Sherlock Holmes', 2, 3, '9780451524935', null),
-        ('OPEN', 1, 5,'Harry Potter and the Philosopher\'s stone', 1, 4, '9780451524935', null),
+        ('OPEN', 1, 5,'Harry Potter and the Philosophers stone', 1, 4, '9780451524935', null),
         ('OPEN', 1, 6,'1984', 3, 5, '9780451524935', null),
         ('OPEN', 1, 7,'To Kill a Mockingbird',4, 7, '9780061120084', null),
         ('OPEN', 1, 8,'Pride and Prejudice', 1, 3, '9781503290563', null),

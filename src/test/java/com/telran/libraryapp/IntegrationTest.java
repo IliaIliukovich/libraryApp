@@ -1,6 +1,7 @@
 package com.telran.libraryapp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.telran.libraryapp.dto.BookDto;
 import com.telran.libraryapp.entity.Book;
 import com.telran.libraryapp.entity.enums.AccessLevel;
 import com.telran.libraryapp.repository.BookRepository;
@@ -39,7 +40,7 @@ public class IntegrationTest {
 
     @Test
     public void testPostAndDeleteRequest() throws Exception {
-        Book book = new Book();
+        BookDto book = new BookDto();
         book.setTitle("Title");
         book.setAccessLevel(AccessLevel.OPEN);
 

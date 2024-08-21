@@ -21,6 +21,7 @@ public class BookDetail {
 
     private String publisher;
 
+    @Column(name = "book_year")
     private String year;
     @Column(name="abstract")
     private String abstractToBook;
