@@ -16,6 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,6 +69,7 @@ public class BookController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ROLE_LIBRARIAN', 'ROLE_ADMIN')")
     public ResponseEntity<BookDto> addBook(@RequestBody @Valid BookDto book) {
         BookDto createdOrUpdated = service.addOrUpdate(book);
         log.info("Book with id = {} created", createdOrUpdated.getId());
@@ -110,6 +112,7 @@ public class BookController {
     }
 
     @DeleteMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> deleteById(@RequestParam Long id) {
         service.remove(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);

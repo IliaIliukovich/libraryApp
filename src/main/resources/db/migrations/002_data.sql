@@ -139,16 +139,16 @@ values (1, 'Urma', 'R.-G.',
         best known for his dystopian novel Fahrenheit 451.');
 
 insert into visitor (email, password, name, surname, role)
-values ('john.doe@example.com', 'password123', 'John', 'Doe', 'USER'),
-       ('jane.smith@example.com', 'password123', 'Jane', 'Smith', 'USER'),
-       ('alice.jones@example.com', 'password123', 'Alice', 'Jones', 'USER'),
-       ('bob.brown@example.com', 'password123', 'Bob', 'Brown', 'USER'),
-       ('charlie.black@example.com', 'password123', 'Charlie', 'Black', 'USER'),
-       ('david.white@example.com', 'password123', 'David', 'White', 'USER'),
-       ('eve.green@example.com', 'password123', 'Eve', 'Green', 'USER'),
-       ('frank.red@example.com', 'password123', 'Frank', 'Red', 'USER'),
-       ('grace.blue@example.com', 'password123', 'Grace', 'Blue', 'USER'),
-       ('hannah.yellow@example.com', 'password123', 'Hannah', 'Yellow', 'USER');
+values ('john.doe@example.com', '$2a$10$jMBIJtjUOlIgd/X6uwNvBOkoI3sfau11Uya.8uZSdDk69ICRv5OzK', 'John', 'Doe', 'USER'),
+       ('jane.smith@example.com', '$2a$10$jMBIJtjUOlIgd/X6uwNvBOkoI3sfau11Uya.8uZSdDk69ICRv5OzK', 'Jane', 'Smith', 'ADMIN'),
+       ('alice.jones@example.com', '$2a$10$jMBIJtjUOlIgd/X6uwNvBOkoI3sfau11Uya.8uZSdDk69ICRv5OzK', 'Alice', 'Jones', 'LIBRARIAN'),
+       ('bob.brown@example.com', '$2a$10$jMBIJtjUOlIgd/X6uwNvBOkoI3sfau11Uya.8uZSdDk69ICRv5OzK', 'Bob', 'Brown', 'USER'),
+       ('charlie.black@example.com', '$2a$10$jMBIJtjUOlIgd/X6uwNvBOkoI3sfau11Uya.8uZSdDk69ICRv5OzK', 'Charlie', 'Black', 'USER'),
+       ('david.white@example.com', '$2a$10$jMBIJtjUOlIgd/X6uwNvBOkoI3sfau11Uya.8uZSdDk69ICRv5OzK', 'David', 'White', 'USER'),
+       ('eve.green@example.com', '$2a$10$jMBIJtjUOlIgd/X6uwNvBOkoI3sfau11Uya.8uZSdDk69ICRv5OzK', 'Eve', 'Green', 'USER'),
+       ('frank.red@example.com', '$2a$10$jMBIJtjUOlIgd/X6uwNvBOkoI3sfau11Uya.8uZSdDk69ICRv5OzK', 'Frank', 'Red', 'USER'),
+       ('grace.blue@example.com', '$2a$10$jMBIJtjUOlIgd/X6uwNvBOkoI3sfau11Uya.8uZSdDk69ICRv5OzK', 'Grace', 'Blue', 'USER'),
+       ('hannah.yellow@example.com', '$2a$10$jMBIJtjUOlIgd/X6uwNvBOkoI3sfau11Uya.8uZSdDk69ICRv5OzK', 'Hannah', 'Yellow', 'USER');
 
 insert into visitor_took_book (visitor_email, book_id)
     values ('john.doe@example.com', 1),

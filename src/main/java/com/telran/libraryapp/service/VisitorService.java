@@ -7,6 +7,7 @@ import com.telran.libraryapp.entity.Visitor;
 import com.telran.libraryapp.mapper.VisitorMapper;
 import com.telran.libraryapp.repository.VisitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -17,10 +18,13 @@ public class VisitorService {
     private final VisitorRepository visitorRepository;
     private final VisitorMapper visitorMapper;
 
+    private final PasswordEncoder encoder;
+
     @Autowired
-    public VisitorService(VisitorRepository visitorRepository, VisitorMapper visitorMapper) {
+    public VisitorService(VisitorRepository visitorRepository, VisitorMapper visitorMapper, PasswordEncoder encoder) {
         this.visitorRepository = visitorRepository;
         this.visitorMapper = visitorMapper;
+        this.encoder = encoder;
     }
 
     public List<VisitorDto> getAll() {
@@ -33,8 +37,13 @@ public class VisitorService {
         return visitor.map(visitorMapper::entityToDto);
     }
 
+    public Optional<Visitor> getByLogin(String login) {
+        return visitorRepository.findById(login);
+    }
+
     public VisitorDto addVisitor(VisitorDto visitorDto) {
         Visitor visitor = visitorMapper.dtoToEntity(visitorDto);
+        visitor.setPassword(encoder.encode(visitor.getPassword()));
         Visitor savedVisitor = visitorRepository.save(visitor);
         return visitorMapper.entityToDto(savedVisitor);
     }

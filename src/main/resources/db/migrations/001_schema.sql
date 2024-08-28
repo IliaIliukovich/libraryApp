@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `tag` (
 
 CREATE TABLE IF NOT EXISTS `visitor` (
   `email` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(60) NOT NULL,
   `name` VARCHAR(45) NULL,
   `surname` VARCHAR(45) NULL,
   `role` VARCHAR(45) NOT NULL,
