@@ -32,9 +32,10 @@ public class BookServiceTest {
         BookFullInfoMapper bookFullInfoMapper = Mockito.mock(BookFullInfoMapper.class);
         CategoryRepository categoryRepository = Mockito.mock(CategoryRepository.class);
         BuildingRepository buildingRepository = Mockito.mock(BuildingRepository.class);
+        VisitorService visitorService = Mockito.mock(VisitorService.class);
         bookMapper = Mappers.getMapper(BookMapper.class);
         bookService = new BookService(repository, bookDetailRepository, categoryRepository,
-                buildingRepository, bookMapper, bookFullInfoMapper);
+                buildingRepository, bookMapper, bookFullInfoMapper, visitorService);
     }
 
 

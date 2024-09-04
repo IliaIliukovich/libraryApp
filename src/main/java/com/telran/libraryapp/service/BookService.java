@@ -2,10 +2,7 @@ package com.telran.libraryapp.service;
 
 import com.telran.libraryapp.dto.BookDto;
 import com.telran.libraryapp.dto.BookFullInfoDto;
-import com.telran.libraryapp.entity.Book;
-import com.telran.libraryapp.entity.BookDetail;
-import com.telran.libraryapp.entity.Building;
-import com.telran.libraryapp.entity.Category;
+import com.telran.libraryapp.entity.*;
 import com.telran.libraryapp.mapper.BookFullInfoMapper;
 import com.telran.libraryapp.mapper.BookMapper;
 import com.telran.libraryapp.repository.BookDetailRepository;
@@ -21,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,14 +34,17 @@ public class BookService {
     private final BookMapper bookMapper;
     private final BookFullInfoMapper bookFullInfoMapper;
 
+    private final VisitorService visitorService;
+
     @Autowired
-    public BookService(BookRepository repository, BookDetailRepository bookDetailRepository, CategoryRepository categoryRepository, BuildingRepository buildingRepository, BookMapper bookMapper, BookFullInfoMapper bookFullInfoMapper) {
+    public BookService(BookRepository repository, BookDetailRepository bookDetailRepository, CategoryRepository categoryRepository, BuildingRepository buildingRepository, BookMapper bookMapper, BookFullInfoMapper bookFullInfoMapper, VisitorService visitorService) {
         this.repository = repository;
         this.bookDetailRepository = bookDetailRepository;
         this.categoryRepository = categoryRepository;
         this.buildingRepository = buildingRepository;
         this.bookMapper = bookMapper;
         this.bookFullInfoMapper = bookFullInfoMapper;
+        this.visitorService = visitorService;
     }
 
     public List<BookDto> getAll() {
@@ -135,5 +136,13 @@ public class BookService {
 
     public void remove(Long id) {
         repository.deleteById(id);
+    }
+
+    public List<BookDto> getMyBooks(String login) {
+        Optional<Visitor> visitor = visitorService.getByLogin(login);
+        if (visitor.isPresent()) {
+           return bookMapper.entityListToDto(visitor.get().getTakenBooks());
+        }
+        return Collections.emptyList();
     }
 }

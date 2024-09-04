@@ -58,6 +58,10 @@ public class VisitorService {
         }
     }
 
+    public void save(Visitor visitor) {
+        visitorRepository.save(visitor);
+    }
+
     public void deleteVisitorByEmail(String email) {
         visitorRepository.deleteById(email);
     }

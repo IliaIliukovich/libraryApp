@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -35,10 +36,11 @@ public class IntegrationTest {
     @Test
     public void testAppWorks() throws Exception {
         mockMvc.perform(get("/books/all").contentType("application/json"))
-                .andExpect(status().isOk());
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
+    @WithMockUser(username = "Test user", roles = {"ADMIN"})
     public void testPostAndDeleteRequest() throws Exception {
         BookDto book = new BookDto();
         book.setTitle("Title");

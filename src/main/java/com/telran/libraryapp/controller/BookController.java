@@ -17,6 +17,8 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,6 +68,14 @@ public class BookController {
     @Operation(summary = "Search By Title")
     public List<BookDto> getAllByTitle(@RequestParam String title, @RequestParam(required = false) Integer amount) {
         return service.getAllByTitle(title, amount);
+    }
+
+    @GetMapping("/my")
+    @Operation(summary = "My books taken from library")
+    public List<BookDto> getMyBooks() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String login = (String) auth.getPrincipal();
+        return service.getMyBooks(login);
     }
 
     @PostMapping

@@ -44,6 +44,6 @@ public class Visitor {
     )
     private List<Book> readingRoomBooks;
 
-
+    private String refreshToken;
 
 }

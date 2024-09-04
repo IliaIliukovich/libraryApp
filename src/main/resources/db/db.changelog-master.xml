@@ -8,5 +8,6 @@
     <include file="db/migrations/002_data.sql"/>
     <include file="db/migrations/003_update_book.sql"/>
     <include file="/db/migrations/004_db_fixes.sql"/>
+    <include file="/db/migrations/005_update_visitor.sql"/>
 
 </databaseChangeLog>
