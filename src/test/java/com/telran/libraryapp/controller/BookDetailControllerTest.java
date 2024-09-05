@@ -1,13 +1,17 @@
 package com.telran.libraryapp.controller;
 
+import com.telran.libraryapp.config.SecurityConfig;
 import com.telran.libraryapp.dto.BookDetailDto;
 import com.telran.libraryapp.entity.BookDetail;
+import com.telran.libraryapp.security.JwtProvider;
 import com.telran.libraryapp.service.BookDetailService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
@@ -21,13 +25,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BookDetailController.class)
+@Import(SecurityConfig.class)
 class BookDetailControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
+    private JwtProvider jwtProvider;
+    @MockBean
     private BookDetailService bookDetailService;
 
     @Test
+    @WithMockUser(username = "Test user", roles = {"ADMIN"})
     public void getAll() throws Exception {
         mockMvc.perform(get("/bookDetails").contentType("application/json"))
                 .andExpect(status().isOk());
@@ -36,6 +44,7 @@ class BookDetailControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Test user", roles = {"ADMIN"})
     public void getBookDetailById() throws Exception {
         when(bookDetailService.getBDById(anyLong()))
                 .thenReturn(Optional.of(new BookDetailDto(22L, "Addison-Wesley", "2011", "A comprehensive introduction to algorithms")));
@@ -45,6 +54,7 @@ class BookDetailControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Test user", roles = {"ADMIN"})
     public void getBookDetailByIdNotFound() throws Exception {
         when(bookDetailService.getBDById(anyLong()))
                 .thenReturn(Optional.empty());
@@ -53,17 +63,4 @@ class BookDetailControllerTest {
         Mockito.verify(bookDetailService, times(1)).getBDById(anyLong());
     }
 
-
-
-    @Test
-     public void addBookDetail() {
-    }
-
-    @Test
-    public void updateBookDetail() {
-    }
-
-    @Test
-    public void deleteBookDetail() {
-    }
 }

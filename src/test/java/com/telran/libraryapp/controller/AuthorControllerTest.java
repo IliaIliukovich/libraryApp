@@ -1,14 +1,18 @@
 package com.telran.libraryapp.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.telran.libraryapp.config.SecurityConfig;
 import com.telran.libraryapp.dto.AuthorDto;
 import com.telran.libraryapp.entity.Author;
+import com.telran.libraryapp.security.JwtProvider;
 import com.telran.libraryapp.service.AuthorService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Optional;
@@ -20,10 +24,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AuthorController.class)
+@Import(SecurityConfig.class)
 class AuthorControllerTest {
 
     @MockBean
     private AuthorService service;
+    @MockBean
+    private JwtProvider jwtProvider;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -31,6 +38,7 @@ class AuthorControllerTest {
     MockMvc mockMvc;
 
     @Test
+    @WithMockUser(username = "Test user", roles = {"ADMIN"})
     public void getAuthors() throws Exception {
         mockMvc.perform(get("/authors").contentType("application/json"))
                 .andExpect(status().isOk());
@@ -38,6 +46,7 @@ class AuthorControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Test user", roles = {"ADMIN"})
     void getAuthorById() throws Exception {
         AuthorDto author = new AuthorDto();
         author.setId(15L);
@@ -52,6 +61,7 @@ class AuthorControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "Test user", roles = {"ADMIN"})
     void addAuthor() throws Exception {
         AuthorDto author = new AuthorDto();
         author.setId(12L);
