@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AuthorizationDeniedException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<String> handleAuthorizationDeniedException(AuthorizationDeniedException ex) {
         log.debug("AuthorizationDeniedException: ", ex);
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
